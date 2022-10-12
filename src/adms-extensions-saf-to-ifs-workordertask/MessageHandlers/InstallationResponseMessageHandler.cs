@@ -18,6 +18,7 @@ namespace BulkChangeResponseReader.MessageHandlers
 
         private readonly IIfsWorkOrder _ifsWorkOrder;
         public IMapper _mapper { get; }
+        public IMaintenanceOrders_Port _client { get; }
 
 
         //public InstallationResponseMessageHandler(ITelemetryInsightsLogger telemetry)
@@ -25,9 +26,10 @@ namespace BulkChangeResponseReader.MessageHandlers
         //    _telemetry = telemetry;
         //}
 
-        public InstallationResponseMessageHandler(IIfsWorkOrder ifsWorkOrder, IMapper mapper)
+        public InstallationResponseMessageHandler(IIfsWorkOrder ifsWorkOrder, IMapper mapper, IMaintenanceOrders_Port soap)
         {
             _mapper = mapper;
+            _client = soap;
             //_telemetry = telemetry;
             _ifsWorkOrder = ifsWorkOrder;
         }
@@ -39,17 +41,38 @@ namespace BulkChangeResponseReader.MessageHandlers
         public void HandleMessage(string messageXML)
         {
 
-            StringReader sReader = new StringReader(messageXML);
+            //StringReader sReader = new StringReader(messageXML);
 
-            MaintenanceOrders.Envelope maintenanceOrders = Utils.DeSerialize<MaintenanceOrders.Envelope>(sReader);
-
-
-            string jsonMsg = JsonConvert.SerializeObject(maintenanceOrders, Newtonsoft.Json.Formatting.Indented);
+            //MaintenanceOrders.Envelope maintenanceOrders = Utils.DeSerialize<MaintenanceOrders.Envelope>(sReader);
 
 
-            var status = _mapper.Map<Model.IFSWorkOrderBody>(maintenanceOrders.Body.ChangedMaintenanceOrders);
+            //string jsonMsg = JsonConvert.SerializeObject(maintenanceOrders, Newtonsoft.Json.Formatting.Indented);
 
 
+            //var status = _mapper.Map<Model.IFSWorkOrderBody>(maintenanceOrders.Body.ChangedMaintenanceOrders);
+            CreateMaintenanceOrdersRequest cmor = new CreateMaintenanceOrdersRequest();
+
+            cmor.CreateMaintenanceOrders = new MaintenanceOrdersCreateMessageType
+            {
+                Payload = new MaintenanceOrdersType
+                {
+                    MaintenanceOrders = new MaintenanceOrdersTypeMaintenanceOrders
+                    {
+
+                        Organisation = new Organisation[]
+                         {
+                             new Organisation
+                             {
+                                 mRID = "1111"
+                             }
+                         }
+
+
+                    }
+                }
+            };
+
+            _client.CreateMaintenanceOrders(cmor);
 
 
             string textMessage = new StreamReader(@"BodyData.json").ReadToEnd();
