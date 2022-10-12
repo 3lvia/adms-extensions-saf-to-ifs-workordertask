@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="MaintenanceOrdersService" targetNamespace="http://iec.ch/TC57/2014/MaintenanceOrders" 
+      xmlns:tns="http://iec.ch/TC57/2014/MaintenanceOrders"
+	  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+	  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+	  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+	  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	  xmlns:infoMessage="http://iec.ch/TC57/2014/MaintenanceOrdersMessage"
+      xmlns:so="http://www.siemens.com/energy/schemas/StandardOutput/v1#"
+      xmlns:sf="http://www.siemens.com/energy/schemas/StandardFault/v1#"
+>
+	<wsdl:types>
+		<xs:schema>
+			<xs:import namespace="http://iec.ch/TC57/2014/MaintenanceOrdersMessage" 
+                              schemaLocation="xsd/MaintenanceOrdersMessage.xsd"/>
+		</xs:schema>
+		<xs:schema>
+			<xs:import namespace="http://www.siemens.com/energy/schemas/StandardOutput/v1#" 
+                              schemaLocation="../../../common/messages/xsd/StandardOutput.xsd"/>
+		</xs:schema>
+		<xs:schema>
+			<xs:import namespace="http://www.siemens.com/energy/schemas/StandardFault/v1#" 
+                              schemaLocation="../../../common/messages/xsd/StandardFault.xsd"/>
+		</xs:schema>
+	</wsdl:types>
+
+    <wsdl:message name="IFSMaintenanceOrdersEventMessage">
+		<wsdl:part name="IFSMaintenanceOrderEventMessage" element="infoMessage:IFSMaintenanceOrders"/>
+	</wsdl:message>
+	<wsdl:message name="GetMaintenanceOrdersEventMessage">
+		<wsdl:part name="GetMaintenanceOrdersEventMessage" element="infoMessage:GetMaintenanceOrders"/>
+	</wsdl:message>
+	<wsdl:message name="CreateMaintenanceOrdersRequestMessage">
+		<wsdl:part name="CreateMaintenanceOrdersRequestMessage" element="infoMessage:CreateMaintenanceOrders"/>
+	</wsdl:message>
+	<wsdl:message name="StandardMessage">
+		<wsdl:part name="StandardOutput" element="so:StandardOutput"/>
+	</wsdl:message>
+	<wsdl:message name="FaultMessage">
+		<wsdl:part name="StandardFault" element="sf:StandardFault"/>
+	</wsdl:message>
+
+
+	<wsdl:portType name="MaintenanceOrders_Port">
+		<wsdl:operation name="IFSMaintenanceOrders">
+			<wsdl:input name="IFSMaintenanceOrdersInput" message="tns:IFSMaintenanceOrdersEventMessage"/>
+			<wsdl:output name="IFSMaintenanceOrdersOutput" message="tns:StandardMessage"/>
+			<wsdl:fault name="IFSMaintenanceOrdersFault" message="tns:FaultMessage"/>
+		</wsdl:operation>
+		<wsdl:operation name="CreateMaintenanceOrders">
+			<wsdl:input name="CreateMaintenanceOrdersRequest" message="tns:CreateMaintenanceOrdersRequestMessage"/>
+			<wsdl:output name="CreateMaintenanceOrdersResponse" message="tns:StandardMessage"/>
+			<wsdl:fault name="CreateMaintenanceOrdersFault" message="tns:FaultMessage"/>
+		  </wsdl:operation>
+		<wsdl:operation name="GetMaintenanceOrders">
+			<wsdl:input name="GetMaintenanceOrdersEvent" message="tns:GetMaintenanceOrdersEventMessage"/>
+			<wsdl:output name="GetMaintenanceOrdersResponse" message="tns:StandardMessage"/>
+			<wsdl:fault name="GetMaintenanceOrdersFault" message="tns:FaultMessage"/>
+		</wsdl:operation>
+	</wsdl:portType>
+
+	<wsdl:binding name="MaintenanceOrders_Binding" type="tns:MaintenanceOrders_Port">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="IFSMaintenanceOrders">
+			<soap:operation soapAction="http://iec.ch/TC57/2014/MaintenanceOrders/MOM/IFSMaintenanceOrders" style="document"/>
+			<wsdl:input name="IFSMaintenanceOrdersInput">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="IFSMaintenanceOrdersOutput">
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="IFSMaintenanceOrdersFault">
+				<soap:fault name="IFSMaintenanceOrdersFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="GetMaintenanceOrders">
+			<soap:operation soapAction="http://iec.ch/TC57/2014/MaintenanceOrders/MOM/GetMaintenanceOrders" style="document"/>
+			<wsdl:input name="GetMaintenanceOrdersEvent">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="GetMaintenanceOrdersResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="GetMaintenanceOrdersFault">
+				<soap:fault name="GetMaintenanceOrdersFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="CreateMaintenanceOrders">
+			<soap:operation soapAction="http://iec.ch/TC57/2014/MaintenanceOrders/MOM/CreateMaintenanceOrders" style="document"/>
+			<wsdl:input name="CreateMaintenanceOrdersRequest">
+			  <soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="CreateMaintenanceOrdersResponse">
+			  <soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="CreateMaintenanceOrdersFault">
+			  <soap:fault name="CreateMaintenanceOrdersFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+	</wsdl:binding>
+
+	<wsdl:service name="MaintenanceOrdersService">
+		<wsdl:port name="MaintenanceOrders_Port" binding="tns:MaintenanceOrders_Binding">
+			<soap:address location="http://localhost:8180/SiemensServices/SAFServiceImpl"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

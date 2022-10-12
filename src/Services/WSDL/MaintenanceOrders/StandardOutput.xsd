@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:a="http://langdale.com.au/2005/Message#" xmlns:sawsdl="http://www.w3.org/ns/sawsdl" targetNamespace="http://www.siemens.com/energy/schemas/StandardOutput/v1#" elementFormDefault="qualified" attributeFormDefault="unqualified" xmlns="http://langdale.com.au/2005/Message#" xmlns:m="http://www.siemens.com/energy/schemas/StandardOutput/v1#">
+<xs:annotation/>
+<xs:element name="StandardOutput" type="m:StandardOutput"/>
+<xs:complexType name="StandardOutput">
+<xs:sequence>
+<xs:element name="EventLog" type="m:EventLog" minOccurs="1" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="EventLog" sawsdl:modelReference="http://www.siemens-ptd/Common#EventLog">
+<xs:annotation/>
+<xs:sequence>
+<xs:element name="bscName" minOccurs="1" maxOccurs="1" type="xs:string" sawsdl:modelReference="http://www.siemens-ptd/Common#EventLog.bscName">
+<xs:annotation>
+<xs:documentation>BSC that generated the event</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="creationTime" minOccurs="1" maxOccurs="1" type="xs:dateTime" sawsdl:modelReference="http://www.siemens-ptd/Common#EventLog.creationTime">
+<xs:annotation>
+<xs:documentation>event creation time</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="detailedMessageText" minOccurs="0" maxOccurs="1" type="xs:string" sawsdl:modelReference="http://www.siemens-ptd/Common#EventLog.detailedMessageText">
+<xs:annotation>
+<xs:documentation>details for event</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="id" minOccurs="0" maxOccurs="1" type="xs:string" sawsdl:modelReference="http://www.siemens-ptd/Common#EventLog.id">
+<xs:annotation>
+<xs:documentation>Identifier of event</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="messageName" minOccurs="1" maxOccurs="1" type="xs:string" sawsdl:modelReference="http://www.siemens-ptd/Common#EventLog.messageName">
+<xs:annotation>
+<xs:documentation>name of message for event</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="messageText" minOccurs="1" maxOccurs="1" type="xs:string" sawsdl:modelReference="http://www.siemens-ptd/Common#EventLog.messageText">
+<xs:annotation>
+<xs:documentation>text of event message</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="resultCode" minOccurs="0" maxOccurs="1" type="xs:string" sawsdl:modelReference="http://www.siemens-ptd/Common#EventLog.resultCode">
+<xs:annotation>
+<xs:documentation>event result code</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="serviceName" minOccurs="1" maxOccurs="1" type="xs:string" sawsdl:modelReference="http://www.siemens-ptd/Common#EventLog.serviceName">
+<xs:annotation>
+<xs:documentation>Name of a service</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="severity" minOccurs="0" maxOccurs="1" type="xs:string" sawsdl:modelReference="http://www.siemens-ptd/Common#EventLog.severity">
+<xs:annotation>
+<xs:documentation>severity of event</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="siteName" minOccurs="1" maxOccurs="1" type="xs:string" sawsdl:modelReference="http://www.siemens-ptd/Common#EventLog.siteName">
+<xs:annotation>
+<xs:documentation>name of site for the event</xs:documentation>
+</xs:annotation>
+</xs:element>
+</xs:sequence>
+</xs:complexType>
+</xs:schema>

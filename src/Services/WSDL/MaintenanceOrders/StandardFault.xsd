@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:a="http://langdale.com.au/2005/Message#" xmlns:sawsdl="http://www.w3.org/ns/sawsdl" targetNamespace="http://www.siemens.com/energy/schemas/StandardFault/v1#" elementFormDefault="qualified" attributeFormDefault="unqualified" xmlns="http://langdale.com.au/2005/Message#" xmlns:m="http://www.siemens.com/energy/schemas/StandardFault/v1#">
+<xs:annotation/>
+<xs:element name="StandardFault" type="m:StandardFault"/>
+<xs:complexType name="StandardFault">
+<xs:sequence>
+<xs:element name="EventLog" type="m:EventLog" minOccurs="1" maxOccurs="1"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="EventLog" sawsdl:modelReference="http://www.siemens-ptd/Common#EventLog">
+<xs:annotation/>
+<xs:sequence>
+<xs:element name="detailedMessageText" minOccurs="0" maxOccurs="1" type="xs:string" sawsdl:modelReference="http://www.siemens-ptd/Common#EventLog.detailedMessageText">
+<xs:annotation>
+<xs:documentation>details for event</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="messageText" minOccurs="1" maxOccurs="1" type="xs:string" sawsdl:modelReference="http://www.siemens-ptd/Common#EventLog.messageText">
+<xs:annotation>
+<xs:documentation>text of event message</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="resultCode" minOccurs="1" maxOccurs="1" type="xs:string" sawsdl:modelReference="http://www.siemens-ptd/Common#EventLog.resultCode">
+<xs:annotation>
+<xs:documentation>event result code</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="severity" minOccurs="1" maxOccurs="1" type="xs:string" sawsdl:modelReference="http://www.siemens-ptd/Common#EventLog.severity">
+<xs:annotation>
+<xs:documentation>severity of event</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="stackTrace" minOccurs="0" maxOccurs="1" type="xs:string" sawsdl:modelReference="http://www.siemens-ptd/Common#EventLog.stackTrace">
+<xs:annotation>
+<xs:documentation>Program stack trace.</xs:documentation>
+</xs:annotation>
+</xs:element>
+</xs:sequence>
+</xs:complexType>
+</xs:schema>

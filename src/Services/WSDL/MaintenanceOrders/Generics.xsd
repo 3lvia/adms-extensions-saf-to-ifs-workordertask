@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.siemens.com/si/schemas/Generics" targetNamespace="http://www.siemens.com/si/schemas/Generics" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0.0">
+    <xs:complexType name="HeaderType">
+        <xs:sequence>
+            <xs:element name="verb">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:enumeration value="change"/>
+                        <xs:enumeration value="changed"/>
+                        <xs:enumeration value="create"/>
+                        <xs:enumeration value="created"/>
+                        <xs:enumeration value="get"/>
+                        <xs:enumeration value="reply"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="source">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:enumeration value="SP7"/>
+                        <xs:enumeration value="MOM"/>
+                        <xs:enumeration value="WFM"/>
+                        <xs:enumeration value="AVL"/>
+                        <xs:enumeration value="AMS"/>
+                        <xs:enumeration value="CIS"/>
+                        <xs:enumeration value="IVR"/>
+                        <xs:enumeration value="MDM"/>
+                        <xs:enumeration value="EIP"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="operation" type="xs:string"/>
+            <xs:element name="messageId" type="StringUUIDType"/>
+            <xs:element name="publishedDateTime" type="xs:dateTime"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:simpleType name="StringUUIDType">
+        <xs:restriction base="xs:string">
+            <xs:minLength value="0"/>
+            <xs:maxLength value="36"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="String8Type">
+        <xs:restriction base="xs:string">
+            <xs:minLength value="0"/>
+            <xs:maxLength value="8"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="String10Type">
+        <xs:restriction base="xs:string">
+            <xs:minLength value="0"/>
+            <xs:maxLength value="10"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="String12Type">
+        <xs:restriction base="xs:string">
+            <xs:minLength value="0"/>
+            <xs:maxLength value="12"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="String15Type">
+        <xs:restriction base="xs:string">
+            <xs:minLength value="0"/>
+            <xs:maxLength value="15"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="String16Type">
+        <xs:restriction base="xs:string">
+            <xs:minLength value="0"/>
+            <xs:maxLength value="16"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="String20Type">
+        <xs:restriction base="xs:string">
+            <xs:minLength value="0"/>
+            <xs:maxLength value="20"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="String25Type">
+        <xs:restriction base="xs:string">
+            <xs:minLength value="0"/>
+            <xs:maxLength value="25"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="String40Type">
+        <xs:restriction base="xs:string">
+            <xs:minLength value="0"/>
+            <xs:maxLength value="40"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="String60Type">
+        <xs:restriction base="xs:string">
+            <xs:minLength value="0"/>
+            <xs:maxLength value="60"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="String66Type">
+        <xs:restriction base="xs:string">
+            <xs:minLength value="0"/>
+            <xs:maxLength value="66"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="String71Type">
+        <xs:restriction base="xs:string">
+            <xs:minLength value="0"/>
+            <xs:maxLength value="71"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="String100Type">
+        <xs:restriction base="xs:string">
+            <xs:minLength value="0"/>
+            <xs:maxLength value="100"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="String200Type">
+        <xs:restriction base="xs:string">
+            <xs:minLength value="0"/>
+            <xs:maxLength value="200"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="TATextType">
+        <xs:restriction base="xs:string">
+            <xs:minLength value="0"/>
+            <xs:maxLength value="8"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="TriggerStateType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="energized"/>
+            <xs:enumeration value="deenergized"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="YesNoType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="Y"/>
+            <xs:enumeration value="N"/>
+        </xs:restriction>
+    </xs:simpleType>
+</xs:schema>

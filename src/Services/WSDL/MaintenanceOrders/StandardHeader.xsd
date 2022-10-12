@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:a="http://langdale.com.au/2005/Message#" xmlns:sawsdl="http://www.w3.org/ns/sawsdl" targetNamespace="http://www.siemens.com/energy/schemas/StandardHeader/v1#" elementFormDefault="qualified" attributeFormDefault="unqualified" xmlns="http://langdale.com.au/2005/Message#" xmlns:m="http://www.siemens.com/energy/schemas/StandardHeader/v1#">
+<xs:annotation/>
+<xs:element name="StandardHeader" type="m:StandardHeader"/>
+<xs:complexType name="StandardHeader">
+<xs:sequence>
+<xs:element name="EnvelopeHeader" type="m:EnvelopeHeader" minOccurs="1" maxOccurs="1"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="EnvelopeHeader" sawsdl:modelReference="http://www.siemens-ptd/Common#EnvelopeHeader">
+<xs:annotation>
+<xs:documentation>Message header information providing descriptive information about the message.</xs:documentation>
+</xs:annotation>
+<xs:sequence>
+<xs:element name="creationTime" minOccurs="1" maxOccurs="1" type="xs:dateTime" sawsdl:modelReference="http://www.siemens-ptd/Common#EnvelopeHeader.creationTime">
+<xs:annotation>
+<xs:documentation>Creation time of the message.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="description" minOccurs="0" maxOccurs="1" type="xs:string" sawsdl:modelReference="http://www.siemens-ptd/Common#EnvelopeHeader.description">
+<xs:annotation>
+<xs:documentation>Description of the message.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="id" minOccurs="1" maxOccurs="1" type="xs:string" sawsdl:modelReference="http://www.siemens-ptd/Common#EnvelopeHeader.id">
+<xs:annotation>
+<xs:documentation>Globally unique identifier for the message.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="name" minOccurs="0" maxOccurs="1" type="xs:string" sawsdl:modelReference="http://www.siemens-ptd/Common#EnvelopeHeader.name">
+<xs:annotation>
+<xs:documentation>Name of the message.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="sequenceNumber" minOccurs="0" maxOccurs="1" type="xs:string" sawsdl:modelReference="http://www.siemens-ptd/Common#EnvelopeHeader.sequenceNumber">
+<xs:annotation>
+<xs:documentation>Sequence number of the message.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="size" minOccurs="0" maxOccurs="1" type="xs:float" sawsdl:modelReference="http://www.siemens-ptd/Common#EnvelopeHeader.size">
+<xs:annotation>
+<xs:documentation>Size of the message.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="sourceBSC" minOccurs="0" maxOccurs="1" type="xs:string" sawsdl:modelReference="http://www.siemens-ptd/Common#EnvelopeHeader.sourceBSC">
+<xs:annotation>
+<xs:documentation>Source BSC for the message.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="tool" minOccurs="0" maxOccurs="1" type="xs:string" sawsdl:modelReference="http://www.siemens-ptd/Common#EnvelopeHeader.tool">
+<xs:annotation>
+<xs:documentation>Tool used to generate the message.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="type" minOccurs="1" maxOccurs="1" type="xs:string" sawsdl:modelReference="http://www.siemens-ptd/Common#EnvelopeHeader.type">
+<xs:annotation>
+<xs:documentation>Type of the message.  A short abbreviation identifying the type of message such as STS for status.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="version" minOccurs="0" maxOccurs="1" type="xs:string" sawsdl:modelReference="http://www.siemens-ptd/Common#EnvelopeHeader.version">
+<xs:annotation>
+<xs:documentation>Version of the message.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="User" minOccurs="1" maxOccurs="1" type="m:User" sawsdl:modelReference="http://www.siemens-ptd/Common#EnvelopeHeader.User">
+<xs:annotation>
+<xs:documentation>The user initiating the transaction for which this message header applies.</xs:documentation>
+</xs:annotation>
+</xs:element>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="User" sawsdl:modelReference="http://www.siemens-ptd/Common#User">
+<xs:annotation>
+<xs:documentation>General purpose information identifying the person or person role initiating the transaction.</xs:documentation>
+</xs:annotation>
+<xs:sequence>
+<xs:element name="userID" minOccurs="1" maxOccurs="1" type="xs:string" sawsdl:modelReference="http://www.siemens-ptd/Common#User.userID">
+<xs:annotation>
+<xs:documentation>The user name for the person; required to log in.</xs:documentation>
+</xs:annotation>
+</xs:element>
+</xs:sequence>
+</xs:complexType>
+</xs:schema>

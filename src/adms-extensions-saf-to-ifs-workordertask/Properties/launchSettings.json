@@ -1,0 +1,11 @@
+﻿{
+  "profiles": {
+    "adms_extensions_saf_to_ifs_workordertask": {
+      "commandName": "Project",
+      "dotnetRunMessages": "true",
+      "environmentVariables": {
+        "DOTNET_ENVIRONMENT": "Development"
+      }
+    }
+  }
+}

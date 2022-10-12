@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:tns="http://iec.ch/TC57/2014/MaintenanceOrdersMessage"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:msg="http://iec.ch/TC57/2011/schema/message"
+	xmlns:obj="http://iec.ch/TC57/2014/MaintenanceOrders#"
+	xmlns:amo="http://iec.ch/TC57/2014/IFSMaintenanceOrdersSchema#"
+	targetNamespace="http://iec.ch/TC57/2014/MaintenanceOrdersMessage"
+	xmlns:fault="http://www.siemens.com/energy/schemas/StandardFault/v1#"
+	xmlns:g="http://www.siemens.com/si/schemas/Generics"
+	elementFormDefault="qualified"
+	attributeFormDefault="unqualified"
+	version="1.0.0">
+	<!-- Base Message Definitions -->
+	<xs:import namespace="http://iec.ch/TC57/2011/schema/message" schemaLocation="../../Common/xsd/Message.xsd"/>
+	<!-- CIM Information Object Definition -->
+	<xs:import namespace="http://iec.ch/TC57/2014/MaintenanceOrders#" schemaLocation="MaintenanceOrders.xsd"/>
+
+	<xs:import namespace="http://iec.ch/TC57/2014/IFSMaintenanceOrdersSchema#" schemaLocation="IFSMaintenanceOrdersSchema.xsd"/>
+
+	<xs:import namespace="http://www.siemens.com/si/schemas/Generics" schemaLocation="../../../../custom/typelib/Generics.xsd"/>
+
+	<xs:import namespace="http://www.siemens.com/energy/schemas/StandardFault/v1#" schemaLocation="../../../../common/messages/xsd/StandardFault.xsd"/>
+
+	<xs:complexType name="DetailedFaultResponseType">
+		<xs:sequence>
+			<xs:element name="mRID" type="g:StringUUIDType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+						<xs:documentation>Returning Spectrum's current value.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="success" type="xs:boolean"/>
+			<xs:element ref="fault:StandardFault" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="MaintenanceOrdersResponseType">
+		<xs:sequence>
+				<xs:element name="detailedStatus" type="tns:DetailedFaultResponseType" minOccurs="1" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="MaintenanceOrdersCreateMessageType">
+		<xs:sequence>
+			<xs:element name="Header" type="msg:HeaderType"/>
+			<xs:element name="Payload" type="obj:MaintenanceOrdersType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="MaintenanceOrdersRequestMessageType">
+		<xs:sequence>
+			<xs:element name="Header" type="msg:HeaderType"/>
+			<xs:element name="Payload" type="obj:MaintenanceOrdersRequestType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="IFSMaintenanceOrdersMessageType">
+		<xs:sequence>
+			<xs:element name="Header" type="msg:HeaderType"/>
+			<xs:element name="Payload" type="amo:IFSMaintenanceOrdersMessageType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="MaintenanceOrdersResponseMessageType">
+		<xs:sequence>
+			<xs:element name="Header" type="msg:HeaderType"/>
+            <xs:element name="CorrelationId" type="xs:string" minOccurs="0"/>
+			<xs:element name="Payload" type="tns:MaintenanceOrdersResponseType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+
+
+	<xs:complexType name="MaintenanceOrdersEventMessageType">
+		<xs:sequence>
+			<xs:element name="Header" type="msg:HeaderType"/>
+            <xs:element name="CorrelationId" type="xs:string" minOccurs="0"/>
+			<xs:element name="Payload" type="obj:MaintenanceOrdersType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:element name="CreateMaintenanceOrders" type="tns:MaintenanceOrdersCreateMessageType"/>
+	<xs:element name="CreateMaintenanceOrdersResponse" type="tns:MaintenanceOrdersResponseMessageType"/>
+	<xs:element name="ChangedMaintenanceOrders" type="tns:MaintenanceOrdersEventMessageType"/>
+	<xs:element name="IFSMaintenanceOrders" type="tns:IFSMaintenanceOrdersMessageType"/>
+	<xs:element name="IFSMaintenanceOrdersResponse" type="tns:MaintenanceOrdersResponseMessageType"/>
+	<xs:element name="GetMaintenanceOrders" type="tns:MaintenanceOrdersRequestMessageType"/>
+</xs:schema>
