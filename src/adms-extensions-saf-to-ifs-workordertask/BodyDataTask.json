@@ -1,0 +1,19 @@
+﻿{
+  "Sender": "ELSMART",
+  "Context": "STANDARD",
+  "ContextSub": null,
+  "RegDate": null,
+  "Objstate": null,
+  "WoNo": "263",
+  "ExtRefKeyWo": null,
+  "ExtRefKeyTask": "HUB.4321",
+  "MchCode": "NS.0152",
+  "UuidObject": null,
+  "Description": "Just another task \u2013 never-ending story",
+  "LongDescription": "LongDescr",
+  "PlannedStart": null,
+  "PlannedFinish": null,
+  "ReportedBy": "ELVIA_ENTR",
+  "OrgCode": "01B2B001",
+  "InfoFields": []
+}

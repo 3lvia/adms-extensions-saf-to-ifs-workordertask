@@ -1,0 +1,26 @@
+{
+  "Sender": "ELSMART",
+  "Context": "STANDARD",
+  "ContextSub": null,
+  "RegDate": null,
+  "Objstate": null,
+  "ExtRefKeyWo": null,
+  "MchCode": "NS.0890",
+  "UuidObject": null,
+  "ErrDescr": ".",
+  "ErrDescrLo": null,
+  "WorkDescrLo": "Test",
+  "LatestFinish": null,
+  "ReportedBy": null,
+  "CustomerNo": null,
+  "UuidCustomer": null,
+  "ReferenceNo": null,
+  "PhoneNo": null,
+  "Contact": null,
+  "OrgCode": "01B2B001",
+  "WorkMasterSign": null,
+  "InfoFields": [],
+  "WorkTasks": []
+}
+
+
