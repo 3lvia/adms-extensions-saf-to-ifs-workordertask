@@ -1,0 +1,72 @@
+# Default values for elvia-deployment.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+name: saf-to-ifs-workordertask
+namespace: adms-extensions
+microserviceType: worker
+
+replicaCount: 
+  dev: 1
+  test: 1
+  prod: 2
+
+resources:
+  requests:
+    cpu: 200m
+    memory: 512Mi
+  limits:
+    cpu: 200m
+    memory: 512Mi
+
+env:
+- name: ASPNETCORE_URLS
+  value: http://+:8080
+
+service:
+ port: 80
+ targetPort: 8080
+
+ingress:
+  subdomain: iss # only iss is supported
+  path: "/saf-to-ifs-workordertask"
+
+lifecycle:
+  preStop:
+    exec:
+      command:
+      - sleep
+      - "1"
+
+readinessProbe:
+  failureThreshold: 3
+  httpGet:
+    path: /endpoints
+    port: 8080
+    scheme: HTTP
+  initialDelaySeconds: 15
+  periodSeconds: 15
+  successThreshold: 1
+  timeoutSeconds: 3
+
+livenessProbe:
+  failureThreshold: 5
+  httpGet:
+    path: /endpoints
+    port: 8080
+    scheme: HTTP
+  initialDelaySeconds: 15
+  periodSeconds: 15
+  successThreshold: 1
+  timeoutSeconds: 3
+
+startupProbe:
+  failureThreshold: 45
+  httpGet:
+    path: /endpoints
+    port: 8080
+    scheme: HTTP
+  initialDelaySeconds: 5
+  periodSeconds: 1
+  successThreshold: 1
+  timeoutSeconds: 2

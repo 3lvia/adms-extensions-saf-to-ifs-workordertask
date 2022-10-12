@@ -1,0 +1,75 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- master
+
+pool:
+  vmImage: "ubuntu-latest"
+
+variables:
+  containerregistry: 'ContainerRegistryElvia'
+  imagetag: '$(Build.BuildNumber)'
+  name: saf-to-ifs-workordertask
+  namespace: adms-extensions
+  
+resources:
+  repositories:
+  - repository: templates
+    type: github
+    name: 3lvia/core-azure-devops-templates
+    endpoint: 3lvia
+
+#stages:
+#- stage: SonarTest
+#  jobs:
+#  - job: 
+#    pool:
+#      vmImage: 'windows-latest'
+#    steps:
+#    - task: UseDotNet@2
+#      displayName: 'Use .NET Core sdk 6'
+#      inputs:
+#        packageType: 'sdk'
+#        version: '6.0.x'
+#        includePreviewVersions: true
+#    - task: SonarCloudPrepare@1
+#      inputs:
+#        SonarCloud: 'sonarcloud'
+#        organization: 'elvia'
+#        scannerMode: 'MSBuild'
+#        projectKey: '3lvia_saf-to-ifs'    
+#        projectName: 'adms-saf-to-ifs-workordertask'
+#    - script: dotnet build --configuration Release
+#      displayName: 'Build Release'
+#    - task: DotNetCoreCLI@2
+#      displayName: 'Unit tests'
+#      inputs:
+#        command: test
+#        projects: test/Test.Tests/Test.Tests.csproj
+#        arguments: '--configuration Release --collect:"Code Coverage"'
+#        nobuild: true
+#    - task: SonarCloudAnalyze@1
+#    - task: SonarCloudPublish@1
+#      inputs:
+#        pollingTimeoutSec: '300'
+
+stages:
+- stage: Build
+  jobs:
+  # - template: test.yaml@templates
+  - template: iss/build.yaml@templates
+    parameters:
+      dockerfile: Dockerfile
+
+- stage: DeployTest
+  dependsOn: Build
+  pool: iss-test
+  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+  jobs:
+  - template: iss/deploy.yaml@templates
+    parameters:
+      environment: test
+      helmValuesFile: values.yaml
