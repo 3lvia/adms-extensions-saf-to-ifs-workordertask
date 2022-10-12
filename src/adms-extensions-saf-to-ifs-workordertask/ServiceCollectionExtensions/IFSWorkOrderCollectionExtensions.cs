@@ -1,6 +1,6 @@
 ﻿using Elvia.Configuration;
 using FakeItEasy;
-using MaintenanceOrders;
+using MaintenanceOrdersOutBound;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SafToIfsWorkOrder.Configurations;

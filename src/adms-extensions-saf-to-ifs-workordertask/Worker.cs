@@ -1,4 +1,4 @@
-using MaintenanceOrders;
+using MaintenanceOrdersOutBound;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System;

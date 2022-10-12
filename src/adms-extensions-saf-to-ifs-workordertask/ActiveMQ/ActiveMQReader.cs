@@ -1,6 +1,6 @@
 using Apache.NMS;
 using Apache.NMS.Util;
-using BulkChangeResponseReader.MessageHandlers;
+using MaintenanceOrderReader.MessageHandlers;
 //using BulkChangeResponseReader.MessageHandlers;
 //using Elvia.Telemetry;
 using Microsoft.Extensions.Hosting;
@@ -8,7 +8,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace BulkChangeResponseReader.ActiveMQ
+namespace MaintenanceOrderReader.ActiveMQ
 {
     public class ActiveMQReader : BackgroundService
     {

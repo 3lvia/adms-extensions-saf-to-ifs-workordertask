@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BulkChangeResponseReader.ActiveMQ
+namespace MaintenanceOrderReader.ActiveMQ
 {
     public class UnkownMessageFormatException : Exception
     {

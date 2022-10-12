@@ -4,15 +4,15 @@ using System.IO;
 using System.Xml.Serialization;
 using System.Xml;
 using static System.Net.Mime.MediaTypeNames;
-using MaintenanceOrders;
+using MaintenanceOrdersOutBound;
 using Newtonsoft.Json;
 using Microsoft.Extensions.Logging;
 using ServicesIfs;
 using AutoMapper;
 
-namespace BulkChangeResponseReader.MessageHandlers
+namespace MaintenanceOrderReader.MessageHandlers
 {
-    public class InstallationResponseMessageHandler : IMessageHandler
+    public class MaintenanceOrderMessageHandler : IMessageHandler
     {
         //private readonly ITelemetryInsightsLogger _telemetry;
 
@@ -26,7 +26,7 @@ namespace BulkChangeResponseReader.MessageHandlers
         //    _telemetry = telemetry;
         //}
 
-        public InstallationResponseMessageHandler(IIfsWorkOrder ifsWorkOrder, IMapper mapper, IMaintenanceOrders_Port soap)
+        public MaintenanceOrderMessageHandler(IIfsWorkOrder ifsWorkOrder, IMapper mapper, IMaintenanceOrders_Port soap)
         {
             _mapper = mapper;
             _client = soap;
@@ -41,15 +41,16 @@ namespace BulkChangeResponseReader.MessageHandlers
         public void HandleMessage(string messageXML)
         {
 
-            //StringReader sReader = new StringReader(messageXML);
+            StringReader sReader = new StringReader(messageXML);
 
-            //MaintenanceOrders.Envelope maintenanceOrders = Utils.DeSerialize<MaintenanceOrders.Envelope>(sReader);
-
-
-            //string jsonMsg = JsonConvert.SerializeObject(maintenanceOrders, Newtonsoft.Json.Formatting.Indented);
+            MaintenanceOrdersInBound.Envelope maintenanceOrders = Utils.DeSerialize<MaintenanceOrdersInBound.Envelope>(sReader);
 
 
-            //var status = _mapper.Map<Model.IFSWorkOrderBody>(maintenanceOrders.Body.ChangedMaintenanceOrders);
+            string jsonMsg = JsonConvert.SerializeObject(maintenanceOrders, Newtonsoft.Json.Formatting.Indented);
+
+
+            var status = _mapper.Map<Model.IFSWorkOrderBody>(maintenanceOrders.Body.ChangedMaintenanceOrders);
+
             CreateMaintenanceOrdersRequest cmor = new CreateMaintenanceOrdersRequest();
 
             cmor.CreateMaintenanceOrders = new MaintenanceOrdersCreateMessageType
@@ -72,7 +73,7 @@ namespace BulkChangeResponseReader.MessageHandlers
                 }
             };
 
-            _client.CreateMaintenanceOrders(cmor);
+            //_client.CreateMaintenanceOrders(cmor);
 
 
             string textMessage = new StreamReader(@"BodyData.json").ReadToEnd();
@@ -102,6 +103,8 @@ namespace BulkChangeResponseReader.MessageHandlers
             //_telemetry.TrackTrace(messageText);
         }
     }
+
+
 
 
     public class Utils

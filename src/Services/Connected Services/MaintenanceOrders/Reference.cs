@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace MaintenanceOrders
+namespace MaintenanceOrdersOutBound
 {
     
     
@@ -987,31 +987,31 @@ namespace MaintenanceOrders
     {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://iec.ch/TC57/2014/MaintenanceOrders/MOM/IFSMaintenanceOrders", ReplyAction="*")]
-        [System.ServiceModel.FaultContractAttribute(typeof(MaintenanceOrders.StandardFault), Action="http://iec.ch/TC57/2014/MaintenanceOrders/MOM/IFSMaintenanceOrders", Name="StandardFault", Namespace="http://www.siemens.com/energy/schemas/StandardFault/v1#")]
+        [System.ServiceModel.FaultContractAttribute(typeof(MaintenanceOrdersOutBound.StandardFault), Action="http://iec.ch/TC57/2014/MaintenanceOrders/MOM/IFSMaintenanceOrders", Name="StandardFault", Namespace="http://www.siemens.com/energy/schemas/StandardFault/v1#")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Work[]))]
-        MaintenanceOrders.IFSMaintenanceOrdersOutput IFSMaintenanceOrders(MaintenanceOrders.IFSMaintenanceOrdersInput request);
+        MaintenanceOrdersOutBound.IFSMaintenanceOrdersOutput IFSMaintenanceOrders(MaintenanceOrdersOutBound.IFSMaintenanceOrdersInput request);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://iec.ch/TC57/2014/MaintenanceOrders/MOM/IFSMaintenanceOrders", ReplyAction="*")]
-        System.Threading.Tasks.Task<MaintenanceOrders.IFSMaintenanceOrdersOutput> IFSMaintenanceOrdersAsync(MaintenanceOrders.IFSMaintenanceOrdersInput request);
+        System.Threading.Tasks.Task<MaintenanceOrdersOutBound.IFSMaintenanceOrdersOutput> IFSMaintenanceOrdersAsync(MaintenanceOrdersOutBound.IFSMaintenanceOrdersInput request);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://iec.ch/TC57/2014/MaintenanceOrders/MOM/CreateMaintenanceOrders", ReplyAction="*")]
-        [System.ServiceModel.FaultContractAttribute(typeof(MaintenanceOrders.StandardFault), Action="http://iec.ch/TC57/2014/MaintenanceOrders/MOM/CreateMaintenanceOrders", Name="StandardFault", Namespace="http://www.siemens.com/energy/schemas/StandardFault/v1#")]
+        [System.ServiceModel.FaultContractAttribute(typeof(MaintenanceOrdersOutBound.StandardFault), Action="http://iec.ch/TC57/2014/MaintenanceOrders/MOM/CreateMaintenanceOrders", Name="StandardFault", Namespace="http://www.siemens.com/energy/schemas/StandardFault/v1#")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Work[]))]
-        MaintenanceOrders.IFSMaintenanceOrdersOutput CreateMaintenanceOrders(MaintenanceOrders.CreateMaintenanceOrdersRequest request);
+        MaintenanceOrdersOutBound.IFSMaintenanceOrdersOutput CreateMaintenanceOrders(MaintenanceOrdersOutBound.CreateMaintenanceOrdersRequest request);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://iec.ch/TC57/2014/MaintenanceOrders/MOM/CreateMaintenanceOrders", ReplyAction="*")]
-        System.Threading.Tasks.Task<MaintenanceOrders.IFSMaintenanceOrdersOutput> CreateMaintenanceOrdersAsync(MaintenanceOrders.CreateMaintenanceOrdersRequest request);
+        System.Threading.Tasks.Task<MaintenanceOrdersOutBound.IFSMaintenanceOrdersOutput> CreateMaintenanceOrdersAsync(MaintenanceOrdersOutBound.CreateMaintenanceOrdersRequest request);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://iec.ch/TC57/2014/MaintenanceOrders/MOM/GetMaintenanceOrders", ReplyAction="*")]
-        [System.ServiceModel.FaultContractAttribute(typeof(MaintenanceOrders.StandardFault), Action="http://iec.ch/TC57/2014/MaintenanceOrders/MOM/GetMaintenanceOrders", Name="StandardFault", Namespace="http://www.siemens.com/energy/schemas/StandardFault/v1#")]
+        [System.ServiceModel.FaultContractAttribute(typeof(MaintenanceOrdersOutBound.StandardFault), Action="http://iec.ch/TC57/2014/MaintenanceOrders/MOM/GetMaintenanceOrders", Name="StandardFault", Namespace="http://www.siemens.com/energy/schemas/StandardFault/v1#")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Work[]))]
-        MaintenanceOrders.IFSMaintenanceOrdersOutput GetMaintenanceOrders(MaintenanceOrders.GetMaintenanceOrdersEvent request);
+        MaintenanceOrdersOutBound.IFSMaintenanceOrdersOutput GetMaintenanceOrders(MaintenanceOrdersOutBound.GetMaintenanceOrdersEvent request);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://iec.ch/TC57/2014/MaintenanceOrders/MOM/GetMaintenanceOrders", ReplyAction="*")]
-        System.Threading.Tasks.Task<MaintenanceOrders.IFSMaintenanceOrdersOutput> GetMaintenanceOrdersAsync(MaintenanceOrders.GetMaintenanceOrdersEvent request);
+        System.Threading.Tasks.Task<MaintenanceOrdersOutBound.IFSMaintenanceOrdersOutput> GetMaintenanceOrdersAsync(MaintenanceOrdersOutBound.GetMaintenanceOrdersEvent request);
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -1021,13 +1021,13 @@ namespace MaintenanceOrders
     {
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://iec.ch/TC57/2014/MaintenanceOrdersMessage", Order=0)]
-        public MaintenanceOrders.IFSMaintenanceOrdersMessageType IFSMaintenanceOrders;
+        public MaintenanceOrdersOutBound.IFSMaintenanceOrdersMessageType IFSMaintenanceOrders;
         
         public IFSMaintenanceOrdersInput()
         {
         }
         
-        public IFSMaintenanceOrdersInput(MaintenanceOrders.IFSMaintenanceOrdersMessageType IFSMaintenanceOrders)
+        public IFSMaintenanceOrdersInput(MaintenanceOrdersOutBound.IFSMaintenanceOrdersMessageType IFSMaintenanceOrders)
         {
             this.IFSMaintenanceOrders = IFSMaintenanceOrders;
         }
@@ -1041,13 +1041,13 @@ namespace MaintenanceOrders
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://www.siemens.com/energy/schemas/StandardOutput/v1#", Order=0)]
         [System.Xml.Serialization.XmlArrayItemAttribute(IsNullable=false)]
-        public MaintenanceOrders.EventLog[] StandardOutput;
+        public MaintenanceOrdersOutBound.EventLog[] StandardOutput;
         
         public IFSMaintenanceOrdersOutput()
         {
         }
         
-        public IFSMaintenanceOrdersOutput(MaintenanceOrders.EventLog[] StandardOutput)
+        public IFSMaintenanceOrdersOutput(MaintenanceOrdersOutBound.EventLog[] StandardOutput)
         {
             this.StandardOutput = StandardOutput;
         }
@@ -3766,13 +3766,13 @@ namespace MaintenanceOrders
     {
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://iec.ch/TC57/2014/MaintenanceOrdersMessage", Order=0)]
-        public MaintenanceOrders.MaintenanceOrdersCreateMessageType CreateMaintenanceOrders;
+        public MaintenanceOrdersOutBound.MaintenanceOrdersCreateMessageType CreateMaintenanceOrders;
         
         public CreateMaintenanceOrdersRequest()
         {
         }
         
-        public CreateMaintenanceOrdersRequest(MaintenanceOrders.MaintenanceOrdersCreateMessageType CreateMaintenanceOrders)
+        public CreateMaintenanceOrdersRequest(MaintenanceOrdersOutBound.MaintenanceOrdersCreateMessageType CreateMaintenanceOrders)
         {
             this.CreateMaintenanceOrders = CreateMaintenanceOrders;
         }
@@ -3874,26 +3874,26 @@ namespace MaintenanceOrders
     {
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://iec.ch/TC57/2014/MaintenanceOrdersMessage", Order=0)]
-        public MaintenanceOrders.MaintenanceOrdersRequestMessageType GetMaintenanceOrders;
+        public MaintenanceOrdersOutBound.MaintenanceOrdersRequestMessageType GetMaintenanceOrders;
         
         public GetMaintenanceOrdersEvent()
         {
         }
         
-        public GetMaintenanceOrdersEvent(MaintenanceOrders.MaintenanceOrdersRequestMessageType GetMaintenanceOrders)
+        public GetMaintenanceOrdersEvent(MaintenanceOrdersOutBound.MaintenanceOrdersRequestMessageType GetMaintenanceOrders)
         {
             this.GetMaintenanceOrders = GetMaintenanceOrders;
         }
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.3")]
-    public interface MaintenanceOrders_PortChannel : MaintenanceOrders.IMaintenanceOrders_Port, System.ServiceModel.IClientChannel
+    public interface MaintenanceOrders_PortChannel : MaintenanceOrdersOutBound.IMaintenanceOrders_Port, System.ServiceModel.IClientChannel
     {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.3")]
-    public partial class MaintenanceOrders_PortClient : System.ServiceModel.ClientBase<MaintenanceOrders.IMaintenanceOrders_Port>, MaintenanceOrders.IMaintenanceOrders_Port
+    public partial class MaintenanceOrders_PortClient : System.ServiceModel.ClientBase<MaintenanceOrdersOutBound.IMaintenanceOrders_Port>, MaintenanceOrdersOutBound.IMaintenanceOrders_Port
     {
         
         /// <summary>
@@ -3936,32 +3936,32 @@ namespace MaintenanceOrders
         {
         }
         
-        public MaintenanceOrders.IFSMaintenanceOrdersOutput IFSMaintenanceOrders(MaintenanceOrders.IFSMaintenanceOrdersInput request)
+        public MaintenanceOrdersOutBound.IFSMaintenanceOrdersOutput IFSMaintenanceOrders(MaintenanceOrdersOutBound.IFSMaintenanceOrdersInput request)
         {
             return base.Channel.IFSMaintenanceOrders(request);
         }
         
-        public System.Threading.Tasks.Task<MaintenanceOrders.IFSMaintenanceOrdersOutput> IFSMaintenanceOrdersAsync(MaintenanceOrders.IFSMaintenanceOrdersInput request)
+        public System.Threading.Tasks.Task<MaintenanceOrdersOutBound.IFSMaintenanceOrdersOutput> IFSMaintenanceOrdersAsync(MaintenanceOrdersOutBound.IFSMaintenanceOrdersInput request)
         {
             return base.Channel.IFSMaintenanceOrdersAsync(request);
         }
         
-        public MaintenanceOrders.IFSMaintenanceOrdersOutput CreateMaintenanceOrders(MaintenanceOrders.CreateMaintenanceOrdersRequest request)
+        public MaintenanceOrdersOutBound.IFSMaintenanceOrdersOutput CreateMaintenanceOrders(MaintenanceOrdersOutBound.CreateMaintenanceOrdersRequest request)
         {
             return base.Channel.CreateMaintenanceOrders(request);
         }
         
-        public System.Threading.Tasks.Task<MaintenanceOrders.IFSMaintenanceOrdersOutput> CreateMaintenanceOrdersAsync(MaintenanceOrders.CreateMaintenanceOrdersRequest request)
+        public System.Threading.Tasks.Task<MaintenanceOrdersOutBound.IFSMaintenanceOrdersOutput> CreateMaintenanceOrdersAsync(MaintenanceOrdersOutBound.CreateMaintenanceOrdersRequest request)
         {
             return base.Channel.CreateMaintenanceOrdersAsync(request);
         }
         
-        public MaintenanceOrders.IFSMaintenanceOrdersOutput GetMaintenanceOrders(MaintenanceOrders.GetMaintenanceOrdersEvent request)
+        public MaintenanceOrdersOutBound.IFSMaintenanceOrdersOutput GetMaintenanceOrders(MaintenanceOrdersOutBound.GetMaintenanceOrdersEvent request)
         {
             return base.Channel.GetMaintenanceOrders(request);
         }
         
-        public System.Threading.Tasks.Task<MaintenanceOrders.IFSMaintenanceOrdersOutput> GetMaintenanceOrdersAsync(MaintenanceOrders.GetMaintenanceOrdersEvent request)
+        public System.Threading.Tasks.Task<MaintenanceOrdersOutBound.IFSMaintenanceOrdersOutput> GetMaintenanceOrdersAsync(MaintenanceOrdersOutBound.GetMaintenanceOrdersEvent request)
         {
             return base.Channel.GetMaintenanceOrdersAsync(request);
         }

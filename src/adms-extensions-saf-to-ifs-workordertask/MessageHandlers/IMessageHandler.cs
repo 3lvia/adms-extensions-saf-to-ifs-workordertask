@@ -1,4 +1,4 @@
-﻿namespace BulkChangeResponseReader.MessageHandlers
+﻿namespace MaintenanceOrderReader.MessageHandlers
 {
     public interface IMessageHandler
     {

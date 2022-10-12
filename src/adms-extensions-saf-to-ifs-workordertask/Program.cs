@@ -3,11 +3,11 @@ using Microsoft.AspNetCore;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Apache.NMS;
-using BulkChangeResponseReader.ActiveMQ;
-using BulkChangeResponseReader.MessageHandlers;
+using MaintenanceOrderReader.ActiveMQ;
+using MaintenanceOrderReader.MessageHandlers;
 using ServicesIfs;
 using System;
-using MaintenanceOrders;
+using MaintenanceOrdersOutBound;
 using SafToIfsWorkOrder.Configurations;
 
 namespace adms_extensions_saf_to_ifs_workordertask
@@ -51,7 +51,7 @@ namespace adms_extensions_saf_to_ifs_workordertask
                     //services.AddTransient<IAccessTokenService, AccessTokenService>();
 
 
-                    services.AddHostedService<Worker>();
+                    //services.AddHostedService<Worker>();
 
                     string maintenanceOrder = "queue://MaintenanceOrder"; // configuration.EnsureHasValue("bulkChangeCustomersResponseQueue");
 
@@ -63,11 +63,11 @@ namespace adms_extensions_saf_to_ifs_workordertask
 
                     IConnectionFactory factory = new NMSConnectionFactory(activeMqUri);
 
-                    services.AddTransient<InstallationResponseMessageHandler>();
+                    services.AddTransient<MaintenanceOrderMessageHandler>();
 
-                    //services.AddSingleton<IHostedService>(x =>
-                    //    ActivatorUtilities.CreateInstance<ActiveMQReader>(x, factory, maintenanceOrder, x.GetService<InstallationResponseMessageHandler>())
-                    //);
+                    services.AddSingleton<IHostedService>(x =>
+                        ActivatorUtilities.CreateInstance<ActiveMQReader>(x, factory, maintenanceOrder, x.GetService<MaintenanceOrderMessageHandler>())
+                    );
 
 
 
