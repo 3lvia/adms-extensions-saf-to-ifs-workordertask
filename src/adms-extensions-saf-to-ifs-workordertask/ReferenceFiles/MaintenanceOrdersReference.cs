@@ -2900,7 +2900,7 @@ namespace MaintenanceOrdersInBound
         private string workStatusNumField;
 
         private WorkNames[] namesField;
-
+        
         private string workOrderNoField;
 
         private string iFS_RECORD_NUMField;

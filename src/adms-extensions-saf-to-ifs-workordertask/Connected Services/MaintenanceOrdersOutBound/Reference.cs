@@ -982,7 +982,7 @@ namespace MaintenanceOrdersOutBound
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.3")]
-    [System.ServiceModel.ServiceContractAttribute(Namespace="http://iec.ch/TC57/2014/MaintenanceOrders", ConfigurationName="MaintenanceOrders.MaintenanceOrders_Port")]
+    [System.ServiceModel.ServiceContractAttribute(Namespace="http://iec.ch/TC57/2014/MaintenanceOrders", ConfigurationName="MaintenanceOrdersOutBound.MaintenanceOrders_Port")]
     public interface IMaintenanceOrders_Port
     {
         
