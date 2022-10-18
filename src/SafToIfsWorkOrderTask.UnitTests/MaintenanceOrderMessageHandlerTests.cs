@@ -1,4 +1,5 @@
 using AutoMapper;
+using Elvia.KvalitetsportalLogger;
 using FakeItEasy;
 using MaintenanceOrderReader.MessageHandlers;
 using MaintenanceOrdersOutBound;
@@ -30,7 +31,8 @@ public class MaintenanceOrderMessageHandlerTests
         return new MaintenanceOrderMessageHandler(
             basicMocks.IfsWorkOrder,
             basicMocks.Mapper,
-            basicMocks.Soap);
+            basicMocks.Soap,
+            basicMocks.KvalitetsportalClient);
     }
 
     private class BasicMocks
@@ -38,12 +40,14 @@ public class MaintenanceOrderMessageHandlerTests
         public readonly IIfsWorkOrder IfsWorkOrder;
         public readonly IMapper Mapper;
         public readonly IMaintenanceOrders_Port Soap;
+        public readonly IKvalitetsportalClient KvalitetsportalClient;
 
         public BasicMocks()
         {
             IfsWorkOrder = A.Fake<IIfsWorkOrder>();
             Mapper = A.Fake<IMapper>();
             Soap = A.Fake<IMaintenanceOrders_Port>();
+            KvalitetsportalClient = A.Fake<IKvalitetsportalClient>();
         }
     }
 }
