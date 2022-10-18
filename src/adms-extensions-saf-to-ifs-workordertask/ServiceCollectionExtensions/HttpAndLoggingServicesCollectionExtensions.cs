@@ -8,7 +8,7 @@
 //using Microsoft.Extensions.Configuration;
 //using Microsoft.Extensions.DependencyInjection;
 
-//namespace SafToIfsWorkOrderTask.ServiceCollectionExtensions
+//namespace SafToIfsWorkOrderTask.ServiceCollectionExtensions;
 
 //public static class HttpAndLoggingServicesCollectionExtensions
 //{

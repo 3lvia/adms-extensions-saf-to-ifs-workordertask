@@ -9,6 +9,10 @@ using Newtonsoft.Json;
 using Microsoft.Extensions.Logging;
 using ServicesIfs;
 using AutoMapper;
+using System;
+using Elvia.KvalitetsportalLogger;
+using System.Diagnostics;
+using MaintenanceOrdersDomain;
 
 namespace MaintenanceOrderReader.MessageHandlers
 {
@@ -20,18 +24,20 @@ namespace MaintenanceOrderReader.MessageHandlers
         public IMapper _mapper { get; }
         public IMaintenanceOrders_Port _client { get; }
 
+        private readonly IKvalitetsportalClient _kvalitetsportalen;
 
         //public InstallationResponseMessageHandler(ITelemetryInsightsLogger telemetry)
         //{
         //    _telemetry = telemetry;
         //}
 
-        public MaintenanceOrderMessageHandler(IIfsWorkOrder ifsWorkOrder, IMapper mapper, IMaintenanceOrders_Port soap)
+        public MaintenanceOrderMessageHandler(IIfsWorkOrder ifsWorkOrder, IMapper mapper, IMaintenanceOrders_Port soap, IKvalitetsportalClient logger)
         {
             _mapper = mapper;
             _client = soap;
             //_telemetry = telemetry;
             _ifsWorkOrder = ifsWorkOrder;
+            _kvalitetsportalen = logger;
         }
 
       
@@ -41,39 +47,93 @@ namespace MaintenanceOrderReader.MessageHandlers
         public void HandleMessage(string messageXML)
         {
 
+            //try
+            //{
+            //    _mapper.ConfigurationProvider.AssertConfigurationIsValid();
+            //}
+            //catch (Exception ex)
+            //{
+            //    int d = 1;
+
+            //}
+
+
+            var stopWatch = new Stopwatch();
+            stopWatch.Start();
+
             StringReader sReader = new StringReader(messageXML);
 
             MaintenanceOrdersInBound.Envelope maintenanceOrders = Utils.DeSerialize<MaintenanceOrdersInBound.Envelope>(sReader);
 
 
-            string jsonMsg = JsonConvert.SerializeObject(maintenanceOrders, Newtonsoft.Json.Formatting.Indented);
+            //string jsonMsg = JsonConvert.SerializeObject(maintenanceOrders, Newtonsoft.Json.Formatting.Indented);
 
 
-            var status = _mapper.Map<Model.IFSWorkOrderBody>(maintenanceOrders.Body.ChangedMaintenanceOrders);
+    
 
-            CreateMaintenanceOrdersRequest cmor = new CreateMaintenanceOrdersRequest();
-
-            cmor.CreateMaintenanceOrders = new MaintenanceOrdersCreateMessageType
+            var invocation = new Invocation
             {
-                Payload = new MaintenanceOrdersType
-                {
-                    MaintenanceOrders = new MaintenanceOrdersTypeMaintenanceOrders
-                    {
-
-                        Organisation = new Organisation[]
-                         {
-                             new Organisation
-                             {
-                                 mRID = "1111"
-                             }
-                         }
-
-
-                    }
-                }
+                Payload = messageXML,
+                StartTime = DateTime.Now,
+                GraphUri = "NA",
+                Resource = maintenanceOrders?.Body?.ChangedMaintenanceOrders?.Header?.CorrelationID
             };
 
-            //_client.CreateMaintenanceOrders(cmor);
+
+            //try
+            //{
+                //var status = _mapper.Map<MaintenanceOrdersEventMessageTypeDto>(maintenanceOrders.Body.ChangedMaintenanceOrders.Payload);
+
+                var status = _mapper.Map<MaintenanceOrdersDto>(maintenanceOrders.Body.ChangedMaintenanceOrders);
+
+
+            //}
+            //catch (Exception ex)
+            //{
+            //    int qw = 2;
+            //}
+
+
+            string jsonMsg = JsonConvert.SerializeObject(status, Newtonsoft.Json.Formatting.Indented);
+
+
+            invocation.TargetPayloads.Add(jsonMsg);
+
+            stopWatch.Stop();
+
+            _kvalitetsportalen.LogSuccess(invocation, "MaintenanceOrders-MaintenanceOrdersIFSResp");
+
+
+
+            var status2 = _mapper.Map<Model.IFSWorkOrderBody>(maintenanceOrders.Body.ChangedMaintenanceOrders);
+
+
+            int s = 1;
+
+
+            //CreateMaintenanceOrdersRequest cmor = new CreateMaintenanceOrdersRequest();
+
+            //cmor.CreateMaintenanceOrders = new MaintenanceOrdersCreateMessageType
+            //{
+            //    Payload = new MaintenanceOrdersType
+            //    {
+            //        MaintenanceOrders = new MaintenanceOrdersTypeMaintenanceOrders
+            //        {
+
+            //            Organisation = new Organisation[]
+            //             {
+            //                 new Organisation
+            //                 {
+            //                     mRID = "1111"
+            //                 }
+            //             }
+
+
+            //        }
+            //    }
+            //};
+
+            ////_client.CreateMaintenanceOrders(cmor);
 
 
             string textMessage = new StreamReader(@"BodyData.json").ReadToEnd();
