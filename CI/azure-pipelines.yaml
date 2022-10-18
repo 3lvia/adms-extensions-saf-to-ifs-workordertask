@@ -64,12 +64,12 @@ stages:
     parameters:
       dockerfile: Dockerfile
 
-- stage: DeployTest
-  dependsOn: Build
-  pool: iss-test
-  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
-  jobs:
-  - template: iss/deploy.yaml@templates
-    parameters:
-      environment: test
-      helmValuesFile: values.yaml
+#- stage: DeployTest
+#  dependsOn: Build
+#  pool: iss-test
+#  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+#  jobs:
+#  - template: iss/deploy.yaml@templates
+#    parameters:
+#      environment: test
+#      helmValuesFile: values.yaml
