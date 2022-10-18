@@ -9,6 +9,7 @@ using ServicesIfs;
 using System;
 using MaintenanceOrdersOutBound;
 using SafToIfsWorkOrder.Configurations;
+using SafToIfsWorkOrderTask.ServiceCollectionExtensions;
 
 namespace adms_extensions_saf_to_ifs_workordertask
 {
@@ -25,15 +26,23 @@ namespace adms_extensions_saf_to_ifs_workordertask
                 .ConfigureServices((hostContext, services) =>
                 {
 
-                    services.AddMemoryCache();
+                    IHostEnvironment env = hostContext.HostingEnvironment;
 
+                    var isDevelopment = env.IsDevelopment();
 
-                    services.AddAutoMapper(typeof(Program));
+          
+
+                    services
+                        .AddMemoryCache()
+                        .AddKvalitetsportalenServices(isDevelopment)
+                        .AddAuthServices()
+                        .AddAutoMapper(typeof(Program));
+
 
                     //services.AddHostedService<Worker>();
-                    services.AddSingleton<IClientCredentialsConfiguration, ClientCredentialsConfiguration>();
+                    //services.AddSingleton<IClientCredentialsConfiguration, ClientCredentialsConfiguration>();
 
-                    services.AddSingleton<IAccessTokenService, AccessTokenService>();
+                    //services.AddSingleton<IAccessTokenService, AccessTokenService>();
 
                     services.AddSingleton<IIfsWorkOrder, IfsWorkOrder>();
 
@@ -56,9 +65,9 @@ namespace adms_extensions_saf_to_ifs_workordertask
                     string maintenanceOrder = "queue://MaintenanceOrder"; // configuration.EnsureHasValue("bulkChangeCustomersResponseQueue");
 
 
-                    Uri activeMqUri = new("amqp://CXPC-R90W8BW3:61616");
+                    //Uri activeMqUri = new("amqp://CXPC-R90W8BW3:61616");
 
-                    //Uri activeMqUri = new("amqp://CXPC-12V5L12:61616");
+                    Uri activeMqUri = new("amqp://CXPC-12V5L12:61616");
 
 
                     IConnectionFactory factory = new NMSConnectionFactory(activeMqUri);

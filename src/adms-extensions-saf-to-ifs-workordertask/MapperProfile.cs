@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 
 using AutoMapper;
-
+using MaintenanceOrdersDomain;
 using MaintenanceOrdersOutBound;
 using Model;
 
@@ -20,7 +20,12 @@ namespace SafToSesamAPI
         {
             CreateMap<MaintenanceOrdersInBound.MaintenanceOrdersEventMessageType, IFSWorkOrderBody>()
                 .ForMember(dest => dest.Sender, opt => opt.MapFrom(src => src.Header.MessageID));
-               
+
+
+            CreateMap<MaintenanceOrdersInBound.MaintenanceOrdersEventMessageType, MaintenanceOrdersDto>()
+           .ForMember(dest => dest._id, opt => opt.MapFrom(src => src.Header.MessageID))
+           .ForMember(dest => dest.MessageId, opt => opt.MapFrom(src => src.Header.MessageID))
+           .ForMember(dest => dest.PublishedDateTime, opt => opt.MapFrom(src => src.Header.Timestamp));
 
             //CreateMap<MaintenanceOrders.Envelope, EnvelopeDto>();
             //CreateMap<MaintenanceOrders.EnvelopeBody, EnvelopeBodyDto>();
@@ -31,49 +36,52 @@ namespace SafToSesamAPI
             //CreateMap<MaintenanceOrders.MaintenanceOrdersEventMessageType, MaintenanceOrdersEventMessageTypeDto>();
 
 
-            //CreateMap<MaintenanceOrders.HeaderType, HeaderTypeDto>();
+            CreateMap<MaintenanceOrdersInBound.HeaderType, HeaderTypeDto>();
 
 
-            ////CreateMap<MaintenanceOrders.HeaderTypeVerb, HeaderTypeVerbDto>();
-            //CreateMap<MaintenanceOrders.ReplayDetectionType, ReplayDetectionTypeDto>();
-            //CreateMap<MaintenanceOrders.UserType, UserTypeDto>();
-            //CreateMap<MaintenanceOrders.MessageProperty, MessagePropertyDto>();
-            //CreateMap<MaintenanceOrders.MaintenanceOrdersType, MaintenanceOrdersTypeDto>();
-            //CreateMap<MaintenanceOrders.MaintenanceOrdersTypeMaintenanceOrders, MaintenanceOrdersTypeMaintenanceOrdersDto>();
-            //CreateMap<MaintenanceOrders.Organisation, OrganisationDto>();
-            //CreateMap<MaintenanceOrders.Work, WorkDto>();
-            //CreateMap<MaintenanceOrders.WorkNames, WorkNamesDto>();
-            //CreateMap<MaintenanceOrders.WorkPriority, WorkPriorityDto>();
-            //CreateMap<MaintenanceOrders.Equipment, EquipmentDto>();
-            //CreateMap<MaintenanceOrders.EquipmentNames, EquipmentNamesDto>();
-            //CreateMap<MaintenanceOrders.WorkTimeSchedule, WorkTimeScheduleDto>();
-            //CreateMap<MaintenanceOrders.WorkTimeScheduleScheduleInterval, WorkTimeScheduleScheduleIntervalDto>();
-            //CreateMap<MaintenanceOrders.WorkLocation, WorkLocationDto>();
-            //CreateMap<MaintenanceOrders.WorkLocationCoordinateSystem, WorkLocationCoordinateSystemDto>();
-            //CreateMap<MaintenanceOrders.WorkLocationPositionPoints, WorkLocationPositionPointsDto>();
-            //CreateMap<MaintenanceOrders.WorkTask, WorkTaskDto>();
-            ////CreateMap<MaintenanceOrders.CrewType, CrewTypeDto>();
-            ////CreateMap<MaintenanceOrders.DeviceType, DeviceTypeDto>();
-            //CreateMap<MaintenanceOrders.Crew, CrewDto>();
-            //CreateMap<MaintenanceOrders.Status, StatusDto>();
-            //CreateMap<MaintenanceOrders.CrewMember, CrewMemberDto>();
-            //CreateMap<MaintenanceOrders.CrewMemberPerson, CrewMemberPersonDto>();
-            //CreateMap<MaintenanceOrders.TelephoneNumber, TelephoneNumberDto>();
-            //CreateMap<MaintenanceOrders.ElectronicAddress, ElectronicAddressDto>();
-            //CreateMap<MaintenanceOrders.CrewNames, CrewNamesDto>();
-            //CreateMap<MaintenanceOrders.CrewNamesNameType, CrewNamesNameTypeDto>();
-            //CreateMap<MaintenanceOrders.CrewNamesNameTypeNameTypeAuthority, CrewNamesNameTypeNameTypeAuthorityDto>();
-            //CreateMap<MaintenanceOrders.WorkAsset, WorkAssetDto>();
-            //CreateMap<MaintenanceOrders.WorkTaskNames, WorkTaskNamesDto>();
-            //CreateMap<MaintenanceOrders.Asset, AssetDto>();
-            //CreateMap<MaintenanceOrders.AssetNames, AssetNamesDto>();
-            //CreateMap<MaintenanceOrders.MaintenanceOrdersResponseMessageType, MaintenanceOrdersResponseMessageTypeDto>();
-            //CreateMap<MaintenanceOrders.HeaderType1, HeaderType1Dto>();
-            ////CreateMap<MaintenanceOrders.HeaderTypeVerb1, HeaderTypeVerb1Dto>();
-            ////CreateMap<MaintenanceOrders.HeaderTypeSource, HeaderTypeSourceDto>();
-            //CreateMap<MaintenanceOrders.DetailedFaultResponseType, DetailedFaultResponseTypeDto>();
-            //CreateMap<MaintenanceOrders.StandardFault, SesamResponseServices.SesamDomainObjects.StandardFaultDto>();
-            //CreateMap<MaintenanceOrders.EventLog1, EventLog1Dto>();
+            //CreateMap<MaintenanceOrders.HeaderTypeVerb, HeaderTypeVerbDto>();
+            CreateMap<MaintenanceOrdersInBound.ReplayDetectionType, ReplayDetectionTypeDto>();
+            CreateMap<MaintenanceOrdersInBound.UserType, UserTypeDto>();
+            CreateMap<MaintenanceOrdersInBound.MessageProperty, MessagePropertyDto>();
+            CreateMap<MaintenanceOrdersInBound.MaintenanceOrdersType, MaintenanceOrdersTypeDto>();
+            CreateMap<MaintenanceOrdersInBound.MaintenanceOrdersTypeMaintenanceOrders, MaintenanceOrdersTypeMaintenanceOrdersDto>();
+            CreateMap<MaintenanceOrdersInBound.Organisation, OrganisationDto>();
+            CreateMap<MaintenanceOrdersInBound.Work, WorkDto>();
+            CreateMap<MaintenanceOrdersInBound.WorkNames, WorkNamesDto>();
+            CreateMap<MaintenanceOrdersInBound.WorkPriority, WorkPriorityDto>();
+            CreateMap<MaintenanceOrdersInBound.Equipment, EquipmentDto>();
+            CreateMap<MaintenanceOrdersInBound.EquipmentNames, EquipmentNamesDto>();
+            CreateMap<MaintenanceOrdersInBound.WorkTimeSchedule, WorkTimeScheduleDto>();
+            CreateMap<MaintenanceOrdersInBound.WorkTimeScheduleScheduleInterval, WorkTimeScheduleScheduleIntervalDto>();
+            CreateMap<MaintenanceOrdersInBound.WorkLocation, WorkLocationDto>();
+            CreateMap<MaintenanceOrdersInBound.WorkLocationCoordinateSystem, WorkLocationCoordinateSystemDto>();
+            CreateMap<MaintenanceOrdersInBound.WorkLocationPositionPoints, WorkLocationPositionPointsDto>();
+            CreateMap<MaintenanceOrdersInBound.WorkTask, WorkTaskDto>();
+            //CreateMap<MaintenanceOrders.CrewType, CrewTypeDto>();
+            //CreateMap<MaintenanceOrders.DeviceType, DeviceTypeDto>();
+            CreateMap<MaintenanceOrdersInBound.Crew, CrewDto>();
+            CreateMap<MaintenanceOrdersInBound.Status, StatusDto>();
+            CreateMap<MaintenanceOrdersInBound.CrewMember, CrewMemberDto>();
+            CreateMap<MaintenanceOrdersInBound.CrewMemberPerson, CrewMemberPersonDto>();
+            CreateMap<MaintenanceOrdersInBound.TelephoneNumber, TelephoneNumberDto>();
+            CreateMap<MaintenanceOrdersInBound.ElectronicAddress, ElectronicAddressDto>();
+            CreateMap<MaintenanceOrdersInBound.CrewNames, CrewNamesDto>();
+            CreateMap<MaintenanceOrdersInBound.CrewNamesNameType, CrewNamesNameTypeDto>();
+            CreateMap<MaintenanceOrdersInBound.CrewNamesNameTypeNameTypeAuthority, CrewNamesNameTypeNameTypeAuthorityDto>();
+            CreateMap<MaintenanceOrdersInBound.WorkAsset, WorkAssetDto>();
+            CreateMap<MaintenanceOrdersInBound.WorkTaskNames, WorkTaskNamesDto>();
+            CreateMap<MaintenanceOrdersInBound.Asset, AssetDto>();
+            CreateMap<MaintenanceOrdersInBound.AssetNames, AssetNamesDto>();
+            CreateMap<MaintenanceOrdersInBound.MaintenanceOrdersResponseMessageType, MaintenanceOrdersResponseMessageTypeDto>();
+            CreateMap<MaintenanceOrdersInBound.HeaderType1, HeaderType1Dto>();
+            //CreateMap<MaintenanceOrders.HeaderTypeVerb1, HeaderTypeVerb1Dto>();
+            //CreateMap<MaintenanceOrders.HeaderTypeSource, HeaderTypeSourceDto>();
+            CreateMap<MaintenanceOrdersInBound.DetailedFaultResponseType, DetailedFaultResponseTypeDto>();
+            CreateMap<MaintenanceOrdersInBound.StandardFault, StandardFaultDto>();
+            CreateMap<MaintenanceOrdersInBound.EventLog1, EventLog1Dto>();
+
+
+
 
 
 
