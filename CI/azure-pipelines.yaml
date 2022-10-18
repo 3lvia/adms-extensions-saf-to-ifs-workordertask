@@ -59,7 +59,7 @@ resources:
 stages:
 - stage: Build
   jobs:
-  # - template: test.yaml@templates
+  - template: test.yaml@templates
   - template: iss/build.yaml@templates
     parameters:
       dockerfile: Dockerfile
