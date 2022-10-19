@@ -1,15 +1,14 @@
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Apache.NMS;
 using MaintenanceOrderReader.ActiveMQ;
 using MaintenanceOrderReader.MessageHandlers;
-using ServicesIfs;
 using System;
 using MaintenanceOrdersOutBound;
 using SafToIfsWorkOrder.Configurations;
 using SafToIfsWorkOrderTask.ServiceCollectionExtensions;
+
 
 namespace adms_extensions_saf_to_ifs_workordertask
 {
@@ -30,40 +29,30 @@ namespace adms_extensions_saf_to_ifs_workordertask
 
                     var isDevelopment = env.IsDevelopment();
 
-          
-
                     services
                         .AddMemoryCache()
                         .AddKvalitetsportalenServices(isDevelopment)
                         .AddAuthServices()
-                        .AddAutoMapper(typeof(Program));
+                        .AddAutoMapper(typeof(Program))
+                        .AddPerformMessageServices()
+                        .AddIfsCloudMessageServices();
 
 
-                    //services.AddHostedService<Worker>();
-                    //services.AddSingleton<IClientCredentialsConfiguration, ClientCredentialsConfiguration>();
-
-                    //services.AddSingleton<IAccessTokenService, AccessTokenService>();
-
-                    services.AddSingleton<IIfsWorkOrder, IfsWorkOrder>();
+   
 
 
                     var endpoint = "http://localhost:5020/api/message";
                     var service = new MaintenanceOrders_PortClient(new MaintenanceOrders_PortClient.EndpointConfiguration(), endpoint);
                     service.ChannelFactory.Endpoint.EndpointBehaviors.Add(new CustomEndpointBehavior());
 
+
                     services.AddSingleton<IMaintenanceOrders_Port, MaintenanceOrders_PortClient>(s => service);
-
-
-
-                    //services.AddTransient<IClientCredentialsConfiguration, ClientCredentialsConfiguration>();
-
-                    //services.AddTransient<IAccessTokenService, AccessTokenService>();
 
 
                     //services.AddHostedService<Worker>();
 
-                    string maintenanceOrder = "queue://MaintenanceOrder"; // configuration.EnsureHasValue("bulkChangeCustomersResponseQueue");
-
+                   
+                    string maintenanceOrder = "queue://MaintenanceOrder";
 
                     //Uri activeMqUri = new("amqp://CXPC-R90W8BW3:61616");
 
@@ -79,8 +68,11 @@ namespace adms_extensions_saf_to_ifs_workordertask
                     );
 
 
+                    //string maintenanceOrder2 = "queue://CustomerNotification"; // configuration.EnsureHasValue("bulkChangeCustomersResponseQueue");
 
-
+                    //  services.AddSingleton<IHostedService>(x =>
+                    //    ActivatorUtilities.CreateInstance<ActiveMQReader>(x, factory, maintenanceOrder2, x.GetService<MaintenanceOrderMessageHandler>())
+                    //);
 
                 });
 

@@ -13,16 +13,19 @@ using System;
 using Elvia.KvalitetsportalLogger;
 using System.Diagnostics;
 using MaintenanceOrdersDomain;
+using adms_extensions_saf_to_ifs_workordertask.PerformMessages;
 
 namespace MaintenanceOrderReader.MessageHandlers
 {
     public class MaintenanceOrderMessageHandler : IMessageHandler
     {
+        private readonly IPerformMessageMaintenanceOrder _performMessageMaintenanceOrder;
+
         //private readonly ITelemetryInsightsLogger _telemetry;
 
-        private readonly IIfsWorkOrder _ifsWorkOrder;
-        public IMapper _mapper { get; }
-        public IMaintenanceOrders_Port _client { get; }
+        //private readonly IIfsWorkOrder _ifsWorkOrder;
+        //public IMapper _mapper { get; }
+        //public IMaintenanceOrders_Port _client { get; }
 
         private readonly IKvalitetsportalClient _kvalitetsportalen;
 
@@ -31,133 +34,77 @@ namespace MaintenanceOrderReader.MessageHandlers
         //    _telemetry = telemetry;
         //}
 
-        public MaintenanceOrderMessageHandler(IIfsWorkOrder ifsWorkOrder, IMapper mapper, IMaintenanceOrders_Port soap, IKvalitetsportalClient logger)
+        //public MaintenanceOrderMessageHandler(IPerformMessageMaintenanceOrder performMessageMaintenanceOrder, IIfsWorkOrder ifsWorkOrder, IMapper mapper, IMaintenanceOrders_Port soap, IKvalitetsportalClient logger)
+        //{
+        //    _mapper = mapper;
+        //    _client = soap;
+        //    _performMessageMaintenanceOrder = performMessageMaintenanceOrder;
+        //    //_telemetry = telemetry;
+        //    _ifsWorkOrder = ifsWorkOrder;
+        //    _kvalitetsportalen = logger;
+        //}
+
+        public MaintenanceOrderMessageHandler(IPerformMessageMaintenanceOrder performMessageMaintenanceOrder, IKvalitetsportalClient logger)
         {
-            _mapper = mapper;
-            _client = soap;
+            //_mapper = mapper;
+            //_client = soap;
+            _performMessageMaintenanceOrder = performMessageMaintenanceOrder;
             //_telemetry = telemetry;
-            _ifsWorkOrder = ifsWorkOrder;
+            //_ifsWorkOrder = ifsWorkOrder;
             _kvalitetsportalen = logger;
         }
 
-      
+        //try
+        //{
+        //    _mapper.ConfigurationProvider.AssertConfigurationIsValid();
+        //}
+        //catch (Exception ex)
+        //{
+        //    int d = 1;
+
+        //}
 
 
 
         public void HandleMessage(string messageXML)
         {
-
-            //try
-            //{
-            //    _mapper.ConfigurationProvider.AssertConfigurationIsValid();
-            //}
-            //catch (Exception ex)
-            //{
-            //    int d = 1;
-
-            //}
-
-
-            var stopWatch = new Stopwatch();
-            stopWatch.Start();
-
-            StringReader sReader = new StringReader(messageXML);
-
-            MaintenanceOrdersInBound.Envelope maintenanceOrders = Utils.DeSerialize<MaintenanceOrdersInBound.Envelope>(sReader);
-
-
-            //string jsonMsg = JsonConvert.SerializeObject(maintenanceOrders, Newtonsoft.Json.Formatting.Indented);
-
-
-    
-
-            var invocation = new Invocation
+     
+            try
             {
-                Payload = messageXML,
-                StartTime = DateTime.Now,
-                GraphUri = "NA",
-                Resource = maintenanceOrders?.Body?.ChangedMaintenanceOrders?.Header?.CorrelationID
-            };
+
+                var stopWatch = new Stopwatch();
+                stopWatch.Start();
 
 
-            //try
-            //{
-                //var status = _mapper.Map<MaintenanceOrdersEventMessageTypeDto>(maintenanceOrders.Body.ChangedMaintenanceOrders.Payload);
-
-                var status = _mapper.Map<MaintenanceOrdersDto>(maintenanceOrders.Body.ChangedMaintenanceOrders);
+                var info = _performMessageMaintenanceOrder.Invoke(messageXML);
 
 
-            //}
-            //catch (Exception ex)
-            //{
-            //    int qw = 2;
-            //}
+                var invocation = new Invocation
+                {
+                    Payload = messageXML,
+                    StartTime = DateTime.Now,
+                    GraphUri = "NA",
+                    Resource = info.Item4
+                };                
+
+                invocation.TargetPayloads.Add(info.Item1);
 
 
-            string jsonMsg = JsonConvert.SerializeObject(status, Newtonsoft.Json.Formatting.Indented);
+                stopWatch.Stop();
+
+                _kvalitetsportalen.LogSuccess(invocation, "MaintenanceOrders-MaintenanceOrdersIFSResp");
 
 
-            invocation.TargetPayloads.Add(jsonMsg);
+            }
+            catch (Exception ex) 
+            { 
+            
+                
+            
+            
+            }
 
-            stopWatch.Stop();
-
-            _kvalitetsportalen.LogSuccess(invocation, "MaintenanceOrders-MaintenanceOrdersIFSResp");
-
-
-
-            var status2 = _mapper.Map<Model.IFSWorkOrderBody>(maintenanceOrders.Body.ChangedMaintenanceOrders);
-
-
-            int s = 1;
-
-
-            //CreateMaintenanceOrdersRequest cmor = new CreateMaintenanceOrdersRequest();
-
-            //cmor.CreateMaintenanceOrders = new MaintenanceOrdersCreateMessageType
-            //{
-            //    Payload = new MaintenanceOrdersType
-            //    {
-            //        MaintenanceOrders = new MaintenanceOrdersTypeMaintenanceOrders
-            //        {
-
-            //            Organisation = new Organisation[]
-            //             {
-            //                 new Organisation
-            //                 {
-            //                     mRID = "1111"
-            //                 }
-            //             }
-
-
-            //        }
-            //    }
-            //};
-
-            ////_client.CreateMaintenanceOrders(cmor);
-
-
-            string textMessage = new StreamReader(@"BodyData.json").ReadToEnd();
-
-            string testMessageTask = new StreamReader(@"BodyDataTask.json").ReadToEnd();
-
-            //var settings = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All };
-            var bodyObject = JsonConvert.DeserializeObject<Model.IFSWorkOrderBody>(textMessage);
-
-            var bodyObjectTask = JsonConvert.DeserializeObject<Model.IFSWorkTaskBody>(testMessageTask);
-
-
-            var textMessageS = JsonConvert.SerializeObject(bodyObject);
-
-
-            var result = _ifsWorkOrder.Publish(textMessageS, false);
-
-
-            bodyObjectTask.WoNo = result;
-
-            var textMessageT = JsonConvert.SerializeObject(bodyObjectTask);
-
-            var result2 = _ifsWorkOrder.Publish(textMessageT, true);
-
+           
 
             int debug = 1;
             //_telemetry.TrackTrace(messageText);
@@ -186,3 +133,117 @@ namespace MaintenanceOrderReader.MessageHandlers
 
 
 }
+
+
+
+
+
+
+//var stopWatch = new Stopwatch();
+//stopWatch.Start();
+
+//StringReader sReader = new StringReader(messageXML);
+
+//MaintenanceOrdersInBound.Envelope maintenanceOrders = Utils.DeSerialize<MaintenanceOrdersInBound.Envelope>(sReader);
+
+
+//string jsonMsg = JsonConvert.SerializeObject(maintenanceOrders, Newtonsoft.Json.Formatting.Indented);
+
+
+
+
+//var invocation = new Invocation
+//{
+//    Payload = messageXML,
+//    StartTime = DateTime.Now,
+//    GraphUri = "NA",
+//    Resource = maintenanceOrders?.Body?.ChangedMaintenanceOrders?.Header?.CorrelationID
+//};
+
+//var status = _mapper.Map<MaintenanceOrdersDto>(maintenanceOrders.Body.ChangedMaintenanceOrders);
+
+
+//var isAO = status.Payload.MaintenanceOrders.Work[0].IFSStatus == "INIT";
+
+//string jsonMsgTarget = JsonConvert.SerializeObject(status, Newtonsoft.Json.Formatting.Indented);
+
+
+//string textMessage = new StreamReader(@"BodyData.json").ReadToEnd();
+
+//string testMessageTask = new StreamReader(@"BodyDataTask.json").ReadToEnd();
+
+////var settings = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All };
+//var bodyObject = JsonConvert.DeserializeObject<Model.IFSWorkOrderBody>(textMessage);
+
+//var bodyObjectTask = JsonConvert.DeserializeObject<Model.IFSWorkTaskBody>(testMessageTask);
+
+
+//var textMessageS = JsonConvert.SerializeObject(bodyObject);
+
+
+//var result = _ifsWorkOrder.Publish(textMessageS, false);
+
+
+//bodyObjectTask.WoNo = result;
+
+//var textMessageT = JsonConvert.SerializeObject(bodyObjectTask);
+
+//var result2 = _ifsWorkOrder.Publish(textMessageT, true);
+
+
+
+
+
+
+//invocation.TargetPayloads.Add(jsonMsgTarget);
+
+
+
+//try
+//{
+
+
+
+
+
+//}
+//catch (Exception ex)
+//{
+//    int qw = 2;
+//}
+
+
+
+
+
+//var status2 = _mapper.Map<Model.IFSWorkOrderBody>(maintenanceOrders.Body.ChangedMaintenanceOrders);
+
+
+//int s = 1;
+
+
+//CreateMaintenanceOrdersRequest cmor = new CreateMaintenanceOrdersRequest();
+
+//cmor.CreateMaintenanceOrders = new MaintenanceOrdersCreateMessageType
+//{
+//    Payload = new MaintenanceOrdersType
+//    {
+//        MaintenanceOrders = new MaintenanceOrdersTypeMaintenanceOrders
+//        {
+
+//            Organisation = new Organisation[]
+//             {
+//                 new Organisation
+//                 {
+//                     mRID = "1111"
+//                 }
+//             }
+
+
+//        }
+//    }
+//};
+
+////_client.CreateMaintenanceOrders(cmor);
+
+
