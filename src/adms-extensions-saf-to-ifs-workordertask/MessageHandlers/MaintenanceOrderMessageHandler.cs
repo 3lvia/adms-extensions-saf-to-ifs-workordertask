@@ -14,74 +14,41 @@ using Elvia.KvalitetsportalLogger;
 using System.Diagnostics;
 using MaintenanceOrdersDomain;
 using adms_extensions_saf_to_ifs_workordertask.PerformMessages;
+using Castle.DynamicProxy;
 
 namespace MaintenanceOrderReader.MessageHandlers
 {
     public class MaintenanceOrderMessageHandler : IMessageHandler
     {
         private readonly IPerformMessageMaintenanceOrder _performMessageMaintenanceOrder;
-
-        //private readonly ITelemetryInsightsLogger _telemetry;
-
-        //private readonly IIfsWorkOrder _ifsWorkOrder;
-        //public IMapper _mapper { get; }
-        //public IMaintenanceOrders_Port _client { get; }
-
         private readonly IKvalitetsportalClient _kvalitetsportalen;
 
-        //public InstallationResponseMessageHandler(ITelemetryInsightsLogger telemetry)
-        //{
-        //    _telemetry = telemetry;
-        //}
-
-        //public MaintenanceOrderMessageHandler(IPerformMessageMaintenanceOrder performMessageMaintenanceOrder, IIfsWorkOrder ifsWorkOrder, IMapper mapper, IMaintenanceOrders_Port soap, IKvalitetsportalClient logger)
-        //{
-        //    _mapper = mapper;
-        //    _client = soap;
-        //    _performMessageMaintenanceOrder = performMessageMaintenanceOrder;
-        //    //_telemetry = telemetry;
-        //    _ifsWorkOrder = ifsWorkOrder;
-        //    _kvalitetsportalen = logger;
-        //}
-
+  
         public MaintenanceOrderMessageHandler(IPerformMessageMaintenanceOrder performMessageMaintenanceOrder, IKvalitetsportalClient logger)
         {
-            //_mapper = mapper;
-            //_client = soap;
             _performMessageMaintenanceOrder = performMessageMaintenanceOrder;
-            //_telemetry = telemetry;
-            //_ifsWorkOrder = ifsWorkOrder;
             _kvalitetsportalen = logger;
         }
 
-        //try
-        //{
-        //    _mapper.ConfigurationProvider.AssertConfigurationIsValid();
-        //}
-        //catch (Exception ex)
-        //{
-        //    int d = 1;
-
-        //}
 
 
-
-        public void HandleMessage(string messageXML)
+        public void HandleMessage(string xmlMessage)
         {
-     
+
+            var stopWatch = new Stopwatch();
+            Invocation invocation = null;
+            
             try
             {
 
-                var stopWatch = new Stopwatch();
                 stopWatch.Start();
 
+                var info = _performMessageMaintenanceOrder.Invoke(xmlMessage);
 
-                var info = _performMessageMaintenanceOrder.Invoke(messageXML);
 
-
-                var invocation = new Invocation
+                invocation = new Invocation
                 {
-                    Payload = messageXML,
+                    Payload = xmlMessage,
                     StartTime = DateTime.Now,
                     GraphUri = "NA",
                     Resource = info.Item4
@@ -89,23 +56,19 @@ namespace MaintenanceOrderReader.MessageHandlers
 
                 invocation.TargetPayloads.Add(info.Item1);
 
-
                 stopWatch.Stop();
 
                 _kvalitetsportalen.LogSuccess(invocation, "MaintenanceOrders-MaintenanceOrdersIFSResp");
 
-
             }
-            catch (Exception ex) 
-            { 
-            
-                
-            
-            
+            catch (Exception ex)
+            {
+                stopWatch.Stop();
+                _kvalitetsportalen.LogException(invocation, ex, "MaintenanceOrders-MaintenanceOrdersIFSResp");
+
             }
 
            
-
             int debug = 1;
             //_telemetry.TrackTrace(messageText);
         }

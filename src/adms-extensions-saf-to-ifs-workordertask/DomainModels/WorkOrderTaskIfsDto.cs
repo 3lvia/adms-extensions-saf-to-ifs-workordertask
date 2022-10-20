@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Model
 {
-    public class IFSWorkTaskBody
+    public class WorkTaskIfsDto
     {
         public string Sender { get; set; }
         public string Context { get; set; }
@@ -30,6 +30,6 @@ namespace Model
         public string UuidCustomer { get; set; }
         public string VendorNo { get; set; }
         public string OrgCode { get; set; }
-        public InfoFields[] InfoFields { get; set; }
+        public InfoFieldsDto[] InfoFields { get; set; }
     }
 }

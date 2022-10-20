@@ -13,6 +13,11 @@ using Elvia.KvalitetsportalLogger;
 using MaintenanceOrdersDomain;
 using Newtonsoft.Json;
 using System.Diagnostics;
+using Model;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Newtonsoft.Json.Serialization;
+using System.Reflection;
+using IValueProvider = Newtonsoft.Json.Serialization.IValueProvider;
 
 namespace adms_extensions_saf_to_ifs_workordertask.PerformMessages
 {
@@ -33,55 +38,91 @@ namespace adms_extensions_saf_to_ifs_workordertask.PerformMessages
             _client = client;
         }
 
-
+      
         public (string, string, string, string) Invoke(string xmlMessage)
         {
-         
-            StringReader sReader = new StringReader(xmlMessage);
+            MaintenanceOrdersInBound.Envelope maintenanceOrders;
+            MaintenanceOrdersDto maintenanceOrdersDto;
+            WorkOrderIfsDto workOrderIfsDto;
 
-            MaintenanceOrdersInBound.Envelope maintenanceOrders = Utils.DeSerialize<MaintenanceOrdersInBound.Envelope>(sReader);
-
-
-            string jsonMsg = JsonConvert.SerializeObject(maintenanceOrders, Newtonsoft.Json.Formatting.Indented);
+            MapInBoundMessage(xmlMessage, out maintenanceOrdersDto, out workOrderIfsDto);
 
 
-            var status = _mapper.Map<MaintenanceOrdersDto>(maintenanceOrders.Body.ChangedMaintenanceOrders);
+            /////////////////////////////////////////
+            /// TEMP - i påvente av beskrivelser.
+            
+            workOrderIfsDto.Sender = "ELSMART";
+            workOrderIfsDto.Context = "STANDARD";
+            workOrderIfsDto.MchCode = "NS.0890";
+            workOrderIfsDto.ErrDescr = ".";
+            workOrderIfsDto.WorkDescrLo = "Test";
+            workOrderIfsDto.OrgCode = "01B2B001";
+
+            ////////////////////////////////////////
 
 
-            var isAO = status.Payload.MaintenanceOrders.Work[0].IFSStatus == "INIT";
+            var textMessageS = JsonConvert.SerializeObject(workOrderIfsDto, Newtonsoft.Json.Formatting.Indented);
 
-            string jsonMsgTarget = JsonConvert.SerializeObject(status, Newtonsoft.Json.Formatting.Indented);
+            //string textMessageS = JsonSerializer.Serialize(workOrderIfsDto);
 
+            //string textMessageS = new StreamReader(@"BodyData.json").ReadToEnd();
 
-            string textMessage = new StreamReader(@"BodyData.json").ReadToEnd();
+            var resultAONumber = _ifsWorkOrder.Publish(textMessageS, false);
 
-            string testMessageTask = new StreamReader(@"BodyDataTask.json").ReadToEnd();
+            int tst = 2;
 
-            //var settings = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All };
-            var bodyObject = JsonConvert.DeserializeObject<Model.IFSWorkOrderBody>(textMessage);
+            //var tst = _mapper.Map<Model.WorkOrderIfsDto>(maintenanceOrders.Body.ChangedMaintenanceOrders);
 
-            var bodyObjectTask = JsonConvert.DeserializeObject<Model.IFSWorkTaskBody>(testMessageTask);
-
-
-            var textMessageS = JsonConvert.SerializeObject(bodyObject);
+            //var isAO = status.Payload.MaintenanceOrders.Work[0].IFSStatus == "INIT";
 
 
-            var result = _ifsWorkOrder.Publish(textMessageS, false);
+            //string jsonMsgTarget = JsonConvert.SerializeObject(status, Newtonsoft.Json.Formatting.Indented);
 
 
-            bodyObjectTask.WoNo = result;
+            //string textMessage = new StreamReader(@"BodyData.json").ReadToEnd();
 
-            var textMessageT = JsonConvert.SerializeObject(bodyObjectTask);
+            //string testMessageTask = new StreamReader(@"BodyDataTask.json").ReadToEnd();
 
-            var result2 = _ifsWorkOrder.Publish(textMessageT, true);
+            ////var settings = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All };
+            //var bodyObject = JsonConvert.DeserializeObject<Model.WorkOrderIfsDto>(textMessage);
+
+            //var bodyObjectTask = JsonConvert.DeserializeObject<Model.WorkTaskIfsDto>(testMessageTask);
+
+
+            //var textMessageS = JsonConvert.SerializeObject(bodyObject);
+
+
+        
 
 
 
 
-            return (textMessageT , "", "", maintenanceOrders?.Body?.ChangedMaintenanceOrders?.Header?.CorrelationID);
+
+            //bodyObjectTask.WoNo = result;
+
+            //var textMessageT = JsonConvert.SerializeObject(bodyObjectTask);
+
+            //var result2 = _ifsWorkOrder.Publish(textMessageT, true);
+
+
+            //return (textMessageT, "", "", maintenanceOrdersDto?.Body?.ChangedMaintenanceOrders?.Header?.CorrelationID);
+
+            return ("", "", "", "");
         }
 
 
+        private void MapInBoundMessage(string xmlMessage, out MaintenanceOrdersDto maintenanceOrdersDto, out Model.WorkOrderIfsDto workOrderDto)
+        {
+            StringReader sReader = new StringReader(xmlMessage);
+
+            var maintenanceOrders = Utils.DeSerialize<MaintenanceOrdersInBound.Envelope>(sReader);
+            //string jsonMsg = JsonConvert.SerializeObject(maintenanceOrders, Newtonsoft.Json.Formatting.Indented);
+
+
+            maintenanceOrdersDto = _mapper.Map<MaintenanceOrdersDto>(maintenanceOrders.Body.ChangedMaintenanceOrders);
+
+            workOrderDto = _mapper.Map<Model.WorkOrderIfsDto>(maintenanceOrders.Body.ChangedMaintenanceOrders);
+        }
     }
 
 
@@ -102,7 +143,6 @@ namespace adms_extensions_saf_to_ifs_workordertask.PerformMessages
         }
 
     }
-
-
+   
 
 }

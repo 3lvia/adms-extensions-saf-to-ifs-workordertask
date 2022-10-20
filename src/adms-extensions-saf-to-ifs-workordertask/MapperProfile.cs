@@ -18,7 +18,7 @@ namespace SafToSesamAPI
       
         private void CreateMaintenanceOrdersMapping()
         {
-            CreateMap<MaintenanceOrdersInBound.MaintenanceOrdersEventMessageType, IFSWorkOrderBody>()
+            CreateMap<MaintenanceOrdersInBound.MaintenanceOrdersEventMessageType, WorkOrderIfsDto>()
                 .ForMember(dest => dest.Sender, opt => opt.MapFrom(src => src.Header.MessageID));
 
 

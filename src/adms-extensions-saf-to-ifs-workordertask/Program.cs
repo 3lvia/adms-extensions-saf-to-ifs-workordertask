@@ -54,9 +54,9 @@ namespace adms_extensions_saf_to_ifs_workordertask
                    
                     string maintenanceOrder = "queue://MaintenanceOrder";
 
-                    //Uri activeMqUri = new("amqp://CXPC-R90W8BW3:61616");
+                    Uri activeMqUri = new("amqp://CXPC-R90W8BW3:61616");
 
-                    Uri activeMqUri = new("amqp://CXPC-12V5L12:61616");
+                    //Uri activeMqUri = new("amqp://CXPC-12V5L12:61616");
 
 
                     IConnectionFactory factory = new NMSConnectionFactory(activeMqUri);
