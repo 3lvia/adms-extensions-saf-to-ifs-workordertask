@@ -9,7 +9,7 @@ public static class IfsCloudMessagesCollectionExtensions
 {
     public static IServiceCollection AddIfsCloudMessageServices(this IServiceCollection services)
     {
-        services.AddSingleton<IIfsWorkOrder, IfsWorkOrder>();
+        services.AddSingleton<IIfsCloudService, IfsCloudService>();
 
         return services;
     }

@@ -4,11 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace ServicesIfs
 {
-    public interface IIfsWorkOrder
+    public interface IIfsCloudService
     {
-        string Publish(string request, bool bTask);
+        string CreateWorkOrder(string request);
+
+        string CreateWorkOrderTask(string request);
 
     }
 }

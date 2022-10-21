@@ -12,7 +12,7 @@ using AutoMapper;
 using System;
 using Elvia.KvalitetsportalLogger;
 using System.Diagnostics;
-using MaintenanceOrdersDomain;
+using MaintenanceOrdersInBoundDomain;
 using adms_extensions_saf_to_ifs_workordertask.PerformMessages;
 using Castle.DynamicProxy;
 
@@ -43,16 +43,17 @@ namespace MaintenanceOrderReader.MessageHandlers
 
                 stopWatch.Start();
 
-                var info = _performMessageMaintenanceOrder.Invoke(xmlMessage);
-
-
                 invocation = new Invocation
                 {
                     Payload = xmlMessage,
                     StartTime = DateTime.Now,
                     GraphUri = "NA",
-                    Resource = info.Item4
-                };                
+                    Resource = "NA"
+                };
+
+                var info = _performMessageMaintenanceOrder.Invoke(xmlMessage);
+
+                invocation.Resource = info.Item4;
 
                 invocation.TargetPayloads.Add(info.Item1);
 
