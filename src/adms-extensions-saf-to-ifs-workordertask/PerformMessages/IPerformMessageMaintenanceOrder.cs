@@ -11,8 +11,7 @@ namespace adms_extensions_saf_to_ifs_workordertask.PerformMessages
     {
 
 
-        (string, string, string, string) Invoke(string xmlMessage);
-
+        (string, string) Invoke(string xmlMessage);
 
 
     }

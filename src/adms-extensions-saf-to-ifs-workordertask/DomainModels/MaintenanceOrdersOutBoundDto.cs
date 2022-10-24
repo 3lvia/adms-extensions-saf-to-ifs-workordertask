@@ -7,6 +7,13 @@ using System.Threading.Tasks;
 namespace MaintenanceOrdersOutBoundDomain;
 
 
+public class IFSMaintenanceOrdersInputDto
+{
+    public IFSMaintenanceOrdersMessageTypeDto IFSMaintenanceOrders { get; set; }
+
+}
+
+
 
 public class IFSMaintenanceOrdersMessageTypeDto
 {

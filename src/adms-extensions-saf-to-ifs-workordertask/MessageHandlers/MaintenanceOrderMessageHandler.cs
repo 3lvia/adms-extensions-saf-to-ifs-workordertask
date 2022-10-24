@@ -53,7 +53,7 @@ namespace MaintenanceOrderReader.MessageHandlers
 
                 var info = _performMessageMaintenanceOrder.Invoke(xmlMessage);
 
-                invocation.Resource = info.Item4;
+                invocation.Resource = info.Item2;
 
                 invocation.TargetPayloads.Add(info.Item1);
 

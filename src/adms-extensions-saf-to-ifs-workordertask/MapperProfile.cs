@@ -19,8 +19,9 @@ namespace SafToSesamAPI
         private void CreateMaintenanceOrdersOutBoundMapping()
         {
 
+            CreateMap<MaintenanceOrdersOutBoundDomain.IFSMaintenanceOrdersInputDto, MaintenanceOrdersOutBound.IFSMaintenanceOrdersInput>();
             CreateMap<MaintenanceOrdersOutBoundDomain.IFSMaintenanceOrdersMessageTypeDto, MaintenanceOrdersOutBound.IFSMaintenanceOrdersMessageType>();
-            //CreateMap<MaintenanceOrdersOutBoundDomain.HeaderTypeDto, MaintenanceOrdersOutBound.HeaderType>();
+            CreateMap<MaintenanceOrdersOutBoundDomain.HeaderTypeDto, MaintenanceOrdersOutBound.HeaderType>();
             //CreateMap<MaintenanceOrdersOutBoundDomain.HeaderTypeVerbDto, MaintenanceOrdersOutBound.HeaderTypeVerb>();
             CreateMap<MaintenanceOrdersOutBoundDomain.ReplayDetectionTypeDto, MaintenanceOrdersOutBound.ReplayDetectionType>();
             CreateMap<MaintenanceOrdersOutBoundDomain.UserTypeDto, MaintenanceOrdersOutBound.UserType>();
