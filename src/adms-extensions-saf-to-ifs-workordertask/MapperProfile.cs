@@ -1,8 +1,5 @@
-﻿using System.Linq;
-
-using AutoMapper;
+﻿using AutoMapper;
 using MaintenanceOrdersInBoundDomain;
-using MaintenanceOrdersOutBound;
 using Model;
 
 namespace SafToSesamAPI

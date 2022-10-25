@@ -1,25 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Serialization;
 using System.Xml;
 using AutoMapper;
 using ServicesIfs;
-using MaintenanceOrdersOutBound;
-using Elvia.KvalitetsportalLogger;
 using MaintenanceOrdersInBoundDomain;
 using Newtonsoft.Json;
-using System.Diagnostics;
 using Model;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
-using Newtonsoft.Json.Serialization;
-using System.Reflection;
-using Apache.NMS;
-using MaintenanceOrdersInBound;
-using MaintenanceOrdersOutBoundDomain;
+
 
 namespace adms_extensions_saf_to_ifs_workordertask.PerformMessages
 {
@@ -251,70 +239,3 @@ namespace adms_extensions_saf_to_ifs_workordertask.PerformMessages
 
 
 
-
-
-
-
-
-
-
-
-
-
-////string textMessageS = JsonSerializer.Serialize(workOrderIfsDto);
-
-////string textMessageS = new StreamReader(@"BodyData.json").ReadToEnd();
-
-//var resultAONumber = _ifsCloudService.CreateWorkOrder(textMessageS);
-
-
-
-
-
-//workOrderTaskIfsDto.WoNo = resultAONumber;
-
-//string jsonMsgTarget = JsonConvert.SerializeObject(workOrderTaskIfsDto, Newtonsoft.Json.Formatting.Indented);
-
-
-//var result2 = _ifsCloudService.CreateWorkOrderTask(jsonMsgTarget);
-
-//int tst = 2;
-
-
-////var tst = _mapper.Map<Model.WorkOrderIfsDto>(maintenanceOrders.Body.ChangedMaintenanceOrders);
-
-////var isAO = status.Payload.MaintenanceOrders.Work[0].IFSStatus == "INIT";
-
-
-////string jsonMsgTarget = JsonConvert.SerializeObject(status, Newtonsoft.Json.Formatting.Indented);
-
-
-////string textMessage = new StreamReader(@"BodyData.json").ReadToEnd();
-
-////string testMessageTask = new StreamReader(@"BodyDataTask.json").ReadToEnd();
-
-//////var settings = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All };
-////var bodyObject = JsonConvert.DeserializeObject<Model.WorkOrderIfsDto>(textMessage);
-
-////var bodyObjectTask = JsonConvert.DeserializeObject<Model.WorkTaskIfsDto>(testMessageTask);
-
-
-////var textMessageS = JsonConvert.SerializeObject(bodyObject);
-
-
-
-
-
-
-
-
-////bodyObjectTask.WoNo = result;
-
-////var textMessageT = JsonConvert.SerializeObject(bodyObjectTask);
-
-////var result2 = _ifsWorkOrder.Publish(textMessageT, true);
-
-
-////return (textMessageT, "", "", maintenanceOrdersDto?.Body?.ChangedMaintenanceOrders?.Header?.CorrelationID);
-
-//return ("", "", "", "");

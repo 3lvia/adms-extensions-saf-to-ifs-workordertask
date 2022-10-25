@@ -1,4 +1,5 @@
 ﻿using Azure;
+using Microsoft.Extensions.Hosting;
 using Model;
 using Newtonsoft.Json;
 using ServicesIfs;
@@ -17,16 +18,21 @@ namespace ServicesIfs
     public class IfsCloudService : IIfsCloudService
     {
         private readonly IAccessTokenService _accessTokenService;
-
+    
 
         public IfsCloudService(IAccessTokenService accessTokenService)
         {
             _accessTokenService = accessTokenService;
+    
         }
 
         public string CreateWorkOrder(string request)
         {
+            //var sss = ssss.GetSection
+
             string webAddress = @"https://ifs-cloud-integration.dev-elvia.io/passthrough/forward/v1/CEntrWorkOrderHandling.svc/EntRCreateWorkOrder";
+
+            //string webAddress = configuration
 
             HttpResponseMessage httpResponse = CallIfsCloud(request, webAddress);
 
