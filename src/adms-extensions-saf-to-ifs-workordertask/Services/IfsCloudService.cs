@@ -1,4 +1,6 @@
 ﻿using Azure;
+using Elvia.Configuration;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Model;
 using Newtonsoft.Json;
@@ -18,21 +20,19 @@ namespace ServicesIfs
     public class IfsCloudService : IIfsCloudService
     {
         private readonly IAccessTokenService _accessTokenService;
-    
+        private readonly IConfiguration _configuration;
 
-        public IfsCloudService(IAccessTokenService accessTokenService)
+        public IfsCloudService(IAccessTokenService accessTokenService, IConfiguration configuration)
         {
             _accessTokenService = accessTokenService;
-    
+            _configuration = configuration;
+
+
         }
 
         public string CreateWorkOrder(string request)
         {
-            //var sss = ssss.GetSection
-
-            string webAddress = @"https://ifs-cloud-integration.dev-elvia.io/passthrough/forward/v1/CEntrWorkOrderHandling.svc/EntRCreateWorkOrder";
-
-            //string webAddress = configuration
+            string webAddress = _configuration.EnsureHasValue("webAddressIfsCloudWorkOrder");
 
             HttpResponseMessage httpResponse = CallIfsCloud(request, webAddress);
 
@@ -60,9 +60,8 @@ namespace ServicesIfs
 
 
         public string CreateWorkOrderTask(string request)
-        {
-            string webAddress = @"https://ifs-cloud-integration.dev-elvia.io/passthrough/forward/v1/CEntrWorkOrderHandling.svc/EntRCreateWorkOrderTask";
-
+        {      
+            string webAddress = _configuration.EnsureHasValue("webAddressIfsCloudWorkOrderTask");
 
             HttpResponseMessage httpResponse = CallIfsCloud(request, webAddress);
 
