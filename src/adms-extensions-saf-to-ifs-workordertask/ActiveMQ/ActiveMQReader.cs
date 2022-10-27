@@ -4,6 +4,7 @@ using Elvia.Telemetry;
 using MaintenanceOrderReader.MessageHandlers;
 using Microsoft.Extensions.Hosting;
 using System;
+using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -22,6 +23,15 @@ namespace MaintenanceOrderReader.ActiveMQ
             _queueName = queueName;
             _messageHandler = messageHandler;
             _telemetry = telemetry; // DI framework
+
+            string textMessage = new StreamReader(@"MaintenanceOrderSiemens.xml").ReadToEnd();
+
+            _messageHandler.HandleMessage(textMessage);
+
+
+            int x = 2;
+
+
         }
 
         public void HandleConnectionError(NMSException ex)
@@ -31,7 +41,16 @@ namespace MaintenanceOrderReader.ActiveMQ
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
+
             while (!stoppingToken.IsCancellationRequested)
+            {
+                Console.WriteLine("Running: " + DateTime.Now.ToLongTimeString());
+               Thread.Sleep(10000);
+
+            }
+
+
+            while (!stoppingToken.IsCancellationRequested && false)
             {
                 try
                 {
