@@ -47,7 +47,14 @@ namespace adms_extensions_saf_to_ifs_workordertask.PerformMessages
             try
             {
 
-                MapInBoundMessage(xmlMessage, out maintenanceOrdersDto, out workOrderIfsDto, out workOrderTaskIfsDto);
+                //MapInBoundMessage(xmlMessage, out maintenanceOrdersDto, out workOrderIfsDto, out workOrderTaskIfsDto);
+
+
+                workOrderIfsDto = new WorkOrderIfsDto();
+
+                maintenanceOrdersDto = new MaintenanceOrdersDto();
+
+                workOrderTaskIfsDto = new WorkOrderTaskIfsDto();
 
                 SetFieldsTemp(workOrderIfsDto, workOrderTaskIfsDto);// To be removed..
 
@@ -55,19 +62,19 @@ namespace adms_extensions_saf_to_ifs_workordertask.PerformMessages
 
                 resultWorkOrderNumber = _ifsCloudService.CreateWorkOrder(requestMessageWorkOrder);
 
-                workOrderTaskIfsDto.WoNo = resultWorkOrderNumber; //AO
+                //workOrderTaskIfsDto.WoNo = resultWorkOrderNumber; //AO
 
-                requestMessageWorkOrderTask = JsonConvert.SerializeObject(workOrderTaskIfsDto, Newtonsoft.Json.Formatting.Indented);
+                //requestMessageWorkOrderTask = JsonConvert.SerializeObject(workOrderTaskIfsDto, Newtonsoft.Json.Formatting.Indented);
 
-                resultWorkOrderTaskNumber = _ifsCloudService.CreateWorkOrderTask(requestMessageWorkOrderTask);
-
-
-                MapOutBoundMessage(resultWorkOrderNumber, resultWorkOrderTaskNumber, maintenanceOrdersDto, out iFSMaintenanceOrdersInput);
+                //resultWorkOrderTaskNumber = _ifsCloudService.CreateWorkOrderTask(requestMessageWorkOrderTask);
 
 
-                //_client.IFSMaintenanceOrders(iFSMaintenanceOrdersInput);
+                //MapOutBoundMessage(resultWorkOrderNumber, resultWorkOrderTaskNumber, maintenanceOrdersDto, out iFSMaintenanceOrdersInput);
 
-                returnXMLMessageToSaf = JsonConvert.SerializeObject(iFSMaintenanceOrdersInput, Newtonsoft.Json.Formatting.Indented);
+
+                ////_client.IFSMaintenanceOrders(iFSMaintenanceOrdersInput);
+
+                //returnXMLMessageToSaf = JsonConvert.SerializeObject(iFSMaintenanceOrdersInput, Newtonsoft.Json.Formatting.Indented);
        
             }
             catch (Exception ex)

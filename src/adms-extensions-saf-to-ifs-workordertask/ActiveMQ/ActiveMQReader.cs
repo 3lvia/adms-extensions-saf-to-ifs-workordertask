@@ -24,7 +24,12 @@ namespace MaintenanceOrderReader.ActiveMQ
             _messageHandler = messageHandler;
             _telemetry = telemetry; // DI framework
 
-            string textMessage = new StreamReader(@"MaintenanceOrderSiemens.xml").ReadToEnd();
+
+
+
+
+
+            string textMessage = "";
 
             _messageHandler.HandleMessage(textMessage);
 
