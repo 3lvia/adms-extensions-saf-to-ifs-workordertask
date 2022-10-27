@@ -14,13 +14,24 @@ namespace adms_extensions_saf_to_ifs_workordertask
 
         public static void Main(string[] args)
         {
-
             while (true)
             {
-                Console.WriteLine("Running:" + DateTime.Now.ToLongTimeString());
-                Thread.Sleep(1000);
-            }
+                try
+                {
+                    while (true)
+                    {
+                        Console.WriteLine("Running: " + DateTime.Now.ToLongTimeString());
+                        Thread.Sleep(1000);
+                    }
 
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("ERROR: " + ex.Message + "   " + ex.StackTrace);
+
+                }
+
+            }
         
             //CreateHostBuilder(args).Build().Run();
         }
