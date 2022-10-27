@@ -4,6 +4,8 @@ using Microsoft.Extensions.DependencyInjection;
 using SafToIfsWorkOrderTask.ServiceCollectionExtensions;
 using Microsoft.Extensions.Configuration;
 using Elvia.Configuration;
+using System;
+using System.Threading;
 
 namespace adms_extensions_saf_to_ifs_workordertask
 {
@@ -12,7 +14,15 @@ namespace adms_extensions_saf_to_ifs_workordertask
 
         public static void Main(string[] args)
         {
-            CreateHostBuilder(args).Build().Run();
+
+            while (true)
+            {
+                Console.WriteLine("Running:" + DateTime.Now.ToLongTimeString());
+                Thread.Sleep(1000);
+            }
+
+        
+            //CreateHostBuilder(args).Build().Run();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
