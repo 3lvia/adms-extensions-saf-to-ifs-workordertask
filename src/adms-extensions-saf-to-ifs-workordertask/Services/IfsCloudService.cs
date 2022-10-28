@@ -34,6 +34,9 @@ namespace ServicesIfs
         {
             string webAddress = _configuration.EnsureHasValue("webAddressIfsCloudWorkOrder");
 
+
+            Console.WriteLine("CreateWorkOrder-webaddress: " + webAddress.Substring(0,15));
+
             HttpResponseMessage httpResponse = CallIfsCloud(request, webAddress);
 
             if (httpResponse.StatusCode == HttpStatusCode.OK)

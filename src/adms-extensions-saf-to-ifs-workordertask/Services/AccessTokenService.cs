@@ -106,7 +106,8 @@ namespace ServicesIfs
             var cacheEntryOptions = new MemoryCacheEntryOptions().SetAbsoluteExpiration(TimeSpan.FromSeconds(expires));
             _memoryCache.Set(AccessTokenMemoryCacheKey, token, cacheEntryOptions);
 
-            System.Diagnostics.Debug.WriteLine("Token       " + token.Substring(0, 20) + "\r\n");
+            //Temp
+            Console.WriteLine("AccessToken fetched: "+ token.Substring(0,4));
 
             return token;
 
