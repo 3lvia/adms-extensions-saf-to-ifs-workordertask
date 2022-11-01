@@ -10,7 +10,6 @@ namespace adms_extensions_saf_to_ifs_workordertask.PerformMessages
     public interface IPerformMessageMaintenanceOrder
     {
 
-
         (string, string) Invoke(string xmlMessage);
 
 

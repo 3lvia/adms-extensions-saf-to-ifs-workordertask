@@ -25,13 +25,9 @@ namespace MaintenanceOrderReader.ActiveMQ
             _telemetry = telemetry; // DI framework
 
 
-
-
-
-
             string textMessage = "";
 
-            _messageHandler.HandleMessage(textMessage);
+            //_messageHandler.HandleMessage(textMessage);
 
 
             int x = 2;

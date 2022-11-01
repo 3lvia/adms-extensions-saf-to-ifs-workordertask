@@ -30,6 +30,7 @@ namespace adms_extensions_saf_to_ifs_workordertask.PerformMessages
       
         public (string, string) Invoke(string xmlMessage)
         {
+
             MaintenanceOrdersInBound.Envelope maintenanceOrders;
             MaintenanceOrdersOutBound.IFSMaintenanceOrdersInput iFSMaintenanceOrdersInput;
 
@@ -46,7 +47,7 @@ namespace adms_extensions_saf_to_ifs_workordertask.PerformMessages
 
             try
             {
-
+                //throw new Exception("in ifscloudservice");
                 //MapInBoundMessage(xmlMessage, out maintenanceOrdersDto, out workOrderIfsDto, out workOrderTaskIfsDto);
 
 
@@ -56,18 +57,50 @@ namespace adms_extensions_saf_to_ifs_workordertask.PerformMessages
 
                 workOrderTaskIfsDto = new WorkOrderTaskIfsDto();
 
-                SetFieldsTemp(workOrderIfsDto, workOrderTaskIfsDto);// To be removed..
+                //SetFieldsTemp(workOrderIfsDto, workOrderTaskIfsDto);// To be removed..
+
+                workOrderIfsDto.Sender = "ADMS-EXTENSIONS";  //Obl.
+                workOrderIfsDto.Context = "STANDARD";        //Obl.
+
+                workOrderIfsDto.MchCode = "Ulven/300/T4";
+
+                workOrderIfsDto.RegDate = "2022-10-31T15:00:00";//Obl.
+
+                workOrderIfsDto.ErrDescr = ".";//Obl.
+                workOrderIfsDto.LatestFinish = "2022-11-30T08:09:47";
+
+                workOrderIfsDto.OrgCode = "01B2B001";//Obl.
+
+                //_________________________________________________________________________________________
 
                 requestMessageWorkOrder = JsonConvert.SerializeObject(workOrderIfsDto, Newtonsoft.Json.Formatting.Indented);
 
                 resultWorkOrderNumber = _ifsCloudService.CreateWorkOrder(requestMessageWorkOrder);
 
+                int deb = 4;
+
+                workOrderTaskIfsDto.Sender = "ADMS-EXTENSIONS"; //Obl.
+                workOrderTaskIfsDto.Context = "STANDARD";       //Obl.
+                workOrderTaskIfsDto.ContextSub = "";
+
+                workOrderTaskIfsDto.WoNo = resultWorkOrderNumber;
+
+                //workOrderTaskIfsDto.ExtRefKeyTask = "HUB.4321";
+                workOrderTaskIfsDto.MchCode = "Ulven/300/T4";
+                workOrderTaskIfsDto.Description = "Just another task \u2013 never-ending story";
+                workOrderTaskIfsDto.LongDescription = "LongDescr";
+                workOrderTaskIfsDto.ReportedBy = "ELVIA_ENTR";
+                //workOrderTaskIfsDto.ReportedBy = "ADMS/ISS";
+                workOrderTaskIfsDto.OrgCode = "01B2B001";
+
+
                 //workOrderTaskIfsDto.WoNo = resultWorkOrderNumber; //AO
 
-                //requestMessageWorkOrderTask = JsonConvert.SerializeObject(workOrderTaskIfsDto, Newtonsoft.Json.Formatting.Indented);
+                requestMessageWorkOrderTask = JsonConvert.SerializeObject(workOrderTaskIfsDto, Newtonsoft.Json.Formatting.Indented);
 
-                //resultWorkOrderTaskNumber = _ifsCloudService.CreateWorkOrderTask(requestMessageWorkOrderTask);
+                resultWorkOrderTaskNumber = _ifsCloudService.CreateWorkOrderTask(requestMessageWorkOrderTask);
 
+                int debuggg =  9;
 
                 //MapOutBoundMessage(resultWorkOrderNumber, resultWorkOrderTaskNumber, maintenanceOrdersDto, out iFSMaintenanceOrdersInput);
 
@@ -75,7 +108,7 @@ namespace adms_extensions_saf_to_ifs_workordertask.PerformMessages
                 ////_client.IFSMaintenanceOrders(iFSMaintenanceOrdersInput);
 
                 //returnXMLMessageToSaf = JsonConvert.SerializeObject(iFSMaintenanceOrdersInput, Newtonsoft.Json.Formatting.Indented);
-       
+
             }
             catch (Exception ex)
             {

@@ -67,6 +67,7 @@ namespace MaintenanceOrderReader.MessageHandlers
                 stopWatch.Stop();
                 _kvalitetsportalen.LogException(invocation, ex, "MaintenanceOrders-MaintenanceOrdersIFSResp");
 
+                throw new InvalidOperationException("zzzzz");
             }
 
            
