@@ -59,10 +59,11 @@ namespace adms_extensions_saf_to_ifs_workordertask.PerformMessages
 
                 //SetFieldsTemp(workOrderIfsDto, workOrderTaskIfsDto);// To be removed..
 
+                //workOrderIfsDto.Sender = "ELSMART";  //Obl.
                 workOrderIfsDto.Sender = "ADMS-EXTENSIONS";  //Obl.
                 workOrderIfsDto.Context = "STANDARD";        //Obl.
 
-                workOrderIfsDto.MchCode = "Ulven/300/T4";
+                workOrderIfsDto.MchCode =  "0022/11/H1";//"NS.0152";
 
                 workOrderIfsDto.RegDate = "2022-10-31T15:00:00";//Obl.
 
@@ -86,7 +87,7 @@ namespace adms_extensions_saf_to_ifs_workordertask.PerformMessages
                 workOrderTaskIfsDto.WoNo = resultWorkOrderNumber;
 
                 //workOrderTaskIfsDto.ExtRefKeyTask = "HUB.4321";
-                workOrderTaskIfsDto.MchCode = "Ulven/300/T4";
+                workOrderTaskIfsDto.MchCode = "0022/11/H1";
                 workOrderTaskIfsDto.Description = "Just another task \u2013 never-ending story";
                 workOrderTaskIfsDto.LongDescription = "LongDescr";
                 workOrderTaskIfsDto.ReportedBy = "ELVIA_ENTR";
