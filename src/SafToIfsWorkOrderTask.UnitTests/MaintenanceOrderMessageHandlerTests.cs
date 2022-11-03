@@ -4,6 +4,7 @@ using Elvia.KvalitetsportalLogger;
 using FakeItEasy;
 using MaintenanceOrderReader.MessageHandlers;
 using MaintenanceOrdersOutBound;
+using Moq;
 using ServicesIfs;
 using Xunit;
 

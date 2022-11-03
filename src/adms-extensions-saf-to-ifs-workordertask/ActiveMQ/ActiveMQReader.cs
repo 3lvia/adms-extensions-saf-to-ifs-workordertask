@@ -46,7 +46,7 @@ namespace MaintenanceOrderReader.ActiveMQ
             while (!stoppingToken.IsCancellationRequested)
             {
                 Console.WriteLine("Running: " + DateTime.Now.ToLongTimeString());
-               Thread.Sleep(10000);
+               Thread.Sleep(60000);
 
             }
 

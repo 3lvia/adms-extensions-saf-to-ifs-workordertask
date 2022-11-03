@@ -48,7 +48,7 @@ namespace adms_extensions_saf_to_ifs_workordertask.PerformMessages
             try
             {
                 //throw new Exception("in ifscloudservice");
-                //MapInBoundMessage(xmlMessage, out maintenanceOrdersDto, out workOrderIfsDto, out workOrderTaskIfsDto);
+                MapInBoundMessage(xmlMessage, out maintenanceOrdersDto, out workOrderIfsDto, out workOrderTaskIfsDto);
 
 
                 workOrderIfsDto = new WorkOrderIfsDto();
@@ -103,7 +103,7 @@ namespace adms_extensions_saf_to_ifs_workordertask.PerformMessages
 
                 int debuggg =  9;
 
-                //MapOutBoundMessage(resultWorkOrderNumber, resultWorkOrderTaskNumber, maintenanceOrdersDto, out iFSMaintenanceOrdersInput);
+                MapOutBoundMessage(resultWorkOrderNumber, resultWorkOrderTaskNumber, maintenanceOrdersDto, out iFSMaintenanceOrdersInput);
 
 
                 ////_client.IFSMaintenanceOrders(iFSMaintenanceOrdersInput);
