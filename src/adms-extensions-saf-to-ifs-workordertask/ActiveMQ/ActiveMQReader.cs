@@ -25,13 +25,11 @@ namespace MaintenanceOrderReader.ActiveMQ
             _telemetry = telemetry; // DI framework
 
 
-            string textMessage = "";
+            //string textMessage = "";
 
             //_messageHandler.HandleMessage(textMessage);
 
-
-            int x = 2;
-
+            //int x = 2;
 
         }
 
@@ -46,12 +44,12 @@ namespace MaintenanceOrderReader.ActiveMQ
             while (!stoppingToken.IsCancellationRequested)
             {
                 Console.WriteLine("Running: " + DateTime.Now.ToLongTimeString());
-               Thread.Sleep(60000);
+                Thread.Sleep(60000);
 
             }
 
 
-            while (!stoppingToken.IsCancellationRequested && false)
+            while (!stoppingToken.IsCancellationRequested)
             {
                 try
                 {

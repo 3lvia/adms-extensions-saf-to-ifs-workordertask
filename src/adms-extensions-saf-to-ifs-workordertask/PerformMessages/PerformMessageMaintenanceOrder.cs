@@ -7,21 +7,22 @@ using ServicesIfs;
 using MaintenanceOrdersInBoundDomain;
 using Newtonsoft.Json;
 using Model;
-
+using ServicesUniqueId;
 
 namespace adms_extensions_saf_to_ifs_workordertask.PerformMessages
 {
 
     public class PerformMessageMaintenanceOrder : IPerformMessageMaintenanceOrder
     {
-
+        private readonly IUniqueIdService _uniqueIdService;
         private readonly IIfsCloudService _ifsCloudService;
         public IMapper _mapper { get; }
         public MaintenanceOrdersOutBound.IMaintenanceOrders_Port _client { get; }
 
 
-        public PerformMessageMaintenanceOrder(IIfsCloudService ifsCloudService, IMapper mapper, MaintenanceOrdersOutBound.IMaintenanceOrders_Port client)
+        public PerformMessageMaintenanceOrder(IUniqueIdService uniqueIdService, IIfsCloudService ifsCloudService, IMapper mapper, MaintenanceOrdersOutBound.IMaintenanceOrders_Port client)
         {
+            _uniqueIdService = uniqueIdService;
             _ifsCloudService = ifsCloudService;
             _mapper = mapper;
             _client = client;
@@ -47,8 +48,15 @@ namespace adms_extensions_saf_to_ifs_workordertask.PerformMessages
 
             try
             {
+
+                Guid idG = Guid.NewGuid();
+
+                var test = _uniqueIdService.CreateUniqueId(idG, "0022/", "beskrivelse0022");
+
+
+
                 //throw new Exception("in ifscloudservice");
-                MapInBoundMessage(xmlMessage, out maintenanceOrdersDto, out workOrderIfsDto, out workOrderTaskIfsDto);
+                //MapInBoundMessage(xmlMessage, out maintenanceOrdersDto, out workOrderIfsDto, out workOrderTaskIfsDto);
 
 
                 workOrderIfsDto = new WorkOrderIfsDto();
@@ -63,7 +71,9 @@ namespace adms_extensions_saf_to_ifs_workordertask.PerformMessages
                 workOrderIfsDto.Sender = "ADMS-EXTENSIONS";  //Obl.
                 workOrderIfsDto.Context = "STANDARD";        //Obl.
 
-                workOrderIfsDto.MchCode =  "0022/11/H1";//"NS.0152";
+                //workOrderIfsDto.MchCode =  "0022/11/H1";//"NS.0152";
+
+                workOrderIfsDto.MchCode = "NS.0152";
 
                 workOrderIfsDto.RegDate = "2022-10-31T15:00:00";//Obl.
 
@@ -87,7 +97,9 @@ namespace adms_extensions_saf_to_ifs_workordertask.PerformMessages
                 workOrderTaskIfsDto.WoNo = resultWorkOrderNumber;
 
                 //workOrderTaskIfsDto.ExtRefKeyTask = "HUB.4321";
-                workOrderTaskIfsDto.MchCode = "0022/11/H1";
+                //workOrderTaskIfsDto.MchCode = "0022/11/H1";
+                workOrderTaskIfsDto.MchCode = "NS.0152";
+
                 workOrderTaskIfsDto.Description = "Just another task \u2013 never-ending story";
                 workOrderTaskIfsDto.LongDescription = "LongDescr";
                 workOrderTaskIfsDto.ReportedBy = "ELVIA_ENTR";
@@ -103,7 +115,7 @@ namespace adms_extensions_saf_to_ifs_workordertask.PerformMessages
 
                 int debuggg =  9;
 
-                MapOutBoundMessage(resultWorkOrderNumber, resultWorkOrderTaskNumber, maintenanceOrdersDto, out iFSMaintenanceOrdersInput);
+                //MapOutBoundMessage(resultWorkOrderNumber, resultWorkOrderTaskNumber, maintenanceOrdersDto, out iFSMaintenanceOrdersInput);
 
 
                 ////_client.IFSMaintenanceOrders(iFSMaintenanceOrdersInput);
