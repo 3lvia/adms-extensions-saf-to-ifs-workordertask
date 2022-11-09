@@ -24,7 +24,7 @@ public static class KvalitetsportalenCollectionExtensions
         var successfulinvocationsLowPriTopic = "private.dk.iss.successfulinvocations_low_priority";
         var exceptioninvocationsTopic = "private.dk.iss.exceptioninvocations";
         var exceptioninvocationsLowPriTopic = "private.dk.iss.exceptioninvocations_low_priority";
-        var lobStoreSasUri = HashiVault.EnsureHasValue("iss/kv/storage/sastoken/invocationstore/sasuri");
+        var lobStoreSasUri = HashiVault.EnsureHasValue("adms-extensions/kv/kvalitetsportalen/sasuri");
 
         return new KvalitetsportalClient(
             successfulInvocationsTopic,
