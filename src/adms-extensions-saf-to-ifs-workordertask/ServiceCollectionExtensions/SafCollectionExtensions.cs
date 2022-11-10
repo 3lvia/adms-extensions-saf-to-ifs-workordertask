@@ -1,5 +1,4 @@
 ﻿using Elvia.Configuration;
-using FakeItEasy;
 using MaintenanceOrdersOutBound;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

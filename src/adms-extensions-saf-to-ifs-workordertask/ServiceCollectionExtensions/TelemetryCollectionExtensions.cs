@@ -1,7 +1,6 @@
 ﻿using Elvia.Configuration;
 using Elvia.KvalitetsportalLogger;
 using Elvia.Telemetry;
-using FakeItEasy;
 using Microsoft.ApplicationInsights.DataContracts;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,7 +15,7 @@ public static class TelemetryCollectionExtensions
         //{
         //    return services;
         //}
-
+                                                      
         var instrumentationKey = configuration.EnsureHasValue("adms-extensions/kv/appinsights/adms-extensions/instrumentation_key");
         services.AddStandardElviaTelemetryLoggingWorkerService(
             instrumentationKey,

@@ -49,7 +49,7 @@ namespace MaintenanceOrderReader.ActiveMQ
             }
 
 
-            while (!stoppingToken.IsCancellationRequested)
+            while (!stoppingToken.IsCancellationRequested && false)
             {
                 try
                 {

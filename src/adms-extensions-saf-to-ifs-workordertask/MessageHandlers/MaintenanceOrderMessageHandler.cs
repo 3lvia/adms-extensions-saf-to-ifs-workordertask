@@ -14,7 +14,7 @@ using Elvia.KvalitetsportalLogger;
 using System.Diagnostics;
 using MaintenanceOrdersInBoundDomain;
 using adms_extensions_saf_to_ifs_workordertask.PerformMessages;
-using Castle.DynamicProxy;
+//using Castle.DynamicProxy;
 
 namespace MaintenanceOrderReader.MessageHandlers
 {

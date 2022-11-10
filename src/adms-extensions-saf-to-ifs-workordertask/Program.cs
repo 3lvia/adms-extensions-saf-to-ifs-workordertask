@@ -6,35 +6,19 @@ using Microsoft.Extensions.Configuration;
 using Elvia.Configuration;
 using System;
 using System.Threading;
+using IfsResponseServices.Vault;
+using Elvia.Telemetry;
 
 namespace adms_extensions_saf_to_ifs_workordertask
 {
     public class Program
     {
-
+    
         public static void Main(string[] args)
         {
-            //while (true)
-            //{
-            //    try
-            //    {
-            //        while (true)
-            //        {
-            //            Console.WriteLine("Running: " + DateTime.Now.ToLongTimeString());
-            //            Thread.Sleep(1000);
-            //        }
-
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        Console.WriteLine("ERROR: " + ex.Message + "   " + ex.StackTrace);
-
-            //    }
-
-            //}
-        
             CreateHostBuilder(args).Build().Run();
         }
+
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
@@ -43,26 +27,34 @@ namespace adms_extensions_saf_to_ifs_workordertask
                      config.AddJsonFile($"appsettings.json", true);
                      config.AddEnvironmentVariables();
                      config.AddHashiVaultSecrets();
+
                  })
                 .ConfigureServices((hostContext, services) =>
                 {
 
                     IHostEnvironment env = hostContext.HostingEnvironment;
 
+                    IHashiVaultWrapper hashiVaultWrapper = new HashiVaultWrapper();
+
                     var isDevelopment = env.IsDevelopment();
                     var configuration = hostContext.Configuration;
+
+                    var instrumentationKeyPath = configuration["Vault:AppInsights:InstrumentationKey"];
+                    var instrumentationKey = hashiVaultWrapper.EnsureHasValue(instrumentationKeyPath);
 
                     services
                         .AddMemoryCache()
                         .AddActiveMQServices(configuration, isDevelopment)
                         .AddSafServices(configuration, isDevelopment)
                         .AddTelemetryServices(configuration, isDevelopment)
-                        .AddKvalitetsportalenServices(isDevelopment)
+                        //.AddStandardElviaTelemetryLogging(instrumentationKey, true)
+                        //.AddKvalitetsportalenServices(isDevelopment)
+                        .AddKvalitetsportalenServices(configuration, isDevelopment, hashiVaultWrapper)
                         .AddAuthServices()
                         .AddAutoMapper(typeof(Program))
                         .AddPerformMessageServices()
-                        .AddIfsCloudMessageServices();       
-                    
+                        .AddIfsCloudMessageServices();
+
                 });
 
     }

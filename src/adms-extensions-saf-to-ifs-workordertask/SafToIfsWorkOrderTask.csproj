@@ -5,8 +5,6 @@
     <UserSecretsId>dotnet-adms_extensions_saf_to_ifs_workordertask-B964EFC8-AFFE-41A3-BCA7-973F18260E9F</UserSecretsId>
     <RootNamespace>adms_extensions_saf_to_ifs_workordertask</RootNamespace>
   </PropertyGroup>
-
-	
 	
   <ItemGroup>
     
@@ -30,7 +28,9 @@
 	  <PackageReference Include="System.ServiceModel.Federation" Version="4.10.*" />
 	
 	  <PackageReference Include="System.ServiceModel.NetTcp" Version="4.10.*" />
+	  
+	  <PackageReference Include="FakeItEasy" Version="7.3.1" />
+	  <PackageReference Include="FakerDotNet" Version="1.0.7" />
  
-	  <PackageReference Include="FakeItEasy" Version="6.2.1" />
   </ItemGroup>
 </Project>
