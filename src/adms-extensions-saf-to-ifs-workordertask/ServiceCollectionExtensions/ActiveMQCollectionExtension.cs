@@ -1,8 +1,7 @@
 ﻿using System;
+using AdmsExtensionsLibActiveMQ;
 using Apache.NMS;
 using Elvia.Configuration;
-using FakeItEasy;
-using MaintenanceOrderReader.ActiveMQ;
 using MaintenanceOrderReader.MessageHandlers;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -22,8 +21,14 @@ public static class BulkChangeCollectionExtension
 
         services.AddTransient<MaintenanceOrderMessageHandler>();
 
+        //return services.AddSingleton<IHostedService>(x =>
+        //    ActivatorUtilities.CreateInstance<ActiveMQReader>(x, factory, maintenanceOrderResponseQueue, x.GetService<MaintenanceOrderMessageHandler>())
+
+        //Using this local version for development!!!
         return services.AddSingleton<IHostedService>(x =>
-            ActivatorUtilities.CreateInstance<ActiveMQReader>(x, factory, maintenanceOrderResponseQueue, x.GetService<MaintenanceOrderMessageHandler>())
+            ActivatorUtilities.CreateInstance<MaintenanceOrderReader.ActiveMQ.ActiveMQReader>(x, factory, maintenanceOrderResponseQueue, x.GetService<MaintenanceOrderMessageHandler>())
+
+
         );
 
     }

@@ -76,7 +76,7 @@ namespace MaintenanceOrderReader.ActiveMQ
                         {
                             Console.WriteLine("Unknown message");
                             string exceptionMessage = "MessageID:" + message.NMSMessageId + ". Only text messages are supported. Message type was: " + message.NMSType;
-                            UnkownMessageFormatException exception = new (exceptionMessage);
+                            UnkownMessageFormatException exception = new(exceptionMessage);
                             _telemetry.TrackException(exception);
 
                             // Don't block the queue if an unsupported message arrives
