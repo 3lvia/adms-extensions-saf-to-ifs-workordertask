@@ -10,7 +10,6 @@
 
 //[assembly: System.Runtime.Serialization.ContractNamespaceAttribute("http://www.siemens.com/energy/schemas/StandardFault/v1#", ClrNamespace="www.siemens.com.energy.schemas.StandardFault.v1")]
 
-
 namespace MaintenanceOrdersInBound
 {
 
@@ -153,7 +152,6 @@ namespace MaintenanceOrdersInBound
 
         private System.Xml.XmlElement[] anyField;
 
-        //private System.String anyField;
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
         public HeaderTypeVerb Verb
@@ -410,7 +408,6 @@ namespace MaintenanceOrdersInBound
         /// <remarks/>
         [System.Xml.Serialization.XmlAnyElementAttribute(Order = 15)]
         public System.Xml.XmlElement[] Any
-        //public System.String Any
         {
             get
             {
@@ -707,6 +704,8 @@ namespace MaintenanceOrdersInBound
 
         private string sourceField;
 
+
+
         private string operationField;
 
         private string messageIdField;
@@ -715,8 +714,7 @@ namespace MaintenanceOrdersInBound
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
-        //public HeaderTypeVerb1 Verb
-        public string Verb
+        public string verb
         {
             get
             {
@@ -730,8 +728,7 @@ namespace MaintenanceOrdersInBound
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
-        //public HeaderTypeSource Source
-        public string Source
+        public string source
         {
             get
             {
@@ -745,7 +742,7 @@ namespace MaintenanceOrdersInBound
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
-        public string Operation
+        public string operation
         {
             get
             {
@@ -759,7 +756,7 @@ namespace MaintenanceOrdersInBound
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
-        public string MessageId
+        public string messageId
         {
             get
             {
@@ -774,7 +771,7 @@ namespace MaintenanceOrdersInBound
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 4)]
         [System.ComponentModel.DefaultValueAttribute(typeof(System.DateTime), "0001-01-01 00:00:00")]
-        public System.DateTime PublishedDateTime
+        public System.DateTime publishedDateTime
         {
             get
             {
@@ -2717,6 +2714,8 @@ namespace MaintenanceOrdersInBound
 
         private string feedernameField;
 
+        private string feederLVField;
+
         private string voltageLevelNumField;
 
         /// <remarks/>
@@ -2832,7 +2831,21 @@ namespace MaintenanceOrdersInBound
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(DataType = "integer", Order = 8)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 8)]
+        public string FeederLV
+        {
+            get
+            {
+                return this.feederLVField;
+            }
+            set
+            {
+                this.feederLVField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(DataType = "integer", Order = 9)]
         public string VoltageLevelNum
         {
             get
@@ -2900,7 +2913,7 @@ namespace MaintenanceOrdersInBound
         private string workStatusNumField;
 
         private WorkNames[] namesField;
-        
+
         private string workOrderNoField;
 
         private string iFS_RECORD_NUMField;
@@ -2949,11 +2962,11 @@ namespace MaintenanceOrdersInBound
 
         private string eND_ACT_DELAY_CAUSEField;
 
-        private string cAUSE_OR_REASON_NUMField;
+        private string cAUSE_OR_REASONField;
 
-        private string fAULT_CATEGORY_NUMField;
+        private string fAULT_CATEGORYField;
 
-        private string fAULT_EQUIPMENT_NUMField;
+        private string fAULT_EQUIPMENTField;
 
         private string deviceLocationField;
 
@@ -3465,44 +3478,44 @@ namespace MaintenanceOrdersInBound
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(DataType = "integer", Order = 25)]
-        public string CAUSE_OR_REASON_NUM
+        [System.Xml.Serialization.XmlElementAttribute(Order = 25)]
+        public string CAUSE_OR_REASON
         {
             get
             {
-                return this.cAUSE_OR_REASON_NUMField;
+                return this.cAUSE_OR_REASONField;
             }
             set
             {
-                this.cAUSE_OR_REASON_NUMField = value;
+                this.cAUSE_OR_REASONField = value;
             }
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(DataType = "integer", Order = 26)]
-        public string FAULT_CATEGORY_NUM
+        [System.Xml.Serialization.XmlElementAttribute(Order = 26)]
+        public string FAULT_CATEGORY
         {
             get
             {
-                return this.fAULT_CATEGORY_NUMField;
+                return this.fAULT_CATEGORYField;
             }
             set
             {
-                this.fAULT_CATEGORY_NUMField = value;
+                this.fAULT_CATEGORYField = value;
             }
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(DataType = "integer", Order = 27)]
-        public string FAULT_EQUIPMENT_NUM
+        [System.Xml.Serialization.XmlElementAttribute(Order = 27)]
+        public string FAULT_EQUIPMENT
         {
             get
             {
-                return this.fAULT_EQUIPMENT_NUMField;
+                return this.fAULT_EQUIPMENTField;
             }
             set
             {
-                this.fAULT_EQUIPMENT_NUMField = value;
+                this.fAULT_EQUIPMENTField = value;
             }
         }
 
