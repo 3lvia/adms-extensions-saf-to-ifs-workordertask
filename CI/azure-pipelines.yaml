@@ -64,6 +64,18 @@ stages:
     parameters:
       dockerfile: Dockerfile
 
+- stage: UnitAndIntegrationTestingWithSonar
+  dependsOn: []
+  jobs:
+  - template: test.yaml@templates
+    parameters:
+      sonarcloudProjectName: saf-to-ifs-workordertask
+      sonarcloudProjectKey: 3lvia_adms-extensions
+      vault_addr: $(vault_addr_test)
+      vault_role_id: $(vault_role_id_test)
+
+
+
 - stage: DeployTest
   dependsOn: Build
   pool: iss-test
