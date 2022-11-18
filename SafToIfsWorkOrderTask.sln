@@ -5,7 +5,7 @@ VisualStudioVersion = 17.3.32819.101
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SafToIfsWorkOrderTask", "src\adms-extensions-saf-to-ifs-workordertask\SafToIfsWorkOrderTask.csproj", "{F603E3B3-553F-47BA-8002-41408D6FC9F9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SafToIfsWorkOrderTask.UnitTests", "src\SafToIfsWorkOrderTask.UnitTests\SafToIfsWorkOrderTask.UnitTests.csproj", "{F94B0599-E870-42F2-A6A7-0405367BC4C0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SafToIfsWorkOrderTask.UnitTests", "test\SafToIfsWorkOrderTask.UnitTests\SafToIfsWorkOrderTask.UnitTests.csproj", "{F94B0599-E870-42F2-A6A7-0405367BC4C0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
