@@ -62,7 +62,7 @@
 
 	<xs:complexType name="MaintenanceOrdersResponseMessageType">
 		<xs:sequence>
-			<xs:element name="Header" type="msg:HeaderType"/>
+			<xs:element name="Header" type="g:HeaderType"/>
             <xs:element name="CorrelationId" type="xs:string" minOccurs="0"/>
 			<xs:element name="Payload" type="tns:MaintenanceOrdersResponseType" minOccurs="0"/>
 		</xs:sequence>
