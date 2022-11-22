@@ -49,11 +49,14 @@ namespace adms_extensions_saf_to_ifs_workordertask.PerformMessages
             try
             {
 
-                Guid idG = Guid.NewGuid();
+        
+                string oName = "KhaiQ 11 H01";
+                oName = "Ulven/300/T4/A";
 
-                var test = _uniqueIdService.CreateUniqueId(idG, "0022/", "beskrivelse0022");
+                var test = _uniqueIdService.GetUniqueId(oName);
 
-
+                var g = new Guid("8ba41b41-f627-47a6-ac53-7354ae9b022a"); //d
+                var ssss = _uniqueIdService.GetName(g);
 
                 //throw new Exception("in ifscloudservice");
                 //MapInBoundMessage(xmlMessage, out maintenanceOrdersDto, out workOrderIfsDto, out workOrderTaskIfsDto);
@@ -125,7 +128,7 @@ namespace adms_extensions_saf_to_ifs_workordertask.PerformMessages
             }
             catch (Exception ex)
             {
-                throw new Exception("ERROR: " + ex.Message + "___#####__" + requestMessageWorkOrder + "___#####__" + requestMessageWorkOrderTask + "___#####__"); 
+                throw new Exception("ERROR: " + ex.Message + "  " + ex.StackTrace + "___#####__" + requestMessageWorkOrder + "___#####__" + requestMessageWorkOrderTask + "___#####__"); 
             }
      
 

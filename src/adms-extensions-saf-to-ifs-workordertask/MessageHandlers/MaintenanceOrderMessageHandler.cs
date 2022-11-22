@@ -14,7 +14,7 @@ using Elvia.KvalitetsportalLogger;
 using System.Diagnostics;
 using MaintenanceOrdersInBoundDomain;
 using adms_extensions_saf_to_ifs_workordertask.PerformMessages;
-//using Castle.DynamicProxy;
+
 
 namespace MaintenanceOrderReader.MessageHandlers
 {
@@ -98,117 +98,5 @@ namespace MaintenanceOrderReader.MessageHandlers
 
 
 }
-
-
-
-
-
-
-//var stopWatch = new Stopwatch();
-//stopWatch.Start();
-
-//StringReader sReader = new StringReader(messageXML);
-
-//MaintenanceOrdersInBound.Envelope maintenanceOrders = Utils.DeSerialize<MaintenanceOrdersInBound.Envelope>(sReader);
-
-
-//string jsonMsg = JsonConvert.SerializeObject(maintenanceOrders, Newtonsoft.Json.Formatting.Indented);
-
-
-
-
-//var invocation = new Invocation
-//{
-//    Payload = messageXML,
-//    StartTime = DateTime.Now,
-//    GraphUri = "NA",
-//    Resource = maintenanceOrders?.Body?.ChangedMaintenanceOrders?.Header?.CorrelationID
-//};
-
-//var status = _mapper.Map<MaintenanceOrdersDto>(maintenanceOrders.Body.ChangedMaintenanceOrders);
-
-
-//var isAO = status.Payload.MaintenanceOrders.Work[0].IFSStatus == "INIT";
-
-//string jsonMsgTarget = JsonConvert.SerializeObject(status, Newtonsoft.Json.Formatting.Indented);
-
-
-//string textMessage = new StreamReader(@"BodyData.json").ReadToEnd();
-
-//string testMessageTask = new StreamReader(@"BodyDataTask.json").ReadToEnd();
-
-////var settings = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All };
-//var bodyObject = JsonConvert.DeserializeObject<Model.IFSWorkOrderBody>(textMessage);
-
-//var bodyObjectTask = JsonConvert.DeserializeObject<Model.IFSWorkTaskBody>(testMessageTask);
-
-
-//var textMessageS = JsonConvert.SerializeObject(bodyObject);
-
-
-//var result = _ifsWorkOrder.Publish(textMessageS, false);
-
-
-//bodyObjectTask.WoNo = result;
-
-//var textMessageT = JsonConvert.SerializeObject(bodyObjectTask);
-
-//var result2 = _ifsWorkOrder.Publish(textMessageT, true);
-
-
-
-
-
-
-//invocation.TargetPayloads.Add(jsonMsgTarget);
-
-
-
-//try
-//{
-
-
-
-
-
-//}
-//catch (Exception ex)
-//{
-//    int qw = 2;
-//}
-
-
-
-
-
-//var status2 = _mapper.Map<Model.IFSWorkOrderBody>(maintenanceOrders.Body.ChangedMaintenanceOrders);
-
-
-//int s = 1;
-
-
-//CreateMaintenanceOrdersRequest cmor = new CreateMaintenanceOrdersRequest();
-
-//cmor.CreateMaintenanceOrders = new MaintenanceOrdersCreateMessageType
-//{
-//    Payload = new MaintenanceOrdersType
-//    {
-//        MaintenanceOrders = new MaintenanceOrdersTypeMaintenanceOrders
-//        {
-
-//            Organisation = new Organisation[]
-//             {
-//                 new Organisation
-//                 {
-//                     mRID = "1111"
-//                 }
-//             }
-
-
-//        }
-//    }
-//};
-
-////_client.CreateMaintenanceOrders(cmor);
 
 

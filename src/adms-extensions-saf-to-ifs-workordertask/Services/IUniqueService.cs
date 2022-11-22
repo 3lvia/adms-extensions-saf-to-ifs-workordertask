@@ -9,9 +9,7 @@ namespace ServicesUniqueId
 {
     public interface IUniqueIdService
     {
-        string CreateUniqueId(Guid id, string Name, string Description);
-
-        string GetObjectByUniqueId(string request);
-
+        Guid GetUniqueId(string Name);
+        string GetName(Guid UniqueId);
     }
 }

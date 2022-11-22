@@ -1,5 +1,8 @@
 ﻿using Azure.Core;
+using Elvia.Configuration;
 using k8s.Util.Common;
+using Microsoft.Extensions.Configuration;
+using Model;
 using Newtonsoft.Json;
 using ServicesIfs;
 using System;
@@ -9,109 +12,104 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
+using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 
 
 namespace ServicesUniqueId
 {
     public class UniqueIdService : IUniqueIdService
-    {   
+    {
         public IAccessTokenService _accessTokenService { get; }
-      
-        public UniqueIdService(IAccessTokenService accessTokenService)
+        private string _uniqueIdURL = "";
+        private string nameType = "3d99f02b-fef4-4669-b3f4-81a4ce7d0572";
+            //"d0d63167-a7ec-4904-ab3f-1d8224bcc8d0";
+
+
+        public UniqueIdService(IAccessTokenService accessTokenService, IConfiguration configuration)
         {
             _accessTokenService = accessTokenService;
+            _uniqueIdURL = configuration.EnsureHasValue("UniqueId:Endpoint");
         }
 
-
-
-        public string CreateUniqueId(Guid id, string Name, string Description)
-        {
-            //string webAddress = @"h ttps://uniqueid-api.dev-elvia.io/ObjectType";
-
-            string webAddress = @"https://uniqueid-api.elvia.io/IdentifiedObject/26adce8e-2933-4728-83c5-a609ed964faf";
-
-            var obj = new Model.UniqueId
-            {
-                mrid = id.ToString(),
-                name = Name,
-                description = Description
-            };
-
-
-            var request = JsonConvert.SerializeObject(obj, Newtonsoft.Json.Formatting.Indented);
-
-              
-            HttpResponseMessage httpResponse = CallUniqueIdAtlas(request, webAddress);
-
-
-            string result12 = httpResponse.Content.ReadAsStringAsync().Result;
-
-            if (httpResponse.StatusCode == HttpStatusCode.OK)
-            {
-
-                string result = httpResponse.Content.ReadAsStringAsync().Result;
-
-                string cc = "";
-
-            }
-
-            return "";
-        }
-
-
-        public string GetObjectByUniqueId(string request)
-        {
-            throw new NotImplementedException();
-        }
-
-
-        private HttpResponseMessage CallUniqueIdAtlas(string request, string webAddress)
+        public Guid GetUniqueId(string Name)
         {
             var accessToken = _accessTokenService.GetAccessToken().Result;
 
-            var _httpClient = new HttpClient() { BaseAddress = new Uri(webAddress)  };
+            string webAddress = _uniqueIdURL + "IdentifiedObject?name=" + UrlEncoder.Default.Encode(Name) + "&nameType=" + nameType + "&pageNumber=1&pageSize=300";
 
-
-            webAddress = @"https://uniqueid-api.dev-elvia.io/IdentifiedObject/b2c83910-4e49-4d98-b253-bfc943c9773c";
 
             HttpRequestMessage requestMessage = new HttpRequestMessage(HttpMethod.Get, webAddress);
 
+            var _httpClient = new HttpClient() { BaseAddress = new Uri(webAddress) };
 
-            //SetHeaders(requestMessage.Headers);
-
- 
-           _httpClient.DefaultRequestHeaders.TryAddWithoutValidation("Authorization", "Bearer " + accessToken);
-           _httpClient.DefaultRequestHeaders.TryAddWithoutValidation("api-version", "1.0");
-            _httpClient.DefaultRequestHeaders.TryAddWithoutValidation("accept", "text/plain");
-
-            //var httpBody = new StringContent(request, Encoding.UTF8, "application/json");
-
-            //var httpBody = new StringContent("", Encoding.UTF8, "application/json");
-
-            //var httpResponse = _httpClient.GetAsync(_httpClient.BaseAddress, httpBody).Result;
+            SetHeaders(accessToken, _httpClient);
 
             var httpResponse = _httpClient.GetAsync(_httpClient.BaseAddress).Result;
 
-            return httpResponse;
+            if (httpResponse.StatusCode == HttpStatusCode.OK)
+            {
+                string result = httpResponse.Content.ReadAsStringAsync().Result;
+
+                var ser = JsonConvert.DeserializeObject<Model.UniqueIdResult>(result);
+
+                if (ser.totalRecords == 0)
+                {
+                    throw new Exception("### ERROR GetUniqueId name not found");
+                }
+                else if (ser.totalRecords > 1)
+                {
+                    throw new Exception("### ERROR GetUniqueId name not unique");
+                }
+
+                return ser.data[0].mrid;
+            }
+            else
+            {
+                throw new Exception("### ERROR GetUniqueId " + httpResponse.StatusCode.ToString());
+            }
         }
 
 
-        private static void SetHeaders(HttpRequestHeaders headers)
+        public string GetName(Guid UniqueId)
         {
-            headers.Clear();
+            var accessToken = _accessTokenService.GetAccessToken().Result;
 
-            headers.Accept.ParseAdd("*/*");
-            headers.AcceptEncoding.ParseAdd("gzip,deflate");
-            //headers.AcceptLanguage.ParseAdd("en-GB,en-us;q=0.8,en;q=0.6");
-            //headers.UserAgent.ParseAdd(GetUserAgent);
-    
-           
-            headers.Add("api-version","1.0");
-            headers.Connection.TryParseAdd("keep-alive");
-            //headers.Host = new Uri(LoginUrl).Host;
-            //headers.Add("X-Requested-With", "XMLHttpRequest");
-            //api-version: 1.0
+            string webAddress = _uniqueIdURL + "IdentifiedObject/" + UniqueId.ToString();
+
+
+            HttpRequestMessage requestMessage = new HttpRequestMessage(HttpMethod.Get, webAddress);
+
+            var _httpClient = new HttpClient() { BaseAddress = new Uri(webAddress) };
+
+            SetHeaders(accessToken, _httpClient);
+
+            var httpResponse = _httpClient.GetAsync(_httpClient.BaseAddress).Result;
+
+            if (httpResponse.StatusCode == HttpStatusCode.OK)
+            {
+                string result = httpResponse.Content.ReadAsStringAsync().Result;
+
+                var ser = JsonConvert.DeserializeObject<Model.UniqueNameResult>(result);
+
+                if (ser.names.Length != 1)
+                {
+                    throw new Exception("### ERROR GetUniqueId name not unique");
+                }
+
+                return ser.names[0].name;
+            }
+            else
+            {
+                throw new Exception("### ERROR GetNameByUniqueId " + httpResponse.StatusCode.ToString());
+            }
+        }
+
+        private static void SetHeaders(string accessToken, HttpClient _httpClient)
+        {
+            _httpClient.DefaultRequestHeaders.TryAddWithoutValidation("Authorization", "Bearer " + accessToken);
+            _httpClient.DefaultRequestHeaders.TryAddWithoutValidation("api-version", "1.0");
+            _httpClient.DefaultRequestHeaders.TryAddWithoutValidation("accept", "text/plain");
         }
 
 
