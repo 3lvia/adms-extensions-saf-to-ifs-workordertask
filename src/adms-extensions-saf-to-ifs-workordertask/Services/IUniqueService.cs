@@ -9,7 +9,9 @@ namespace ServicesUniqueId
 {
     public interface IUniqueIdService
     {
-        Guid GetUniqueId(string Name);
-        string GetName(Guid UniqueId);
+        Task<Guid> GetUniqueId(string Name);
+
+        Task<Guid> GetUniqueId2Async(string Name);
+        Task<string> GetName(Guid UniqueId);
     }
 }

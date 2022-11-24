@@ -19,15 +19,15 @@ namespace ServicesIfs
 {
     public class IfsCloudService : IIfsCloudService
     {
+        private readonly HttpClient _httpClient;
         private readonly IAccessTokenService _accessTokenService;
         private readonly IConfiguration _configuration;
 
-        public IfsCloudService(IAccessTokenService accessTokenService, IConfiguration configuration)
+        public IfsCloudService(HttpClient httpClient, IAccessTokenService accessTokenService, IConfiguration configuration)
         {
+            _httpClient = httpClient;
             _accessTokenService = accessTokenService;
             _configuration = configuration;
-
-
         }
 
         public string CreateWorkOrder(string request)
@@ -95,7 +95,7 @@ namespace ServicesIfs
         {
             var accessToken = _accessTokenService.GetAccessToken().Result;
 
-            var _httpClient = new HttpClient() { BaseAddress = new Uri(webAddress) };
+            _httpClient.BaseAddress = new Uri(webAddress);
 
             _httpClient.DefaultRequestHeaders.TryAddWithoutValidation("Authorization", "Bearer " + accessToken);
 

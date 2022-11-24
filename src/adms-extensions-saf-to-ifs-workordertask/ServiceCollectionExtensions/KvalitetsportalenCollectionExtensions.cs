@@ -34,8 +34,8 @@ public static class KvalitetsportalenCollectionExtensions
     {
 
         var logSuccessfulInvocationsTopic = configuration["Kafka:Kvalitetsportalen:LogSuccessfulInvocationsTopic"];
-        var logExceptioninvocationsTopic = configuration["Kafka:Kvalitetsportalen:LogExceptioninvocationsTopic"];
         var logSuccessfulinvocationsLowPriTopic = configuration["Kafka:Kvalitetsportalen:LogSuccessfulinvocationsLowPriTopic"];
+        var logExceptioninvocationsTopic = configuration["Kafka:Kvalitetsportalen:LogExceptioninvocationsTopic"];
         var logExceptioninvocationsLowPriTopic = configuration["Kafka:Kvalitetsportalen:LogExceptioninvocationsLowPriTopic"];
 
         var sasUriPath = configuration["Vault:Kvalitetsportalen:SasUri"];
@@ -48,9 +48,9 @@ public static class KvalitetsportalenCollectionExtensions
         }
 
         return new KvalitetsportalClient(
-            logSuccessfulInvocationsTopic,
+            logSuccessfulInvocationsTopic,     
+            logSuccessfulinvocationsLowPriTopic,     
             logExceptioninvocationsTopic,
-            logSuccessfulinvocationsLowPriTopic,
             logExceptioninvocationsLowPriTopic,
             new Uri(sasUri));
     }

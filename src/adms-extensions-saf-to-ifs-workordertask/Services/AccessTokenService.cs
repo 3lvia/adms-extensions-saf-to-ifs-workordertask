@@ -12,13 +12,15 @@ namespace ServicesIfs
 {
     public class AccessTokenService : IAccessTokenService
     {
+        private readonly HttpClient _httpClient;
         private readonly IClientCredentialsConfiguration _config;
         private readonly IMemoryCache _memoryCache;
 
         private const string AccessTokenMemoryCacheKey = "AccessTokenMemoryCacheKey";
 
-        public AccessTokenService(IClientCredentialsConfiguration config, IMemoryCache memoryCache)
+        public AccessTokenService(HttpClient httpClient, IClientCredentialsConfiguration config, IMemoryCache memoryCache)
         {
+            _httpClient = httpClient;
             _config = config;
             _memoryCache = memoryCache;
         }
@@ -78,10 +80,7 @@ namespace ServicesIfs
                 return cachedAccessToken;
             }
 
-            HttpClient client = new HttpClient();
-
             HttpRequestMessage requestMessage = new HttpRequestMessage(HttpMethod.Post, _config.TokenEndpoint);
-
 
             SetHeaders(requestMessage.Headers);
 
@@ -89,7 +88,7 @@ namespace ServicesIfs
 
             var svar = "";
 
-            await client.SendAsync(requestMessage)
+            await _httpClient.SendAsync(requestMessage)
            .ContinueWith(async responseTask =>
            {
                Console.WriteLine("Response: {0}", responseTask.Result);
@@ -110,7 +109,6 @@ namespace ServicesIfs
             Console.WriteLine("AccessToken fetched: "+ token.Substring(0,4));
 
             return token;
-
 
         }
 

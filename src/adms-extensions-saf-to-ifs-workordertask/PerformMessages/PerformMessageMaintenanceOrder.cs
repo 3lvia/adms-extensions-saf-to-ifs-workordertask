@@ -51,11 +51,11 @@ namespace adms_extensions_saf_to_ifs_workordertask.PerformMessages
 
         
                 string oName = "KhaiQ 11 H01";
-                oName = "Ulven/300/T4/A";
+                ////oName = "Ulven/300/T4/A";
 
-                var test = _uniqueIdService.GetUniqueId(oName);
+                var test = _uniqueIdService.GetUniqueId2Async(oName).Result;
 
-                var g = new Guid("8ba41b41-f627-47a6-ac53-7354ae9b022a"); //d
+                var g = new Guid("8ba41b41-f627-47a6-ac53-7354ae9b022d"); //d
                 var ssss = _uniqueIdService.GetName(g);
 
                 //throw new Exception("in ifscloudservice");
