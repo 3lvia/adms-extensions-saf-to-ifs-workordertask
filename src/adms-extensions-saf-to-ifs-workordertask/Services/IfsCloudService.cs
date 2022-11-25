@@ -1,14 +1,8 @@
-﻿using Azure;
-using Elvia.Configuration;
+﻿using Elvia.Configuration;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Hosting;
 using Model;
 using Newtonsoft.Json;
-using ServicesIfs;
-
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Text;
@@ -30,20 +24,45 @@ namespace ServicesIfs
             _configuration = configuration;
         }
 
-        public string CreateWorkOrder(string request)
+        public async Task<string> CreateWorkOrder(string request)
         {
-            string webAddress = _configuration.EnsureHasValue("webAddressIfsCloudWorkOrder");
-       
+            Uri ifsUri = new Uri(_configuration.EnsureHasValue("URI:IfsCloudWorkOrder"));
 
-            //Console.WriteLine("CreateWorkOrder-webaddress: " + webAddress.Substring(0,15));
-
-            HttpResponseMessage httpResponse = CallIfsCloud(request, webAddress);
+            HttpResponseMessage httpResponse = await CallIfsCloud(request, ifsUri);
 
             if (httpResponse.StatusCode == HttpStatusCode.OK)
             {
-                string result = httpResponse.Content.ReadAsStringAsync().Result;
+                string result = await httpResponse.Content.ReadAsStringAsync();
 
-                var ser = JsonConvert.DeserializeObject<ResultValues>(result);
+                var ser = JsonConvert.DeserializeObject<ResultValuesIfs>(result);
+
+                var resultNumber = Regex.Match(ser.Result, @"\d+").Value;
+
+                if (resultNumber.Length == 0)
+                {
+                    throw new Exception($"Something went wrong when calling IFS-Cloud WorkOrder - for CreateWorkOrderTask.\r\n {httpResponse.StatusCode}:\r\n {httpResponse.ReasonPhrase}:\r\n {httpResponse.Content.ReadAsStringAsync().Result} \r\n\r\n");
+                }
+                return resultNumber;
+            }
+            else
+            {
+                throw new Exception($"Something went wrong when calling IFS-Cloud WorkOrder - for CreateWorkOrder.\r\n {httpResponse.StatusCode}:\r\n {httpResponse.ReasonPhrase}:\r\n {httpResponse.Content.ReadAsStringAsync().Result} \r\n\r\n");
+            }
+        }
+
+
+
+        public async Task<string> CreateWorkOrderTask(string request)
+        {
+            Uri ifsURI = new Uri(_configuration.EnsureHasValue("URI:IfsCloudWorkOrderTask"));
+
+            HttpResponseMessage httpResponse = await CallIfsCloud(request, ifsURI);
+
+            if (httpResponse.StatusCode == HttpStatusCode.OK)
+            {
+                string result = await httpResponse.Content.ReadAsStringAsync();
+
+                var ser = JsonConvert.DeserializeObject<ResultValuesIfs>(result);
 
                 var resultNumber = Regex.Match(ser.Result, @"\d+").Value;
 
@@ -56,130 +75,27 @@ namespace ServicesIfs
             }
             else
             {
-                throw new Exception($"Something went wrong when calling IFS-Cloud WorkOrder - for CreateWorkOrder.\r\n {httpResponse.StatusCode}:\r\n {httpResponse.ReasonPhrase}:\r\n {httpResponse.Content.ReadAsStringAsync().Result} \r\n\r\n");
-            }
-        }
-
-
-
-        public string CreateWorkOrderTask(string request)
-        {      
-            string webAddress = _configuration.EnsureHasValue("webAddressIfsCloudWorkOrderTask");
-
-            HttpResponseMessage httpResponse = CallIfsCloud(request, webAddress);
-
-            if (httpResponse.StatusCode == HttpStatusCode.OK)
-            {
-                string result = httpResponse.Content.ReadAsStringAsync().Result;
-
-                var ser = JsonConvert.DeserializeObject<ResultValuesTask>(result);
-
-                var resultNumber = Regex.Match(ser.Value, @"\d+").Value;
-
-                if (resultNumber.Length == 0)
-                {
-                    throw new Exception($"Something went wrong when calling IFS-Cloud WorkOrder - for CreateWorkOrderTask.\r\n {httpResponse.StatusCode}:\r\n {httpResponse.ReasonPhrase}:\r\n {httpResponse.Content.ReadAsStringAsync().Result} \r\n\r\n");
-                }
-
-                return resultNumber;
-            }
-            else
-            {             
                 throw new Exception($"Something went wrong when calling IFS-Cloud WorkOrder - for CreateWorkOrderTask.\r\n {httpResponse.StatusCode}:\r\n {httpResponse.ReasonPhrase}:\r\n {httpResponse.Content.ReadAsStringAsync().Result} \r\n\r\n");
             }
         }
 
-    
 
-        private HttpResponseMessage CallIfsCloud(string request, string webAddress)
+
+        private async Task<HttpResponseMessage> CallIfsCloud(string request, Uri ifsUri)
         {
-            var accessToken = _accessTokenService.GetAccessToken().Result;
+            var accessToken = await _accessTokenService.GetAccessToken();
 
-            _httpClient.BaseAddress = new Uri(webAddress);
-
+            _httpClient.DefaultRequestHeaders.Clear();
             _httpClient.DefaultRequestHeaders.TryAddWithoutValidation("Authorization", "Bearer " + accessToken);
 
             var httpBody = new StringContent(request, Encoding.UTF8, "application/json");
 
-            var httpResponse = _httpClient.PostAsync(_httpClient.BaseAddress, httpBody).Result;
+            var httpResponse = await _httpClient.PostAsync(ifsUri, httpBody);
             return httpResponse;
         }
     }
 
 }
-
-
-
-
-
-
-
-
-
-
-
-//public string Publish(string request, bool bTask)
-//{
-//    //var _httpClient = new HttpClient() { BaseAddress = new Uri(@"ht tps://ifs-cloud-integration.dev-elvia.io/passthrough/forward/v1/CEntrWorkOrderHandling.svc/EntRCreateWorkOrder") };
-
-//    string webAddress = @"https://ifs-cloud-integration.dev-elvia.io/passthrough/forward/v1/CEntrWorkOrderHandling.svc/EntRCreateWorkOrder";
-
-//    if (bTask) webAddress += "Task";
-
-//    HttpResponseMessage httpResponse = CallIfsCloud(request, webAddress);
-
-//    if (httpResponse.StatusCode == HttpStatusCode.OK)
-//    {
-
-//        if (!bTask)
-//        {
-//            string result = httpResponse.Content.ReadAsStringAsync().Result;
-
-//            var ser = JsonConvert.DeserializeObject<ResultValues>(result);
-
-//            var result2 = Regex.Match(ser.Result, @"\d+").Value;
-
-//            int debug = 12;
-
-//            return result2;
-
-
-//        }
-//        else
-//        {
-//            string result = httpResponse.Content.ReadAsStringAsync().Result;
-
-//            var ser = JsonConvert.DeserializeObject<ResultValuesTask>(result);
-
-//            var result2 = Regex.Match(ser.Value, @"\d+").Value;
-
-//            int debug = 12;
-
-//            return result2;
-
-//        }
-
-
-
-
-//    }
-//    else
-//    {
-//        //var errorMessage = httpResponse.Content.ReadAsStringAsync();
-//        //var txt = @"Something went wrong when calling Convey. \r\n" + httpResponse.StatusCode + httpResponse.ReasonPhrase + errorMessage.Result;
-
-//        //throw new Exception(txt);
-
-//        throw new Exception($"Something went wrong when calling Convey.\r\n {httpResponse.StatusCode}:\r\n {httpResponse.ReasonPhrase}:\r\n {httpResponse.Content.ReadAsStringAsync().Result} \r\n\r\n");
-
-
-//    }
-
-
-
-//    return "ERROR"; // Task.CompletedTask;
-//}
-
 
 
 

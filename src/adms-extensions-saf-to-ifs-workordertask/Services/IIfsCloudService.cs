@@ -9,9 +9,9 @@ namespace ServicesIfs
 {
     public interface IIfsCloudService
     {
-        string CreateWorkOrder(string request);
+        Task<string> CreateWorkOrder(string request);
 
-        string CreateWorkOrderTask(string request);
+        Task<string> CreateWorkOrderTask(string request);
 
     }
 }

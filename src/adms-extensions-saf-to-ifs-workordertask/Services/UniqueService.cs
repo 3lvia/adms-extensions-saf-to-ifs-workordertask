@@ -1,20 +1,10 @@
-﻿using Azure.Core;
-using Confluent.Kafka;
-using Elvia.Configuration;
-using k8s.Util.Common;
-using Microsoft.Extensions.Caching.Memory;
+﻿using Elvia.Configuration;
 using Microsoft.Extensions.Configuration;
-using Model;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using ServicesIfs;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 
@@ -35,105 +25,65 @@ namespace ServicesUniqueId
             _httpClient = httpClient;
             _accessTokenService = accessTokenService;
             _uniqueIdURL = configuration.EnsureHasValue("UniqueId:Endpoint");
-            _httpClient.BaseAddress = new Uri(_uniqueIdURL);
         }
-
-
-        public async Task<Guid> GetUniqueId2Async(string Name)
-        {
-         
-            HttpRequestMessage requestMessage = new HttpRequestMessage(HttpMethod.Get, _uniqueIdURL);
-
-            //_httpClient.DefaultRequestHeaders.TryAddWithoutValidation("Authorization", "Bearer " + accessToken);
-            //_httpClient.DefaultRequestHeaders.TryAddWithoutValidation("api-version", "1.0");
-            //_httpClient.DefaultRequestHeaders.TryAddWithoutValidation("accept", "text/plain");
-            var accessToken = _accessTokenService.GetAccessToken().Result;
-
-           // SetHeaders(accessToken, _httpClient);
-
-
-           // requestMessage.Content = new StringContent("IdentifiedObject?name=" + UrlEncoder.Default.Encode(Name) + "&nameType=" + nameType + "&pageNumber=1&pageSize=300");
-    
-           // var svar = "";
-           // await _httpClient.GetAsync(requestMessage)
-           //.ContinueWith(async responseTask =>
-           //{
-           //    Console.WriteLine("Response: {0}", responseTask.Result);
-           //    var Content = await responseTask.Result.Content.ReadAsStringAsync();
-           //    svar = Content;
-           //    int debug = 1;
-           //});
-         
-         
-            //Temp
-            //Console.WriteLine("AccessToken fetched: " + token.Substring(0, 4));
-
-            return Guid.NewGuid();
-
-        }
-
-
 
 
         public async Task<Guid> GetUniqueId(string Name)
         {
-            var accessToken = _accessTokenService.GetAccessToken().Result;
+            string webRequest = _uniqueIdURL + "IdentifiedObject?name=" + UrlEncoder.Default.Encode(Name) + "&nameType=" + nameType + "&pageNumber=1&pageSize=300";
 
-            string webAddress = "IdentifiedObject?name=" + UrlEncoder.Default.Encode(Name) + "&nameType=" + nameType + "&pageNumber=1&pageSize=300";
-
-
-            //HttpRequestMessage requestMessage = new HttpRequestMessage(HttpMethod.Get, webAddress);
+            var accessToken = await _accessTokenService.GetAccessToken();
 
             SetHeaders(accessToken, _httpClient);
 
-            var httpResponse = await _httpClient.GetAsync(webAddress);
+    
+            HttpResponseMessage httpResponse = await _httpClient.GetAsync(webRequest);
 
             if (httpResponse.StatusCode == HttpStatusCode.OK)
             {
-                string result = httpResponse.Content.ReadAsStringAsync().Result;
+                string result = await httpResponse.Content.ReadAsStringAsync();
 
-                var ser = JsonConvert.DeserializeObject<Model.UniqueIdResult>(result);
+                var uniqueIdResult = JsonConvert.DeserializeObject<Model.UniqueIdResult>(result);
 
-                if (ser.totalRecords == 0)
+                if (uniqueIdResult.totalRecords == 0)
                 {
                     throw new Exception("### ERROR GetUniqueId name not found");
                 }
-                else if (ser.totalRecords > 1)
+                else if (uniqueIdResult.totalRecords > 1)
                 {
                     throw new Exception("### ERROR GetUniqueId name not unique");
                 }
 
-                return ser.data[0].mrid;
+                return uniqueIdResult.data[0].mrid;
             }
             else
             {
                 throw new Exception("### ERROR GetUniqueId " + httpResponse.StatusCode.ToString());
             }
-        }
 
+        }
 
         public async Task<string> GetName(Guid UniqueId)
         {
-            var accessToken = _accessTokenService.GetAccessToken().Result;
+            var accessToken = await _accessTokenService.GetAccessToken();
 
-            string webAddress = "IdentifiedObject/" + UniqueId.ToString();
+            string webRequest = _uniqueIdURL + "IdentifiedObject/" + UniqueId.ToString();
 
             SetHeaders(accessToken, _httpClient);
 
-            var httpResponse = await _httpClient.GetAsync(webAddress);
+            var httpResponse = await _httpClient.GetAsync(webRequest);
 
             if (httpResponse.StatusCode == HttpStatusCode.OK)
             {
-                string result = httpResponse.Content.ReadAsStringAsync().Result;
+                string result = await httpResponse.Content.ReadAsStringAsync();
 
-                var ser = JsonConvert.DeserializeObject<Model.UniqueNameResult>(result);
+                var uniqueNameResult = JsonConvert.DeserializeObject<Model.UniqueNameResult>(result);
 
-                if (ser.names.Length != 1)
+                if (uniqueNameResult.names.Length != 1)
                 {
                     throw new Exception("### ERROR GetUniqueId name not unique");
                 }
-
-                return ser.names[0].name;
+                return uniqueNameResult.names[0].name;
             }
             else
             {
@@ -143,11 +93,10 @@ namespace ServicesUniqueId
 
         private static void SetHeaders(string accessToken, HttpClient _httpClient)
         {
+            _httpClient.DefaultRequestHeaders.Clear();
             _httpClient.DefaultRequestHeaders.TryAddWithoutValidation("Authorization", "Bearer " + accessToken);
             _httpClient.DefaultRequestHeaders.TryAddWithoutValidation("api-version", "1.0");
             _httpClient.DefaultRequestHeaders.TryAddWithoutValidation("accept", "text/plain");
         }
-
-
     }
 }
