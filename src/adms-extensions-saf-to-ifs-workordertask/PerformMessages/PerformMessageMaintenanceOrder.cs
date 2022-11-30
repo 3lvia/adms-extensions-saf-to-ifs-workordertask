@@ -48,15 +48,19 @@ namespace adms_extensions_saf_to_ifs_workordertask.PerformMessages
 
             try
             {
-
+               
+                //"ObjectType": "db83df58-1140-4a60-b6d1-9dacc6f2cbf0",
 
                 string oName = "KhaiQ 11 H01";
                 //////oName = "Ulven/300/T4/A";
 
+                oName = "Kjelsås 11 4911";
                 var test = _uniqueIdService.GetUniqueId(oName).Result;
 
-                var g = new Guid("8ba41b41-f627-47a6-ac53-7354ae9b022d");
-                var ssss = _uniqueIdService.GetName(g).Result;
+                //var g = new Guid("8ba41b41-f627-47a6-ac53-7354ae9b022d");
+                //g = test;
+                
+                var ssss = _uniqueIdService.GetName(test).Result;
 
                 //throw new Exception("in ifscloudservice");
                 //MapInBoundMessage(xmlMessage, out maintenanceOrdersDto, out workOrderIfsDto, out workOrderTaskIfsDto);
@@ -119,7 +123,7 @@ namespace adms_extensions_saf_to_ifs_workordertask.PerformMessages
 
                 int debuggg =  9;
 
-                //MapOutBoundMessage(resultWorkOrderNumber, resultWorkOrderTaskNumber, maintenanceOrdersDto, out iFSMaintenanceOrdersInput);
+                MapOutBoundMessage(resultWorkOrderNumber, resultWorkOrderTaskNumber, maintenanceOrdersDto, out iFSMaintenanceOrdersInput);
 
 
                 ////_client.IFSMaintenanceOrders(iFSMaintenanceOrdersInput);
