@@ -69,10 +69,6 @@ namespace MaintenanceOrderReader.MessageHandlers
 
                 throw new InvalidOperationException("zzzzz");
             }
-
-           
-            int debug = 1;
-            //_telemetry.TrackTrace(messageText);
         }
     }
 
