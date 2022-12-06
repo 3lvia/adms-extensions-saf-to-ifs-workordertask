@@ -44,9 +44,8 @@ namespace ServicesIfs
            .ContinueWith(async responseTask =>
            {
                Console.WriteLine("Response: {0}", responseTask.Result);
-               var Content = await responseTask.Result.Content.ReadAsStringAsync();
-               svar = Content;
-               int debug = 1;
+               var content = await responseTask.Result.Content.ReadAsStringAsync();
+               svar = content;
            });
             JObject jObject = JObject.Parse(svar);
 

@@ -28,11 +28,9 @@ namespace adms_extensions_saf_to_ifs_workordertask.PerformMessages
             _client = client;
         }
 
-      
+
         public (string, string) Invoke(string xmlMessage)
         {
-
-            MaintenanceOrdersInBound.Envelope maintenanceOrders;
             MaintenanceOrdersOutBound.IFSMaintenanceOrdersInput iFSMaintenanceOrdersInput;
 
             MaintenanceOrdersDto maintenanceOrdersDto;
@@ -48,7 +46,7 @@ namespace adms_extensions_saf_to_ifs_workordertask.PerformMessages
 
             try
             {
-               
+
                 //"ObjectType": "db83df58-1140-4a60-b6d1-9dacc6f2cbf0",
 
                 string oName = "KhaiQ 11 H01";
@@ -59,7 +57,7 @@ namespace adms_extensions_saf_to_ifs_workordertask.PerformMessages
 
                 //var g = new Guid("8ba41b41-f627-47a6-ac53-7354ae9b022d");
                 //g = test;
-                
+
                 var ssss = _uniqueIdService.GetName(test).Result;
 
                 //throw new Exception("in ifscloudservice");
@@ -95,8 +93,6 @@ namespace adms_extensions_saf_to_ifs_workordertask.PerformMessages
 
                 resultWorkOrderNumber = _ifsCloudService.CreateWorkOrder(requestMessageWorkOrder).Result;
 
-                int deb = 4;
-
                 workOrderTaskIfsDto.Sender = "ELSMART";  //Obl.
                 //workOrderTaskIfsDto.Sender = "ADMS-EXTENSIONS"; //Obl.
                 workOrderTaskIfsDto.Context = "STANDARD";       //Obl.
@@ -121,8 +117,6 @@ namespace adms_extensions_saf_to_ifs_workordertask.PerformMessages
 
                 resultWorkOrderTaskNumber = _ifsCloudService.CreateWorkOrderTask(requestMessageWorkOrderTask).Result;
 
-                int debuggg =  9;
-
                 MapOutBoundMessage(resultWorkOrderNumber, resultWorkOrderTaskNumber, maintenanceOrdersDto, out iFSMaintenanceOrdersInput);
 
 
@@ -133,20 +127,20 @@ namespace adms_extensions_saf_to_ifs_workordertask.PerformMessages
             }
             catch (Exception ex)
             {
-                throw new Exception("ERROR: " + ex.Message + "  " + ex.StackTrace + "___#####__" + requestMessageWorkOrder + "___#####__" + requestMessageWorkOrderTask + "___#####__"); 
+                throw new Exception("ERROR: " + ex.Message + "  " + ex.StackTrace + "___#####__" + requestMessageWorkOrder + "___#####__" + requestMessageWorkOrderTask + "___#####__");
             }
-     
+
 
             string targetMessages  = "\r\n\r\nWorkOrderRequest: \r\n" + requestMessageWorkOrder + "\r\nResult:" + resultWorkOrderNumber;
                    targetMessages += "\r\n\r\nWorkOrderTaskRequest: \r\n" + requestMessageWorkOrderTask + "\r\nResult:" + resultWorkOrderTaskNumber;
                    targetMessages += "\r\n\r\nReturnMessageToSAF: \r\n" + returnXMLMessageToSaf + "\r\n";
 
             string id = maintenanceOrdersDto.MessageId;
-           
+
             return (targetMessages, id);
         }
 
-      
+
 
         private void MapInBoundMessage(string xmlMessage, out MaintenanceOrdersDto maintenanceOrdersDto, out Model.WorkOrderIfsDto workOrderDto, out Model.WorkOrderTaskIfsDto workOrderTaskDto)
         {
@@ -155,16 +149,16 @@ namespace adms_extensions_saf_to_ifs_workordertask.PerformMessages
             var maintenanceOrders = Utils.DeSerialize<MaintenanceOrdersInBound.Envelope>(sReader);
 
             maintenanceOrdersDto = _mapper.Map<MaintenanceOrdersDto>(maintenanceOrders.Body.ChangedMaintenanceOrders);
-            
+
             workOrderDto = _mapper.Map<Model.WorkOrderIfsDto>(maintenanceOrders.Body.ChangedMaintenanceOrders);
 
             workOrderTaskDto = _mapper.Map<Model.WorkOrderTaskIfsDto>(maintenanceOrders.Body.ChangedMaintenanceOrders);
         }
 
 
-  
+
         private void MapOutBoundMessage(string resultWorkOrderNumber, string resultWorkOrderTaskNumber, MaintenanceOrdersDto maintenanceOrdersDto, out MaintenanceOrdersOutBound.IFSMaintenanceOrdersInput iFSMaintenanceOrdersInput)
-        {         
+        {
 
             var iFSMaintenanceOrdersInputDto = new MaintenanceOrdersOutBoundDomain.IFSMaintenanceOrdersInputDto
             {
@@ -237,9 +231,6 @@ namespace adms_extensions_saf_to_ifs_workordertask.PerformMessages
 
 
             iFSMaintenanceOrdersInput = _mapper.Map<MaintenanceOrdersOutBound.IFSMaintenanceOrdersInput>(iFSMaintenanceOrdersInputDto);
-
-          
-            int d = 6;
         }
 
 
@@ -273,7 +264,7 @@ namespace adms_extensions_saf_to_ifs_workordertask.PerformMessages
 
 
 
-   
+
 
 
 
@@ -294,7 +285,7 @@ namespace adms_extensions_saf_to_ifs_workordertask.PerformMessages
         }
 
     }
-   
+
 
 }
 
