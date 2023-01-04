@@ -38,35 +38,35 @@ lifecycle:
       - sleep
       - "1"
 
-readinessProbe:
-  failureThreshold: 3
-  httpGet:
-    path: /endpoints
-    port: 8080
-    scheme: HTTP
-  initialDelaySeconds: 15
-  periodSeconds: 15
-  successThreshold: 1
-  timeoutSeconds: 3
+#readinessProbe:
+#  failureThreshold: 3
+#  httpGet:
+#    path: /endpoints
+#    port: 8080
+#    scheme: HTTP
+#  initialDelaySeconds: 15
+#  periodSeconds: 15
+#  successThreshold: 1
+#  timeoutSeconds: 3
 
-livenessProbe:
-  failureThreshold: 5
-  httpGet:
-    path: /endpoints
-    port: 8080
-    scheme: HTTP
-  initialDelaySeconds: 15
-  periodSeconds: 15
-  successThreshold: 1
-  timeoutSeconds: 3
+#livenessProbe:
+#  failureThreshold: 5
+#  httpGet:
+#    path: /endpoints
+#    port: 8080
+#    scheme: HTTP
+#  initialDelaySeconds: 15
+#  periodSeconds: 15
+# successThreshold: 1
+#  timeoutSeconds: 3
 
-startupProbe:
-  failureThreshold: 45
-  httpGet:
-    path: /endpoints
-    port: 8080
-    scheme: HTTP
-  initialDelaySeconds: 5
-  periodSeconds: 1
-  successThreshold: 1
-  timeoutSeconds: 2
+#startupProbe:
+#  failureThreshold: 45
+#  httpGet:
+#    path: /endpoints
+#    port: 8080
+#    scheme: HTTP
+#  initialDelaySeconds: 5
+#  periodSeconds: 1
+#  successThreshold: 1
+#  timeoutSeconds: 2

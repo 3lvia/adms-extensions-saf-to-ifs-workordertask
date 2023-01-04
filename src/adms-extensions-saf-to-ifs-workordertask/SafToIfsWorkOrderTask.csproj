@@ -1,25 +1,24 @@
-<Project Sdk="Microsoft.NET.Sdk.Worker">
+﻿<Project Sdk="Microsoft.NET.Sdk.Worker">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <UserSecretsId>dotnet-adms_extensions_saf_to_ifs_workordertask-B964EFC8-AFFE-41A3-BCA7-973F18260E9F</UserSecretsId>
     <RootNamespace>adms_extensions_saf_to_ifs_workordertask</RootNamespace>
   </PropertyGroup>
-
-	
 	
   <ItemGroup>
-    
+	  <PackageReference Include="adms-extensions-lib-activemq" Version="1.0.0-CI-20221103-125338" />
+	  
 	  <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
 	  <PackageReference Include="Apache.NMS.AMQP" Version="2.0.0" />
 
-	  <PackageReference Include="AutoMapper" Version="11.0.1" />
-	  <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
+	  <PackageReference Include="AutoMapper" Version="12.0.0" />
+	  <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0" />
 
 	  <PackageReference Include="Elvia.Configuration" Version="1.15.0" />
 
-	  <PackageReference Include="Elvia.KvalitetsportalLogger" Version="3.0.3" />
-	  <PackageReference Include="Elvia.Telemetry.AspNetCore" Version="3.1.0" />
+	  <PackageReference Include="Elvia.KvalitetsportalLogger" Version="5.1.1" />
+	  <PackageReference Include="Elvia.Telemetry.AspNetCore" Version="3.1.2" />
 
 	  <PackageReference Include="System.ServiceModel.Http" Version="4.10.0" />
 	  <PackageReference Include="System.ServiceModel.Primitives" Version="4.10.0" />
@@ -30,7 +29,9 @@
 	  <PackageReference Include="System.ServiceModel.Federation" Version="4.10.*" />
 	
 	  <PackageReference Include="System.ServiceModel.NetTcp" Version="4.10.*" />
+	  
+	  <PackageReference Include="FakeItEasy" Version="7.3.1" />
+	  <PackageReference Include="FakerDotNet" Version="1.0.7" />
  
-	  <PackageReference Include="FakeItEasy" Version="6.2.1" />
   </ItemGroup>
 </Project>

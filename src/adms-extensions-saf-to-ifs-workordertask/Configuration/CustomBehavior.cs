@@ -16,9 +16,6 @@ namespace SafToIfsWorkOrder.Configurations
         }
         public void AfterReceiveReply(ref Message reply, object correlationState)
         {
-
-            int debug = 5;
-
         }
     }
     public class CustomEndpointBehavior : IEndpointBehavior

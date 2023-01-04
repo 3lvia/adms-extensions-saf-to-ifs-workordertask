@@ -393,9 +393,14 @@
           <xs:documentation>Terminal on transformer station.</xs:documentation>
         </xs:annotation>
       </xs:element>
+      <xs:element name="FeederLV" type="xs:string" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>"Kurs"</xs:documentation>
+        </xs:annotation>
+      </xs:element>        
       <xs:element name="VoltageLevelNum" type="xs:integer" minOccurs="0">
         <xs:annotation>
-          <xs:documentation>Voltage level.</xs:documentation>
+          <xs:documentation>Voltage level in kV.</xs:documentation>
         </xs:annotation>
       </xs:element>
     </xs:sequence>
@@ -513,13 +518,21 @@
       <xs:element name="OPERATOR_END_EST" type="xs:dateTime" minOccurs="0"/>
       <xs:element name="OPERATOR_EST_TC" type="xs:dateTime" minOccurs="0"/>
       <xs:element name="END_ACT_DELAY_CAUSE" type="xs:string" minOccurs="0"/>
-      <xs:element name="CAUSE_OR_REASON_NUM" type="xs:integer" minOccurs="0">
+      <xs:element name="CAUSE_OR_REASON" type="xs:string" minOccurs="0">
         <xs:annotation>
           <xs:documentation>Mapped against OM_CAUSE_OR_REASON_NUM.</xs:documentation>
         </xs:annotation>
       </xs:element>
-      <xs:element name="FAULT_CATEGORY_NUM" type="xs:integer" minOccurs="0"/>
-      <xs:element name="FAULT_EQUIPMENT_NUM" type="xs:integer" minOccurs="0"/>
+      <xs:element name="FAULT_CATEGORY" type="xs:string" minOccurs="0">
+      <xs:annotation>
+        <xs:documentation>Mapped against OM_FAULT_CATEGORY.</xs:documentation>
+      </xs:annotation>
+      </xs:element>
+      <xs:element name="FAULT_EQUIPMENT" type="xs:string" minOccurs="0">
+      <xs:annotation>
+        <xs:documentation>Mapped against OM_FAULT_CATEGORY.</xs:documentation>
+      </xs:annotation>
+      </xs:element>
       <xs:element name="DeviceLocation" type="xs:string" minOccurs="0">
         <xs:annotation>
           <xs:documentation>Location of device.</xs:documentation>

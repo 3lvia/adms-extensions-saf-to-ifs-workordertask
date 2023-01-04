@@ -1256,11 +1256,11 @@ namespace MaintenanceOrdersOutBound
         
         private string eND_ACT_DELAY_CAUSEField;
         
-        private string cAUSE_OR_REASON_NUMField;
+        private string cAUSE_OR_REASONField;
         
-        private string fAULT_CATEGORY_NUMField;
+        private string fAULT_CATEGORYField;
         
-        private string fAULT_EQUIPMENT_NUMField;
+        private string fAULT_EQUIPMENTField;
         
         private string deviceLocationField;
         
@@ -1763,44 +1763,44 @@ namespace MaintenanceOrdersOutBound
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(DataType="integer", Order=25)]
-        public string CAUSE_OR_REASON_NUM
+        [System.Xml.Serialization.XmlElementAttribute(Order=25)]
+        public string CAUSE_OR_REASON
         {
             get
             {
-                return this.cAUSE_OR_REASON_NUMField;
+                return this.cAUSE_OR_REASONField;
             }
             set
             {
-                this.cAUSE_OR_REASON_NUMField = value;
+                this.cAUSE_OR_REASONField = value;
             }
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(DataType="integer", Order=26)]
-        public string FAULT_CATEGORY_NUM
+        [System.Xml.Serialization.XmlElementAttribute(Order=26)]
+        public string FAULT_CATEGORY
         {
             get
             {
-                return this.fAULT_CATEGORY_NUMField;
+                return this.fAULT_CATEGORYField;
             }
             set
             {
-                this.fAULT_CATEGORY_NUMField = value;
+                this.fAULT_CATEGORYField = value;
             }
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(DataType="integer", Order=27)]
-        public string FAULT_EQUIPMENT_NUM
+        [System.Xml.Serialization.XmlElementAttribute(Order=27)]
+        public string FAULT_EQUIPMENT
         {
             get
             {
-                return this.fAULT_EQUIPMENT_NUMField;
+                return this.fAULT_EQUIPMENTField;
             }
             set
             {
-                this.fAULT_EQUIPMENT_NUMField = value;
+                this.fAULT_EQUIPMENTField = value;
             }
         }
         
@@ -2044,6 +2044,8 @@ namespace MaintenanceOrdersOutBound
         
         private string feedernameField;
         
+        private string feederLVField;
+        
         private string voltageLevelNumField;
         
         /// <remarks/>
@@ -2159,7 +2161,21 @@ namespace MaintenanceOrdersOutBound
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(DataType="integer", Order=8)]
+        [System.Xml.Serialization.XmlElementAttribute(Order=8)]
+        public string FeederLV
+        {
+            get
+            {
+                return this.feederLVField;
+            }
+            set
+            {
+                this.feederLVField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(DataType="integer", Order=9)]
         public string VoltageLevelNum
         {
             get

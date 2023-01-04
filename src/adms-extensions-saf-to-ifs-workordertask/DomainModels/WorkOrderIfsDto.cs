@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Model
 {
 
-    public class IFSWorkOrderBody
+    public class WorkOrderIfsDto
     {
         public string Sender { get; set; }
         public string Context { get; set; }
@@ -30,18 +30,18 @@ namespace Model
         public string OrgCode { get; set; }
         public string WorkMasterSign { get; set; }
 
-        public InfoFields[] InfoFields { get; set; }
-        public WorkTasks[] WorkTasks { get; set; }
+        public List<InfoFieldsDto> InfoFields { get; set; } = new List<InfoFieldsDto>();
+        public List<WorkTasksDto> WorkTasks { get; set; } = new List<WorkTasksDto>();
     }
 
-    public class InfoFields
+    public class InfoFieldsDto
     {
         public string Key { get; set; }
         public string Value { get; set; }
     }
 
 
-    public class WorkTasks
+    public class WorkTasksDto
     {
         public string Description { get; set; }
         public string LongDescription { get; set; }
@@ -59,7 +59,8 @@ namespace Model
         public string CustomerNo { get; set; }
         public string UuidCustomer { get; set; }
         public string VendorNo { get; set; }
-        public InfoFields[] InfoFields { get; set; }
+        public InfoFieldsDto[] InfoFields { get; set; }
+
     }
 
 

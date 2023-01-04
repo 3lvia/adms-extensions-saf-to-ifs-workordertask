@@ -1,8 +1,5 @@
-﻿using System.Linq;
-
-using AutoMapper;
-using MaintenanceOrdersDomain;
-using MaintenanceOrdersOutBound;
+﻿using AutoMapper;
+using MaintenanceOrdersInBoundDomain;
 using Model;
 
 namespace SafToSesamAPI
@@ -11,15 +8,37 @@ namespace SafToSesamAPI
     {
         public MapperProfile()
         {        
-            CreateMaintenanceOrdersMapping(); 
+            CreateMaintenanceOrdersInBoundMapping();
+            CreateMaintenanceOrdersOutBoundMapping();
         }
 
 
-      
-        private void CreateMaintenanceOrdersMapping()
+        private void CreateMaintenanceOrdersOutBoundMapping()
         {
-            CreateMap<MaintenanceOrdersInBound.MaintenanceOrdersEventMessageType, IFSWorkOrderBody>()
+
+            CreateMap<MaintenanceOrdersOutBoundDomain.IFSMaintenanceOrdersInputDto, MaintenanceOrdersOutBound.IFSMaintenanceOrdersInput>();
+            CreateMap<MaintenanceOrdersOutBoundDomain.IFSMaintenanceOrdersMessageTypeDto, MaintenanceOrdersOutBound.IFSMaintenanceOrdersMessageType>();
+            CreateMap<MaintenanceOrdersOutBoundDomain.HeaderTypeDto, MaintenanceOrdersOutBound.HeaderType>();
+            //CreateMap<MaintenanceOrdersOutBoundDomain.HeaderTypeVerbDto, MaintenanceOrdersOutBound.HeaderTypeVerb>();
+            CreateMap<MaintenanceOrdersOutBoundDomain.ReplayDetectionTypeDto, MaintenanceOrdersOutBound.ReplayDetectionType>();
+            CreateMap<MaintenanceOrdersOutBoundDomain.UserTypeDto, MaintenanceOrdersOutBound.UserType>();
+            CreateMap<MaintenanceOrdersOutBoundDomain.MessagePropertyDto, MaintenanceOrdersOutBound.MessageProperty>();
+            CreateMap<MaintenanceOrdersOutBoundDomain.IFSMaintenanceOrdersMessageType1Dto, MaintenanceOrdersOutBound.IFSMaintenanceOrdersMessageType1>();
+            CreateMap<MaintenanceOrdersOutBoundDomain.WorkDto, MaintenanceOrdersOutBound.Work>();
+            CreateMap<MaintenanceOrdersOutBoundDomain.WorkTaskDto, MaintenanceOrdersOutBound.WorkTask>();
+
+        }
+
+
+
+        private void CreateMaintenanceOrdersInBoundMapping()
+        {
+            CreateMap<MaintenanceOrdersInBound.MaintenanceOrdersEventMessageType, WorkOrderIfsDto>()
                 .ForMember(dest => dest.Sender, opt => opt.MapFrom(src => src.Header.MessageID));
+
+            CreateMap<MaintenanceOrdersInBound.MaintenanceOrdersEventMessageType, WorkOrderTaskIfsDto>()
+                .ForMember(dest => dest.Sender, opt => opt.MapFrom(src => src.Header.MessageID));
+
 
 
             CreateMap<MaintenanceOrdersInBound.MaintenanceOrdersEventMessageType, MaintenanceOrdersDto>()

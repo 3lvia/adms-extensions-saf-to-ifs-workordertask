@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MaintenanceOrdersDomain;
+namespace MaintenanceOrdersInBoundDomain;
 
 public class MaintenanceOrdersDto 
 {
@@ -168,9 +168,9 @@ public class WorkDto
     public System.DateTime? OPERATOR_EST_TC { get; set; }
     public Boolean? OPERATOR_EST_TCSpecified { get; set; }
     public System.String? END_ACT_DELAY_CAUSE { get; set; }
-    public System.String? CAUSE_OR_REASON_NUM { get; set; }
-    public System.String? FAULT_CATEGORY_NUM { get; set; }
-    public System.String? FAULT_EQUIPMENT_NUM { get; set; }
+    public System.String? CAUSE_OR_REASON { get; set; }
+    public System.String? FAULT_CATEGORY { get; set; }
+    public System.String? FAULT_EQUIPMENT { get; set; }
     public System.String? DeviceLocation { get; set; }
     public System.String? EMERGENCY_HAZARD_INDICATOR { get; set; }
     public System.String? POLE_NUMBER { get; set; }
@@ -211,6 +211,7 @@ public class EquipmentDto
     public System.String? B3TEXT { get; set; }
     public System.String? ELTEXT { get; set; }
     public System.String? Feedername { get; set; }
+    public System.String? FeederLV { get; set; }
     public System.String? VoltageLevelNum { get; set; }
 
 }
