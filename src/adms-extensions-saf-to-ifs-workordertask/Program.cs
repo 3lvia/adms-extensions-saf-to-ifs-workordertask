@@ -47,7 +47,7 @@ namespace adms_extensions_saf_to_ifs_workordertask
                         .AddActiveMQServices(configuration, isDevelopment)
                         .AddSafServices(configuration, isDevelopment)
                         .AddTelemetryServices(configuration, isDevelopment)
-                        //.AddStandardElviaTelemetryLogging(instrumentationKey, true)
+                        .AddStandardElviaTelemetryLogging(instrumentationKey, true)
                         //.AddKvalitetsportalenServices(isDevelopment)
                         .AddKvalitetsportalenServices(configuration, isDevelopment, hashiVaultWrapper)
                         .AddAuthServices()
