@@ -7,7 +7,7 @@
   </PropertyGroup>
 	
   <ItemGroup>
-	  <PackageReference Include="adms-extensions-lib-activemq" Version="1.0.0-CI-20221103-125338" />
+	  <PackageReference Include="adms-extensions-lib-activemq" Version="1.0.0-CI-20230103-132514" />
 	  
 	  <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
 	  <PackageReference Include="Apache.NMS.AMQP" Version="2.0.0" />
