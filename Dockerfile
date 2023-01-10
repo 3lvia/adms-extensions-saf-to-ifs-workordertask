@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 LABEL maintainer="elvia@elvia.no"
 
 WORKDIR /app
@@ -8,7 +8,7 @@ RUN dotnet publish \
         --configuration Release \
         --output ./out
 
-FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS runtime
+FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS runtime
 LABEL maintainer="elvia@elvia.no"
 
 # Workaround

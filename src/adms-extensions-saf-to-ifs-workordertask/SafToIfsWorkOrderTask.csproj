@@ -1,15 +1,15 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Worker">
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net7.0</TargetFramework>
     <UserSecretsId>dotnet-adms_extensions_saf_to_ifs_workordertask-B964EFC8-AFFE-41A3-BCA7-973F18260E9F</UserSecretsId>
     <RootNamespace>adms_extensions_saf_to_ifs_workordertask</RootNamespace>
   </PropertyGroup>
 	
   <ItemGroup>
-	  <PackageReference Include="adms-extensions-lib-activemq" Version="1.0.0-CI-20221103-125338" />
+	  <PackageReference Include="adms-extensions-lib-activemq" Version="1.0.0-CI-20230103-132514" />
 	  
-	  <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
+	  <PackageReference Include="Microsoft.Extensions.Hosting" Version="7.0.0" />
 	  <PackageReference Include="Apache.NMS.AMQP" Version="2.0.0" />
 
 	  <PackageReference Include="AutoMapper" Version="12.0.0" />
@@ -23,7 +23,7 @@
 	  <PackageReference Include="System.ServiceModel.Http" Version="4.10.0" />
 	  <PackageReference Include="System.ServiceModel.Primitives" Version="4.10.0" />
 	  <PackageReference Include="System.ServiceModel.Security" Version="4.10.0" />
-	  <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.12" />
+	  <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="7.0.1" />
 
 	  <PackageReference Include="System.ServiceModel.Duplex" Version="4.10.*" />
 	  <PackageReference Include="System.ServiceModel.Federation" Version="4.10.*" />
