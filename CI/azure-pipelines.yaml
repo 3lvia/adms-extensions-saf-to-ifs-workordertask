@@ -36,8 +36,8 @@ stages:
         SonarCloud: 'sonarcloud'
         organization: 'elvia'
         scannerMode: 'MSBuild'
-        projectKey: '3lvia_adms-extensions-saf-to-ifs-workordertask'
-        projectName: 'adms-extensions-saf-to-ifs-workordertask'
+        projectKey: '3lvia_adms-extensions-saf-to-workordertask'
+        projectName: 'adms-extensions-saf-to-workordertask'
     - script: dotnet build --configuration Release
       displayName: 'Build Release'
     - task: DotNetCoreCLI@2
