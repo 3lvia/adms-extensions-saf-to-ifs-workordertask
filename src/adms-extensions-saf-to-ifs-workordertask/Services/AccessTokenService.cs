@@ -32,11 +32,11 @@ namespace ServicesIfs
                 return cachedAccessToken;
             }
 
-            HttpRequestMessage requestMessage = new HttpRequestMessage(HttpMethod.Post, _config.TokenEndpoint);
+            HttpRequestMessage requestMessage = new HttpRequestMessage(HttpMethod.Post, _config.TokenEndpoint());
 
             SetHeaders(requestMessage.Headers);
 
-            requestMessage.Content = new StringContent("grant_type=client_credentials&client_id=" + _config.ClientId + "&client_secret=" + _config.ClientSecret + "", Encoding.UTF8, "application/x-www-form-urlencoded");
+            requestMessage.Content = new StringContent("grant_type=client_credentials&client_id=" + _config.ClientId() + "&client_secret=" + _config.ClientSecret() + "", Encoding.UTF8, "application/x-www-form-urlencoded");
 
             var svar = "";
 

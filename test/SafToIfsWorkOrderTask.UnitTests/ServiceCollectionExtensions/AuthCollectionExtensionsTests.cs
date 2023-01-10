@@ -11,7 +11,7 @@ public class AuthCollectionExtensionsTests
     public void AddAuthServices_Contains_ExpectedNumberOfServices()
     {
         // Arrange
-        var expected = 2;
+        var expected = 3;
         var underTest = CreateUnderTest();
 
         // Act

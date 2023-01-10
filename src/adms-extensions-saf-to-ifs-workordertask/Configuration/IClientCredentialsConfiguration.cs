@@ -8,9 +8,9 @@ namespace ServicesIfs
 {
     public interface IClientCredentialsConfiguration
     {
-        string ClientId { get; init; }
-        string ClientSecret { get; init; }
-        string TokenEndpoint { get; init; }
+        string ClientId();
+        string ClientSecret();
+        string TokenEndpoint();
     }
 }
 
