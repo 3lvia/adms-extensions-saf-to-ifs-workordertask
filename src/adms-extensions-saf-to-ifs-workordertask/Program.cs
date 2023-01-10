@@ -13,12 +13,10 @@ namespace adms_extensions_saf_to_ifs_workordertask
 {
     public class Program
     {
-    
         public static void Main(string[] args)
         {
             CreateHostBuilder(args).Build().Run();
         }
-
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
@@ -27,11 +25,10 @@ namespace adms_extensions_saf_to_ifs_workordertask
                      config.AddJsonFile($"appsettings.json", true);
                      config.AddEnvironmentVariables();
                      config.AddHashiVaultSecrets();
-
                  })
                 .ConfigureServices((hostContext, services) =>
                 {
-
+      
                     IHostEnvironment env = hostContext.HostingEnvironment;
 
                     IHashiVaultWrapper hashiVaultWrapper = new HashiVaultWrapper();
